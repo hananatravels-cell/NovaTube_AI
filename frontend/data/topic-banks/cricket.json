@@ -1,0 +1,277 @@
+{
+  "niche": "Cricket",
+  "createdAt": "2026-08-29T12:19:10.893Z",
+  "updatedAt": "2026-08-29T13:17:23.224Z",
+  "topics": [
+    {
+      "id": "bdc740ff-d4c8-4c31-bbcb-1d9d64fbe12a",
+      "text": "Evolution of batting techniques in modern cricket",
+      "used": true,
+      "usedAt": "2026-08-29T12:19:10.918Z"
+    },
+    {
+      "id": "d175a0a4-1d69-4193-82b8-9ee34f8270f4",
+      "text": "How spin bowlers exploit pitch conditions effectively",
+      "used": true,
+      "usedAt": "2026-08-29T13:16:28.973Z"
+    },
+    {
+      "id": "cc21c86f-a316-4c40-a315-1f6fbde758d5",
+      "text": "Top five most unexpected cricket upsets in history",
+      "used": true,
+      "usedAt": "2026-08-29T13:17:23.224Z"
+    },
+    {
+      "id": "fdf85a22-b3f3-4071-8348-91f5ec92390d",
+      "text": "Breaking myths: Do helmets prevent all head injuries?",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "1e2be9dc-24d9-44ca-bd92-e848b6d503c3",
+      "text": "Story of the 1983 World Cup underdog triumph",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "3315453e-a2be-42aa-929d-76d762ce5de8",
+      "text": "Step‑by‑step guide to mastering reverse swing",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "959b5ad7-9819-4428-b531-e39521035344",
+      "text": "Analyzing the rise of T20 franchise leagues worldwide",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "dcdc67ee-8989-46da-93b9-31444703641c",
+      "text": "Psychology behind clutch performances in cricket finals",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "17f9bc7e-df28-4fcf-90f6-81db6764fb3d",
+      "text": "Comparing equipment: Wooden versus composite cricket bats",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "f87628d8-a34a-42a9-955d-dbf4e836b058",
+      "text": "How weather forecasts influence match strategies",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "5f1414ba-9ed8-4e59-85f8-bc7829d5859c",
+      "text": "The role of analytics in selecting opening partnerships",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "1cc1b556-8134-4e6c-8493-7b14825b756a",
+      "text": "Legendary fielding moments that changed game outcomes",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "3ea719ee-3677-4508-8b40-f07aeb938dd5",
+      "text": "Training drills to improve wicket‑keeping footwork speed",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "0899735c-1d72-49e2-af49-70a82c193f07",
+      "text": "Exploring cultural impact of cricket in the Caribbean",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "1497835d-0ba2-4d61-b754-6c67a1d8d339",
+      "text": "Why the Decision Review System remains controversial",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "5810e08e-0b77-4b13-9d6f-999af5176de3",
+      "text": "Historical timeline: From timeless Tests to limited overs",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "77a8d1a0-e1e9-447e-9b66-de950baabbbc",
+      "text": "How to set up a home cricket practice net",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "3bd4444f-eade-4dce-8d5f-1f140e69f725",
+      "text": "Analyzing captaincy styles: Aggressive vs. calm leadership",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "2b2ab097-7ccb-4eda-875b-b3ecab7541e9",
+      "text": "The science behind bowling speed and biomechanics",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "b2e38ed1-1691-47d3-84c8-e11494edcf76",
+      "text": "Emotional journey of a cricketer returning from injury",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "4286d3b1-58c4-45eb-8cb4-dfcce5ddfa90",
+      "text": "Decoding the art of yorker variations in death overs",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "940d98c9-e6d9-42df-808a-06338bfafa31",
+      "text": "How night‑time matches affect player performance metrics",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "f6644d14-b379-4e0b-9670-fcdf3d7c02c6",
+      "text": "Top ten most influential cricket coaches of all time",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "63d21ee0-fe59-45c8-8020-25c62a7f749c",
+      "text": "The rise and fall of the 'Super Over' controversy",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "9f73c814-3dd5-4bbd-a37f-6e3a904baeb7",
+      "text": "Exploring the science behind ball seam movement on green tops",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "5b6a31c9-8372-448c-ba92-159021df135a",
+      "text": "Step‑by‑step plan to build a backyard pitch on budget",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "a8c0afd6-6922-4ac9-9881-b151bc187dee",
+      "text": "Lessons from legendary captain Mahendra Singh Dhoni’s calm leadership",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "daef88ce-5644-491f-9b81-536a108ef197",
+      "text": "Analyzing why some nations dominate spin bowling historically",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "76f7111c-7c8c-4026-bc2b-9ce5a66457dc",
+      "text": "Five underrated fielding positions that can win matches",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "3ec471d1-9466-4ed9-a2aa-d0c21489f3b3",
+      "text": "How virtual reality training is changing wicket‑keeper reflexes",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "aaee4271-f91e-40d4-bf68-6977a6065573",
+      "text": "The cultural significance of cricket chants in South Asian stadiums",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "e5b83bb8-da9e-4d59-b99e-f825af2d083f",
+      "text": "Breaking the myth: Fast bowlers don’t need flexibility training",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "8467af66-a23b-46a0-b71c-63e0391fb809",
+      "text": "Historical impact of the 1992 World Cup’s colored clothing",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "b2e55f86-938b-4bf4-a763-8e21f9a52010",
+      "text": "How data‑driven pitch maps improve bowling spell planning",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "17e67486-a8e8-44de-8cbd-bed2245d2f09",
+      "text": "Personal story: Overcoming language barriers in international cricket squads",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "a3e6bb41-25d2-4b5a-9a87-17b76c841c5f",
+      "text": "Top three cricketing superstitions and their psychological effects",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "191a34cd-4b31-417e-b278-07bdd74d32f1",
+      "text": "Understanding the role of sports psychologists in high‑pressure matches",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "b7ae6f10-0aed-4c89-a65a-1d75ca7b764d",
+      "text": "Comparative analysis of ODI versus T20 powerplay strategies",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "2eda37c7-435f-4752-8e24-19badc7faf49",
+      "text": "How grassroots programs are nurturing future women’s cricket stars",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "8f314ea0-5397-4047-8cb8-e012e0acc257",
+      "text": "The physics behind a perfect leg‑glance shot placement",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "d7514cab-be71-4727-998f-c14e104101f2",
+      "text": "Exploring the evolution of cricket commentary styles over decades",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "ee8115fb-f0fb-4c6b-8d6d-76366cf77b20",
+      "text": "Why night‑time floodlights can alter swing dynamics",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "5a5d4758-eabb-4189-b147-eaca267f4919",
+      "text": "A day in the life of a professional cricket analyst",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "24f9af37-9dd9-446c-82d3-d734967bcc03",
+      "text": "The economic impact of hosting a major cricket tournament",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "cffec58d-38fa-4b5a-9105-d2bb7e571641",
+      "text": "How social media memes shape fan expectations during series",
+      "used": false,
+      "usedAt": null
+    }
+  ]
+}

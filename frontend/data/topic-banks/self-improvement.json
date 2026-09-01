@@ -1,0 +1,427 @@
+{
+  "niche": "Self Improvement",
+  "createdAt": "2026-08-25T10:41:39.290Z",
+  "updatedAt": "2026-08-25T10:41:39.397Z",
+  "topics": [
+    {
+      "id": "3ee1fef5-71ec-48f9-a050-f006c448bf39",
+      "text": "Morning routines that boost productivity instantly",
+      "used": true,
+      "usedAt": "2026-08-25T10:41:39.397Z"
+    },
+    {
+      "id": "e4f3ea7f-b677-4c50-b438-760dfecdd79b",
+      "text": "Overcoming procrastination using the Pomodoro technique",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "ae74759d-5ff0-4bbd-9802-cf6827a5a80c",
+      "text": "How to set SMART goals for lasting change",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "786674b7-3320-415e-a057-8a8f61cff33d",
+      "text": "The science behind habit stacking for success",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "bd453fe8-e513-46ae-be1b-e091464e442e",
+      "text": "Personal storytelling: turning failure into motivation",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "e5136556-aa18-4c4d-bbe0-c8a9056300d8",
+      "text": "Debunking myths: multitasking hurts more than helps",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "b802c761-28e5-4373-b4d8-792585e70ead",
+      "text": "Historical figures who mastered self-discipline daily",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "5cff0bd9-6a07-45a5-a345-bddaf37486f1",
+      "text": "Minimalist living tips to reduce decision fatigue",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "bbe5b3ed-c5ed-4021-b4ea-907c6d29fb0d",
+      "text": "Emotional intelligence exercises for stronger relationships",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "ebf47232-e8da-4dc4-bf46-a2b10dce3412",
+      "text": "Digital detox: a 7‑day challenge guide",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "0e3ed823-b474-4a0d-b666-42b512976b95",
+      "text": "Mindful breathing techniques for instant stress relief",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "f697e5a9-50cd-4859-b79e-5f4c48259bdd",
+      "text": "Learning speed reading: practical exercises for beginners",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "23e73ab4-55f9-49ca-bf46-698c59a6bcde",
+      "text": "Building confidence through daily micro‑wins tracking",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "1f7288e6-23f4-4ff8-b303-7119b6ee9716",
+      "text": "Financial self‑care: budgeting basics for mental peace",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "7420cb4b-a612-42e1-bbd1-3076d7273151",
+      "text": "How journaling improves self‑awareness and focus",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "edc82d13-771d-45b8-bc68-75cb4e758409",
+      "text": "Using visualization to achieve personal milestones faster",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "e1115017-1283-4877-9f9f-98b244d9f7f3",
+      "text": "The role of sleep hygiene in peak performance",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "f4e22d67-2b28-4f5e-8509-025cc0102e17",
+      "text": "Overcoming imposter syndrome with evidence‑based strategies",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "1a9afdc1-b0e5-46e8-9052-caf57488ae55",
+      "text": "Story of a habit transformation: 90‑day case study",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "f445e918-8157-446d-b850-7e6143afd140",
+      "text": "Cultivating gratitude daily to enhance mental resilience",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "470b72f1-b59c-4c12-8b49-44d1d41466ab",
+      "text": "How to use the Eisenhower matrix for priorities",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "5c5fd589-e7c6-4454-915e-b7c99ebccaea",
+      "text": "Breaking the perfectionism trap with realistic expectations",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "33731aa6-38df-4218-9782-f61e77dc7021",
+      "text": "Learning from stoic philosophy for modern self‑growth",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "45292c36-89ff-4361-a4ea-96e5f115c151",
+      "text": "Creating a personal development roadmap in 30 minutes",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "1fa18887-0019-4f58-8165-5c32ecab700f",
+      "text": "Boosting creativity through structured play and reflection",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "2a3677cb-e2e8-47a6-b46f-e044fc68da46",
+      "text": "Designing a personal habit tracker for long-term consistency",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "1236f2e9-ecc0-455f-8d3c-aa0a77bbc23c",
+      "text": "Applying growth mindset principles to career transitions",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "1371960c-0a4b-4253-a030-ba2160a6d03e",
+      "text": "Neuroscience of willpower: strengthening the prefrontal cortex",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "b9d4df2e-e09d-4398-aac9-2d04a07c5495",
+      "text": "Micro‑learning strategies for mastering new skills quickly",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "637773ab-48dd-4785-8f50-1e16958ccb4c",
+      "text": "Storytelling techniques to reframe personal setbacks positively",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "93256135-6644-4172-9213-bfdf53aa6f70",
+      "text": "Using the Fogg Behavior Model to design habits",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "62caeefd-e288-407e-8a4a-488226556db4",
+      "text": "Comparing meditation styles: mindfulness vs. transcendental benefits",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "8460a371-4f09-4765-8ced-18a048fa2c28",
+      "text": "Time‑boxing vs. batching: which productivity method wins?",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "6cca9d1b-f39f-453c-a23b-46abc45175c8",
+      "text": "Psychology of decision fatigue and how to reset",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "38f70655-d159-4aad-896c-6b84434b5f1e",
+      "text": "Lessons from elite athletes on mental resilience training",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "b0f824c9-28da-481d-9c1b-df9a88d5c133",
+      "text": "Implementing a weekly review for continuous self‑assessment",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "c8476132-795a-403c-a3c3-2a0dfbe46c3a",
+      "text": "The impact of nutrition on cognitive performance and focus",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "ffbbb14b-97c4-4f60-a426-99a405119a4a",
+      "text": "Creating a personal mission statement to guide choices",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "66c464fb-b0bf-4ebc-a26f-f88f544361a3",
+      "text": "How to use spaced repetition for habit retention",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "91e7752b-0349-4906-9b8a-5063933393c7",
+      "text": "Exploring the role of curiosity in lifelong learning",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "eccb1087-afea-4ae1-864b-d180627e8590",
+      "text": "Building a supportive accountability network for goal achievement",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "c37d8a0b-144a-41a2-b121-af6f52ca86df",
+      "text": "Analyzing the myth of the 'overnight success' story",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "79f8afdf-20e4-4c88-9ad0-845f5e42441a",
+      "text": "Tech‑free mornings: benefits for mental clarity and energy",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "6801131b-2a27-4d59-8945-2f15f88a618c",
+      "text": "Applying Kaizen philosophy to daily personal improvements",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "bbada0a2-bb2c-45e9-997b-cf765b499c5c",
+      "text": "Using biofeedback tools to monitor stress levels effectively",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "f17b529d-01a7-4177-bf79-8ab09838030a",
+      "text": "Morning sunlight exposure for mood regulation",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "b3901797-5fe2-4274-adf2-2616f3a0534f",
+      "text": "Leveraging habit stacking to build routines effortlessly",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "867ed988-2bf2-4cab-8591-da003ec96bf1",
+      "text": "Psychology behind procrastination and actionable counter‑measures",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "98e26133-c6bf-4047-9295-53685fe0a107",
+      "text": "Story of a failed startup turned personal growth catalyst",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "7690a85b-3e3e-4fd6-a5b2-a8d972376e9e",
+      "text": "Top five books that reshape self‑belief systems",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "c130f653-7024-4b97-a456-60ae3cb0b07b",
+      "text": "Using body language to boost confidence instantly",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "538a76ca-a641-4349-832b-87f14d456885",
+      "text": "Designing a digital vision board for goal visualization",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "3f866fdd-0e0e-447b-acf4-24ed15e10c3b",
+      "text": "Applying the Pareto principle to personal skill acquisition",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "fd00ef46-af17-4583-8d23-a80e347324bd",
+      "text": "How cold showers improve mental toughness and focus",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "9fb37f22-4f4d-4969-94d8-aaad81afe1d6",
+      "text": "Narrative of a 30‑day social media fast transformation",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "f4747469-eb25-4b55-9141-c124cd270ea2",
+      "text": "Science of gratitude letters and emotional uplift",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "12dcd057-fb4a-4644-acbc-243e183d458e",
+      "text": "Developing a growth journal: prompts for daily reflection",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "2630edeb-ec42-476a-aa46-26597748cb23",
+      "text": "Breaking the habit loop: cue‑routine‑reward analysis",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "137bcb53-22d9-4056-b08e-43af3140e96c",
+      "text": "Exploring the benefits of intermittent fasting for brain health",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "5cb4e16c-9ae8-47f7-aa8a-3fdba45ad69f",
+      "text": "Creating a personal SWOT analysis for life planning",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "2e559a40-f1d9-4855-8458-3eb67fd7052d",
+      "text": "Using music tempo to enhance productivity cycles",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "57870166-e9ee-49aa-bba1-dbd0b68243aa",
+      "text": "Lessons from ancient martial arts on discipline and patience",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "521c5cf1-ad42-40cf-8d6d-6a066a0a5163",
+      "text": "Mind‑map techniques for clarifying long‑term aspirations",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "c87294ba-f78e-4fca-bf47-52c7fea44b33",
+      "text": "The impact of color psychology on workspace motivation",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "88ee264c-42f5-4055-8b47-e022ffa1f982",
+      "text": "Building resilience through controlled exposure to discomfort",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "a0f8b15d-262d-4a80-afdc-b3197d28bd88",
+      "text": "How to conduct a personal values audit effectively",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "513aefa7-f2a8-4bdf-a670-00d4b1e71ace",
+      "text": "Story of overcoming chronic self‑doubt via public speaking",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "b5b087bf-4907-4ef8-9514-022e7f9ff34c",
+      "text": "Applying the 2‑minute rule to reduce task pile‑up",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "bfbb65fc-b00d-4f2e-9223-ec3b905e34d0",
+      "text": "Benefits of barefoot walking for grounding and mental clarity",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "a71d79a6-8c45-4af2-acc9-2be2678cad3f",
+      "text": "Crafting a weekly habit experiment framework for rapid iteration",
+      "used": false,
+      "usedAt": null
+    }
+  ]
+}

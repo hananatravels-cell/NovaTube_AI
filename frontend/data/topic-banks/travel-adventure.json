@@ -1,0 +1,517 @@
+{
+  "niche": "Travel & Adventure",
+  "createdAt": "2026-08-23T12:29:10.771Z",
+  "updatedAt": "2026-08-23T12:29:10.938Z",
+  "topics": [
+    {
+      "id": "4ff3ad8c-dd84-482f-b64d-75de9c47a78b",
+      "text": "Hidden waterfalls of the Pacific Northwest",
+      "used": true,
+      "usedAt": "2026-08-23T12:29:10.938Z"
+    },
+    {
+      "id": "1891f0f7-fadc-4e1d-99ba-85112064064f",
+      "text": "Budget backpacking tips for Southeast Asia",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "4da04055-4902-48f3-af5a-df9fb677144c",
+      "text": "Historical ruins tour of Petra, Jordan",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "5e26513c-3f0d-47f5-a699-f5d871ad0d91",
+      "text": "How to pack light for multi‑day hikes",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "d2852c13-7adb-450a-b5f1-a6b20a969994",
+      "text": "Myth‑busting: Are travel insurance policies necessary?",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "5b5fc16e-26db-4993-8027-e225718656df",
+      "text": "Cultural etiquette guide for visiting Morocco",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "61fb686b-49f4-4df1-aea7-9e345118199c",
+      "text": "Top 10 underrated European train journeys",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "76b0f0f7-6e7b-4bc7-9348-7f829623f96f",
+      "text": "Adventure photography: Capturing sunrise on mountain peaks",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "8d87a3bf-f39f-41a4-b90d-34e375249734",
+      "text": "Sustainable tourism practices in Icelandic villages",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "1e716e05-da87-43f3-8696-5cea2dc1cfc3",
+      "text": "Storytelling: My solo trek across the Patagonian Andes",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "e87d2e91-ff88-4d85-8c6f-5bf02b1be162",
+      "text": "How to navigate foreign public transit systems confidently",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "5afac6f4-0c2b-4d27-8920-babed41455df",
+      "text": "Exploring ancient trade routes of the Silk Road",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "3a1d0574-f9c8-4662-a4ff-4f48f7f4855f",
+      "text": "Essential safety gear for desert camping trips",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "957c3b27-eca6-4c7e-9549-9bb791df17c2",
+      "text": "Local food markets: Culinary adventure in Bangkok",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "453ea264-cba8-4552-95fd-c8083cc418c1",
+      "text": "Winter travel hacks for snowy mountain resorts",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "5e047688-ebd2-4621-a156-054d711aa19e",
+      "text": "Volunteer travel: Building schools in rural Nepal",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "8952ed2e-0c90-4c5e-9874-39fd05875c8e",
+      "text": "Road trip playlist ideas for cross‑country journeys",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "af617aeb-7e12-4ff5-96ef-d7abe478dd6d",
+      "text": "Navigating language barriers with translation apps",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "ed32155e-223c-46c0-a0be-e3020bb8106e",
+      "text": "Adventure sports: Beginner’s guide to white‑water rafting",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "b1915480-cbe4-4975-91ab-56d8724c7e0a",
+      "text": "Eco‑friendly lodging options in Costa Rica",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "a4af6a73-72b7-4b68-9813-20b80ec6d547",
+      "text": "Traveling with pets: Airline policies explained",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "bd4afc36-aaa3-4215-bcc1-972a39517507",
+      "text": "Historical ferry routes of the Greek islands",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "9bf39877-966d-41d2-ae50-360bcb303705",
+      "text": "Night sky photography tips for remote campsites",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "51d8288e-5669-42d6-8c4f-14d8dca249fd",
+      "text": "How to earn travel rewards without credit cards",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "8ddcc733-553c-43e9-9fca-6b2b551cb406",
+      "text": "Emotional impact of long‑term nomadic living",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "ad184085-889d-4b0c-b340-7d704dfd98b9",
+      "text": "Island hopping itinerary for the Philippines' lesser-known isles",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "9324299b-e2b8-446c-919c-f3f89533e0b8",
+      "text": "Geological wonders: Exploring volcanic landscapes of the Azores",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "111a6fa5-7603-4ffb-82db-c918d76892e1",
+      "text": "Cultural immersion: Living with a Bedouin family in Jordan",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "3e45476d-8fa7-4023-862f-f87dcd0b7a17",
+      "text": "Backpacking the Trans‑Canada Trail: Highlights and challenges",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "8a79da16-2123-4157-8b4d-ca181bcbee98",
+      "text": "How to choose the right travel insurance for extreme sports",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "07c63027-5474-4f80-a183-2d761e98ae7f",
+      "text": "Night market adventures: Street food tour in Taipei",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "9a2c9d05-4a6b-4ca8-9413-eeb03ecf70be",
+      "text": "Historical pilgrimage routes: Walking the Camino de Santiago",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "22a80510-41de-45f4-aecf-d9944aad9360",
+      "text": "Wildlife safaris: Ethical elephant encounters in Sri Lanka",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "4c080e04-400d-4338-89f3-491ca35263b6",
+      "text": "Minimalist travel: One‑bag packing for month‑long trips",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "dbbb4723-ed3e-440a-983e-3e5bf884ff06",
+      "text": "Surfing hotspots: Uncrowded breaks on Central America's Caribbean coast",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "537d01df-dcca-4ddb-aee0-6ba0fdf6a87e",
+      "text": "Train travel hacks: Booking hidden‑seat reservations in Europe",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "162da85c-b9ea-4fbb-bb58-dd1dae18e2b4",
+      "text": "Adventure volunteering: Restoring coral reefs in the Maldives",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "252df61d-ee20-40d3-aad2-1cd4445eed80",
+      "text": "Cave exploration: Mapping the underground rivers of Vietnam",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "fbc1e552-36fa-4ca4-a428-516d219e34f0",
+      "text": "Culinary road trip: Sampling regional cheeses across France",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "0a514f18-975f-455d-8c32-c29b7ff7dd35",
+      "text": "High‑altitude trekking safety: Acclimatization strategies for Andes climbs",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "2f74d033-0105-4f49-b417-078753b3becf",
+      "text": "Digital nomad hotspots: Cost‑of‑living comparison between Bali and Medellín",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "6fd14d23-603d-4238-be7a-f4cd45f8153e",
+      "text": "Storytelling: My unexpected encounter with a reclusive mountain hermit",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "d263a463-d0e1-46c5-bb97-beedd9ffaf86",
+      "text": "Eco‑adventure: Kayaking through Norway's protected fjord ecosystems",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "b3d09692-9d39-4680-847c-1baed48cc750",
+      "text": "Travel photography gear: Lightweight lenses for on‑the‑go shooting",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "5d313187-c31b-4411-af77-3a6dee70dd35",
+      "text": "Navigating visa processes: Fast‑track options for digital nomads",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "5267b11c-3adf-4a94-b3c7-17caf60402cb",
+      "text": "Seasonal festivals: Experiencing the Lantern Festival in Taiwan",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "2ea68b49-c164-450f-94a2-a69f8c15e173",
+      "text": "Adventure budgeting: Calculating daily costs for remote island stays",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "e9450099-196a-40a7-81e0-aa4ba9fd9e8f",
+      "text": "Historical train journeys: Riding the Trans‑Siberian Railway's lesser-known segments",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "149fccd9-1392-462f-9738-b1c4ad573a95",
+      "text": "Solo female travel: Safety strategies for night markets in Asia",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "744be425-e2b9-4a93-a0fc-aaf0a0b7ade9",
+      "text": "Glamping experiences: Luxury tent stays in the Sahara Desert",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "27327219-6228-40ed-aeae-46405dbcd6f9",
+      "text": "Cultural dance immersion: Learning the Maori haka in New Zealand",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "8ebe940f-a118-4bd2-a31a-0aa0f4823cfe",
+      "text": "Road trip planning: Mapping scenic byways through the American Southwest",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "05dcb38f-449a-4147-806b-34c55ee07762",
+      "text": "Travel health: Preventing mosquito‑borne illnesses on tropical vacations",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "7eaf22ef-111d-40b2-ab0e-ff59f3847637",
+      "text": "Adventure sailing: Navigating the Greek Cyclades on a small yacht",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "1b1cf012-7966-4171-a3d6-f7511ad2369b",
+      "text": "Historical landmarks: Visiting UNESCO World Heritage sites in Uzbekistan",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "5a29dd10-bdbb-4a35-847c-e18ecc44810d",
+      "text": "Microadventures: One‑day hikes near major cities",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "e642a598-943b-4dd2-b24a-c07c84019421",
+      "text": "How to travel sustainably using carbon‑offset programs",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "630d5c0d-eeaa-4ff5-969c-67450c2b7847",
+      "text": "Uncovering abandoned ghost towns across the American West",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "fe407885-6af1-48f6-bf31-cdb759af4e68",
+      "text": "Cultural etiquette: Do’s and don’ts in Morocco",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "7d59aa13-41d0-4f47-9443-221ae8ad8ba7",
+      "text": "Budget backpacking: Surviving on $20 a day in Southeast Asia",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "0171578d-7da8-4190-b904-96b602f33834",
+      "text": "The science behind jet lag and effective recovery hacks",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "0294dee3-e468-4e00-83c0-5b197def12fd",
+      "text": "Hidden culinary gems: Street food markets off the tourist radar",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "1710a102-f675-43d8-b2e5-34d5153cae49",
+      "text": "Travel photography storytelling: Capturing emotions without words",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "581863a4-28bb-49c0-a3e1-81af8d00e67d",
+      "text": "Navigating public transport: Mastering subway maps in Tokyo",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "265ac5d0-5d2e-4b1c-bb17-5fb669abdd83",
+      "text": "Adventure photography: Shooting waterfalls with drones safely",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "99ebac20-f1c3-4227-b615-1618a17bee58",
+      "text": "Historical mystery tour: Tracing the lost city of Petra’s secrets",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "18976aa9-9ac7-43db-a3f3-38682448aea9",
+      "text": "Solo travel confidence: Overcoming fear of empty airports",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "0a83595e-434d-440a-ad97-8803c84287d4",
+      "text": "Eco‑camping: Setting up zero‑waste tents in alpine regions",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "fd5cf72e-3759-4966-b49a-536590fb1bd7",
+      "text": "Travel tech: Using satellite messengers in remote expeditions",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "a9849e13-57f5-48e5-97bc-ec8080d15802",
+      "text": "Local festivals: Experiencing harvest celebrations in rural Spain",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "128db319-c256-40c5-9eb7-a58d3deaeacf",
+      "text": "Roadside attractions: Odd museums you must see in the USA",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "87c2c770-4e6c-48ed-b9ca-19c4a3ddd505",
+      "text": "Adventure cooking: Preparing gourmet meals on a portable stove",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "0b1c0637-d45a-42d4-bfa7-7c1a577bb0ec",
+      "text": "Travel insurance myths: What policies actually cover extreme activities",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "2958a137-2d68-4f3f-8ad1-1f1b266593a7",
+      "text": "Geopolitical travel: Visiting contested borders safely and respectfully",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "d40df34c-e74d-4a5c-b7f8-b8cf240f34e6",
+      "text": "Mindful travel: Practicing meditation while on long train rides",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "1b3d1a15-e3dc-4133-b89d-2b34784a7565",
+      "text": "Backpacking with disabilities: Adaptive gear and route planning tips",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "a6402d21-121d-4a73-84cf-889d8eacc781",
+      "text": "Nighttime wildlife spotting: Safe methods for observing owls abroad",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "edefc72f-76c0-4445-8f93-00d405ca4b14",
+      "text": "Historical reenactment trips: Living a day as a Viking in Scandinavia",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "d0501813-0478-4f4f-b729-335ddbff6a63",
+      "text": "Travel budgeting: Using local currencies to stretch your funds",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "143dbca5-5e88-42bd-8290-48ec4d4e7bd9",
+      "text": "Adventure volunteering: Teaching sailing skills to island youth",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "4e21d965-fe5c-42ba-9fde-42634e453c58",
+      "text": "Digital detox retreats: Unplugged cabins in the Norwegian fjords",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "1db6f822-a155-49e3-973c-832c416f6b85",
+      "text": "Cross‑border train journeys: Scenic routes connecting three countries",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "7e6865cb-d318-4cd6-9eb6-73e300d93b7d",
+      "text": "Travel safety gadgets: Best compact tools for solo explorers",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "7323c564-2b8f-43f9-a084-34d905f0bbb0",
+      "text": "Cultural immersion: Learning traditional weaving techniques in Peru",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "bb717425-4ba8-4bf6-8655-f41e02836cc0",
+      "text": "High‑altitude photography: Capturing sunrise from 5,000‑meter passes",
+      "used": false,
+      "usedAt": null
+    }
+  ]
+}

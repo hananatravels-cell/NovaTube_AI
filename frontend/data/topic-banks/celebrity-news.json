@@ -1,0 +1,307 @@
+{
+  "niche": "Celebrity News",
+  "createdAt": "2026-08-26T02:48:49.095Z",
+  "updatedAt": "2026-08-30T04:52:42.619Z",
+  "topics": [
+    {
+      "id": "19d41439-3188-4bc5-8cb4-1256847e4746",
+      "text": "Rise and fall of 90s teen star careers",
+      "used": true,
+      "usedAt": "2026-08-26T02:48:49.381Z"
+    },
+    {
+      "id": "f72e96c4-6353-4929-8033-a7de4deeb9f9",
+      "text": "How celebrity endorsements influence consumer buying habits",
+      "used": true,
+      "usedAt": "2026-08-26T02:53:36.557Z"
+    },
+    {
+      "id": "4ccf86cb-0062-4b8c-99f1-955d826bb347",
+      "text": "Secret philanthropy: Celebs giving anonymously worldwide",
+      "used": true,
+      "usedAt": "2026-08-26T02:59:21.333Z"
+    },
+    {
+      "id": "7927880f-41f7-465c-879c-29b2ae90cc70",
+      "text": "Breaking down celebrity social media algorithm hacks",
+      "used": true,
+      "usedAt": "2026-08-30T04:49:13.658Z"
+    },
+    {
+      "id": "e29ece07-28b2-4b6f-9bc2-a52aae3a9e70",
+      "text": "The untold story behind famous Hollywood feuds",
+      "used": true,
+      "usedAt": "2026-08-30T04:52:42.619Z"
+    },
+    {
+      "id": "5ea22703-bd3d-4637-9ca2-1a20af5b6b87",
+      "text": "Celebrity fashion evolution from red carpet to streetwear",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "ce8e5c9d-0644-4898-8e90-b6bd84da214e",
+      "text": "Mythbusting rumors about celebrity health diets",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "73b0f2f4-cf41-4875-9e5f-432e33c8dba3",
+      "text": "Top 10 most shocking celebrity legal battles",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "73c5cdbd-b783-40c4-8ad3-a4cc33af622a",
+      "text": "How reality TV launched unexpected star trajectories",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "f2486e29-2d02-4270-bd92-f406bf205f09",
+      "text": "Analyzing the impact of celebrity breakups on pop culture",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "a931d5da-5f58-444d-ba18-37848f156ab7",
+      "text": "The business model behind celebrity-owned product lines",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "b3c78c44-2aed-4998-8c8a-c97f47754062",
+      "text": "From Instagram to film: Celeb cross‑media success stories",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "6b0926b9-cc2e-408b-8ced-1b683a255fda",
+      "text": "Historical overview of Hollywood's golden age scandals",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "5181b138-8392-4926-a1ea-c8f8bd284c91",
+      "text": "How celebrities manage mental health under public scrutiny",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "49bc480c-4a06-46c8-a146-ef7430740e4d",
+      "text": "Celebrity influence on political campaigns and voter turnout",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "ca753076-55c8-425d-a169-f23e3858b0b6",
+      "text": "The role of paparazzi in shaping star narratives",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "3dc96db1-565d-48b9-8b1e-3467f2ae93b4",
+      "text": "DIY: Replicating celebrity makeup looks on a budget",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "33cc2ad0-fa3b-41aa-a77e-cc7cc563b101",
+      "text": "Exploring celebrity family dynasties across generations",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "9a16e4dd-9d62-4931-b7c7-3d54e7842989",
+      "text": "How celebrity podcasts are redefining media consumption",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "84328e7e-e585-442d-8a6d-21d6a692b75f",
+      "text": "The science behind fan obsession with famous idols",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "1f9af705-16ab-4a8c-a8e5-b1b09951ce18",
+      "text": "Celebrity activism: Measuring real-world impact of their causes",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "fc5eebcb-8e9b-4fa6-a7ed-68173fe71bbd",
+      "text": "Behind the scenes: Production of a star-studded award show",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "584764d1-93d3-4492-99a5-1d29611d242b",
+      "text": "Analyzing the economics of celebrity wedding extravaganzas",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "cf28dba6-bed0-4dc2-9339-85f5a8bd0eb4",
+      "text": "From scandal to redemption: Celeb comeback case studies",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "cd15954f-6308-4b81-9dc2-d0ccf809cb80",
+      "text": "The rise of virtual influencers versus real celebrities",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "68a219be-5cc7-4046-9fa8-79b443d96e9e",
+      "text": "How celebrity contracts structure royalty payments",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "1137ed45-c067-4d0c-8a21-d94a585ba629",
+      "text": "The secret love letters of classic Hollywood icons",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "0a628157-2940-45fd-8e42-65f77f8dea9b",
+      "text": "Five celebrity friendships that survived public scandals",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "dbf8e338-cd27-4f2e-88ae-4ac06a89b7fb",
+      "text": "Debunking the myth of celebrity 'overnight' success",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "c7e124c8-4d53-4642-85a8-7e13200cfdad",
+      "text": "The evolution of paparazzi laws protecting celebrities",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "bd46a938-cc13-4b6a-bd30-797ac6ed96b9",
+      "text": "How to negotiate a celebrity endorsement agreement",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "56f559eb-248c-4a84-a821-d86554e1212c",
+      "text": "Analyzing the cultural impact of celebrity wedding livestreams",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "fe856674-bf1f-4951-8d48-d311134faa63",
+      "text": "Celebrity chefs: From TV shows to restaurant empires",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "5b2faea1-c83f-4f96-8ae9-08bd97c5be4b",
+      "text": "The rise of celebrity-owned NFT art collections",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "5b15b2ea-4bf5-4776-af9b-a313b2c48d10",
+      "text": "Pathways from singing competition to chart‑topper success",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "6bdfb35b-dbcc-4df8-9d27-777fd359fbaf",
+      "text": "The role of celebrity stylists in shaping trends",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "16e27300-933c-43af-ac12-519db50a9d82",
+      "text": "Examining celebrity charity foundations' tax strategies",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "d4bf6b99-851c-4559-be6e-90f411666a41",
+      "text": "How actors transition from blockbuster franchises to indie films",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "accc06a6-d7fc-411d-9f17-be5211ce92da",
+      "text": "The psychology behind fans adopting celebrity pets",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "fd2bd377-f5cf-4621-b93a-21d8cfa57e6b",
+      "text": "Celebrity memoirs that revealed hidden industry secrets",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "6316678a-79f8-4f7f-81f0-20853c8ecd0e",
+      "text": "The influence of celebrity podcasts on emerging musicians",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "c0a13dd2-2a4c-4df2-a7e2-cf1f7c8ce98e",
+      "text": "How a star rebuilt career after rehab stint",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "ad3fb28d-fba4-4ff6-b8c8-db3c598a18aa",
+      "text": "The business of celebrity-branded gaming collaborations",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "f3823d18-65be-4983-9d6b-65f7a01f4267",
+      "text": "Analyzing the rise of celebrity-run streaming platforms",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "2423d882-142b-4e43-aa6e-17c42992866e",
+      "text": "How celebrities use private jets for tax avoidance",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "50e706c2-73ce-4479-9848-60823af4d26b",
+      "text": "The impact of celebrity funerals on public mourning rituals",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "2e7b48c4-3f47-427c-a887-ca8e6ad33fe6",
+      "text": "Exploring the mentorship networks among Hollywood veterans",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "2485875e-3bce-4b4d-917d-f0b9791ab7c7",
+      "text": "The hidden economics of celebrity endorsement photo shoots",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "86822f8e-75c8-475e-94b1-e93c3c3b218e",
+      "text": "How fan conventions boost celebrity merchandise sales",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "72656d4d-fb8b-41cf-bc9d-4fbcf48169f3",
+      "text": "The story behind celebrity tattoos and their meanings",
+      "used": false,
+      "usedAt": null
+    }
+  ]
+}

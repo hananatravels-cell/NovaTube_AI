@@ -1,0 +1,457 @@
+{
+  "niche": "Football",
+  "createdAt": "2026-08-29T04:17:11.663Z",
+  "updatedAt": "2026-08-29T04:17:11.759Z",
+  "topics": [
+    {
+      "id": "e1f272ba-e997-42e7-ad32-e725cd8da50e",
+      "text": "Evolution of football formations from WM to 4-3-3",
+      "used": true,
+      "usedAt": "2026-08-29T04:17:11.759Z"
+    },
+    {
+      "id": "9751258b-fdb2-4b9d-a250-c2d677e515d4",
+      "text": "How to improve heading technique for defenders",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "fdd12b77-6e20-46a9-97b3-7cb33348d769",
+      "text": "Top five greatest World Cup upsets ever",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "88596651-b8e8-4d21-8ffc-e908d4fb35db",
+      "text": "The story behind Barcelona's 2009 treble",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "90e7e6d6-a35d-44b4-abf2-a5a9352955e9",
+      "text": "Myth-busting: Does a heavier ball travel faster?",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "68ab081a-4ca6-4eb5-9e22-97d569d249e6",
+      "text": "Analyzing Lionel Messi's free‑kick evolution over decade",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "9adf72dc-a381-42b7-8ff4-dd622d6f27ae",
+      "text": "Training drills to boost midfield passing accuracy",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "f26b0235-33aa-48f7-8fc1-2ace8c6a2f1d",
+      "text": "History of the offside rule and its controversies",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "d14839dc-b894-4395-9fe7-78db99e7afd4",
+      "text": "Emotional comeback: Leicester City's 2015–16 title miracle",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "80daf1a1-fee8-4871-a154-31aac8dab423",
+      "text": "How VAR changed tactical decisions in modern football",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "b0ddb689-c002-4322-9eae-01b75bae94e5",
+      "text": "Explaining the physics behind a curling free kick",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "7c9e1b35-799d-4d62-92f0-117baf103a75",
+      "text": "Top ten underrated defenders in Premier League history",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "5dfb8647-d4cf-4d27-949c-4fa29bb91810",
+      "text": "Youth academy success: Ajax's development model explained",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "aef104e5-63c1-4b3d-9e32-839e67dff626",
+      "text": "The impact of fan culture on club identity",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "abd10eb9-a7f3-4b5f-bca8-9a9e3d33f0b1",
+      "text": "Step‑by‑step guide to mastering the slide tackle",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "5fbc620d-2aea-4b67-b7aa-2dba9d8ecee1",
+      "text": "Comparing tactical styles: Italian Catenaccio vs German Gegenpress",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "35fcce1d-e383-4c22-8cda-990ce49bb958",
+      "text": "How nutrition influences recovery for professional footballers",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "17d39c63-99d1-4a1b-98ba-946ef675c110",
+      "text": "The rise and fall of the 3‑5‑2 formation",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "98df14e8-e207-465e-a767-d583e7f8ac67",
+      "text": "Analyzing goalkeeping errors in last‑minute match deciders",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "1ef759bf-2083-460c-a46a-d67d3436d94d",
+      "text": "Story of the 1999 Champions League final drama",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "2c432626-5a2a-4406-8ad0-39c8d04a0ccc",
+      "text": "Practical tips for improving sprint speed on grass",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "b08df790-d62c-40e0-b358-c4edcadf3519",
+      "text": "The economics of football transfers: supply and demand",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "69ed5c1d-1df3-404a-ab52-fc4e057d6123",
+      "text": "Psychology behind penalty shootouts and player nerves",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "77261aa3-3165-4e57-b410-1cbae473b064",
+      "text": "How women's football tactics differ from men's game",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "e19a1937-d32a-467a-a617-424a88c89860",
+      "text": "Breakdown of Barcelona's tiki‑taka possession principles",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "562268d8-70c8-4407-a84f-2f674aaf40a1",
+      "text": "Impact of climate on stadium turf performance",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "490e5478-235a-45aa-bf60-d447d2b96809",
+      "text": "How set-piece routines exploit defensive weaknesses",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "7c274444-e885-49a8-8fd4-7b7fe3b7aca1",
+      "text": "Story of the 1970 Brazil World Cup squad",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "87da3359-67ff-490f-bd93-f8db1497359b",
+      "text": "Analyzing the rise of data-driven scouting in football",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "2d57bfd7-b3a5-4fc8-95d1-705b7eecdb15",
+      "text": "Top ten most influential football managers of all time",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "792d2363-4bea-46bd-94f5-79f9d2c7cd4d",
+      "text": "Explaining the role of a false nine in modern attacks",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "fc718d24-4d85-4f7f-a861-f9c98aef463c",
+      "text": "The psychology of crowd noise on referee decisions",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "4afdb499-3efe-4dfd-812b-dff9f8be5460",
+      "text": "How youth tournaments shape future national team stars",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "0e4ed6a3-889b-4798-bd0c-4eea6d204fa9",
+      "text": "Breakdown of a successful high‑press transition sequence",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "c84193d5-fa53-46a6-a003-4b136a4330c0",
+      "text": "Historical rivalry: Liverpool vs Manchester United across decades",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "e5f0ae37-5081-450a-8456-e6f7305b219a",
+      "text": "Tech innovations: Smart balls and real‑time player tracking",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "cd3fb968-5b90-4494-9df5-d7d3b1194d94",
+      "text": "Guide to choosing the right football boots for your position",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "9f9e7599-4c54-4d66-8277-5aa6658d59a1",
+      "text": "Analyzing why some clubs consistently produce top goalkeepers",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "e909b078-cc71-44c0-aa0b-6802c1bb763e",
+      "text": "The effect of COVID‑19 on football scheduling and finances",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "1375d822-b9cc-413a-8c30-e16ed2457a16",
+      "text": "Story of the 2005 Istanbul Champions League comeback",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "0e875f44-fde6-4986-9ab7-dc510dcc797e",
+      "text": "Comparing the tactical impact of a 3‑4‑3 versus 4‑2‑3‑1",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "21732ead-74c0-4758-abdc-62b1ab2afe59",
+      "text": "How to develop a goalkeeper’s distribution under pressure",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "ede15132-6e88-4d1f-b4b4-10d224eac966",
+      "text": "Exploring the cultural significance of football chants worldwide",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "6fd7e150-557a-4ce9-bde8-8823cd5c19cb",
+      "text": "The science behind injury prevention in pre‑season conditioning",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "6e7a1dea-4106-42bd-ad5b-f3ff305a3f62",
+      "text": "Analyzing the financial model of fan‑owned football clubs",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "b33d7589-32f9-472e-b199-2749d7b8806c",
+      "text": "The evolution of goalkeeper gloves technology over decades",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "65a53274-aebb-4d18-822b-e861aa21f03a",
+      "text": "How language barriers affect international player integration",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "c6a46c94-192e-410c-a0b0-7a5b64e5c222",
+      "text": "Story of the first women's World Cup in 1991",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "5da787e5-899a-4409-aada-21ff384d8d5b",
+      "text": "Breakdown of a perfect corner kick routine execution",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "14c3b10c-016f-4445-bb5c-2438445f24d3",
+      "text": "The role of sports psychologists in elite football teams",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "1ef882ad-0648-4fe0-9e5f-db6049da1a22",
+      "text": "The hidden tactics behind successful counter‑attacking teams",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "6da25762-f182-44b6-be2f-624157da2637",
+      "text": "How VAR decisions have reshaped modern match strategies",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "2eca9d00-68f3-4a71-bdb8-f61a899bb9c2",
+      "text": "A day in the life of a professional football physiotherapist",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "f5ce084d-9073-4d3b-ac7f-c65afa8373f3",
+      "text": "Analyzing the evolution of the false full‑back role",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "448eb8a8-bc58-4ab1-8308-4525c14a8584",
+      "text": "The story behind the most controversial football transfers ever",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "11dd40fe-2882-48cb-b134-de689a9cc019",
+      "text": "Training drills to improve aerial duels for defenders",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "ead4b6d7-303e-4ffc-bd69-9a3d38579633",
+      "text": "The rise of women's club football in Asia",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "f8436ebf-5f37-4b8b-b3d2-ad2c33c180a3",
+      "text": "Psychological tactics coaches use during halftime adjustments",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "db46c815-7744-43b4-bfc8-78f090bd0d17",
+      "text": "How climate change could affect future football stadium designs",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "4e19de86-8a49-43b9-b1df-3e854a20e083",
+      "text": "The economics of lower‑league clubs surviving financial fair play",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "93805b75-db8f-4d9e-a2a6-3cddcefc21f4",
+      "text": "Breaking down the most effective set‑piece variations in 2024",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "d6988192-ba4f-411e-9e19-71f24a4d9ebb",
+      "text": "Story of the first African nation to win a World Cup",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "d4a090d9-2561-4234-a2ab-96a8bc7c57be",
+      "text": "How social media trends influence player branding and contracts",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "c0570750-f086-4855-99e9-b7254a6ef1ee",
+      "text": "The science of optimal recovery sleep for elite footballers",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "3c1fcb19-f568-4ad8-9b0b-6073c76f0edd",
+      "text": "Analyzing why certain formations succeed in high‑altitude venues",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "5ab4b8e3-768c-4a5d-b1fb-bc77a581f3b3",
+      "text": "A guide to interpreting advanced football analytics dashboards",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "1cbaeac7-0c31-4a30-a1c9-1687c52f8d89",
+      "text": "The cultural impact of football mascots in fan engagement",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "82de36b2-f824-444b-9cb8-5ced8492125a",
+      "text": "Exploring the role of video game simulations in tactical preparation",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "95b9779f-8c6e-4004-b295-a81615bfe71c",
+      "text": "How grassroots tournaments foster community cohesion and health",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "76e95a99-3bbb-478c-a874-c23bc8174807",
+      "text": "The history and significance of the iconic football jersey numbers",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "53b2e397-9791-4af0-b213-c140ec17618f",
+      "text": "Techniques for improving decision‑making speed under pressure",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "0bd355be-3690-45f4-9b9c-38b52524f738",
+      "text": "The effect of stadium acoustics on player communication",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "739e71a7-7614-426b-8e18-6ee5a6b6467c",
+      "text": "Story of a small club’s unexpected run in a national cup",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "a86ee48e-bd18-44e2-8900-b53e93470fe1",
+      "text": "How language learning enhances integration for foreign footballers",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "0beef7c3-04fc-4dac-8979-8e40fd0af1b5",
+      "text": "Analyzing the tactical shift from wing‑backs to inverted forwards",
+      "used": false,
+      "usedAt": null
+    }
+  ]
+}

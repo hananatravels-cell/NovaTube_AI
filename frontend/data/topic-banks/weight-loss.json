@@ -1,0 +1,475 @@
+{
+  "niche": "Weight Loss",
+  "createdAt": "2026-08-25T09:17:30.044Z",
+  "updatedAt": "2026-08-25T09:17:37.570Z",
+  "topics": [
+    {
+      "id": "d1cc6984-6b10-4a17-86de-aadd6e508265",
+      "text": "Understanding calorie deficits for sustainable weight loss",
+      "used": true,
+      "usedAt": "2026-08-25T09:17:30.162Z"
+    },
+    {
+      "id": "0ddf9242-97ff-4548-8c0d-d32cedb5aee1",
+      "text": "How intermittent fasting impacts metabolism and fat burning",
+      "used": true,
+      "usedAt": "2026-08-25T09:17:37.570Z"
+    },
+    {
+      "id": "6a9fac89-1147-4711-823a-e530aeac2163",
+      "text": "Debunking common weight loss myths with scientific evidence",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "afd68a2f-9960-4ec2-87b8-2e327f22bcc1",
+      "text": "A beginner's guide to tracking macros effectively",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "ccc54afc-89d7-4e9c-8006-b116ae0dcbd5",
+      "text": "The role of sleep quality in fat loss journeys",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "75d947f3-7cee-4066-8d6b-0c863f2856bd",
+      "text": "Personal story: losing 50 pounds after heart surgery",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "bc15669d-b367-4223-a18a-21575f6c41a8",
+      "text": "Top 10 low-calorie snacks for busy professionals",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "ba1bee75-6e81-4ffa-9568-0ff728874eb0",
+      "text": "Historical diets: What ancient cultures ate for slimness",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "f708f257-65de-4971-9c26-841e6b4c3947",
+      "text": "How stress hormones sabotage weight loss efforts",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "d4cb8f90-2bf2-4640-9942-7d6b020a5048",
+      "text": "Creating a sustainable home workout routine without equipment",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "35021917-8f3e-43c6-aca3-10186864eef4",
+      "text": "Analyzing the science behind keto diet weight loss results",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "bfaf7e41-fe5b-40c4-8f3d-6ebda858baec",
+      "text": "Meal prepping tips for consistent calorie control",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "fa42809e-930a-4a25-8443-52e3992d2a60",
+      "text": "Emotional eating: strategies to break the cycle",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "6c4bbc6e-95cd-4ec1-8045-ffa3659f2c62",
+      "text": "Comparing popular weight loss apps: features and accuracy",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "7f78e3c5-e176-4ca7-a8af-9dd3e5045ff0",
+      "text": "The impact of gut microbiome on body composition",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "f1a6a37e-0126-4fa7-a773-9d48d2c1dcc6",
+      "text": "How to set realistic weight loss goals and track progress",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "e123fb97-f034-4272-8313-77f5fb2737ad",
+      "text": "Exploring plant-based diets for effective fat reduction",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "4d8e345c-ae0d-48f2-93c4-370819066119",
+      "text": "Weight loss plateau: scientific methods to break through",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "fffef40e-ba08-40ab-995a-3cefdf6b036d",
+      "text": "The psychology behind motivation during long-term weight loss",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "c0036ac8-e2f4-487f-b9ab-d98630277171",
+      "text": "Seasonal eating: leveraging winter produce for weight management",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "31db7cb2-bc7a-4dd1-907a-a4f4c66050ff",
+      "text": "Quick 15-minute cardio routines for busy schedules",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "52317a4c-46fe-493d-8978-b4d5087bab41",
+      "text": "Understanding body recomposition vs pure weight loss",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "889ab405-3aec-4efe-a75f-742706dc3f1a",
+      "text": "How alcohol consumption affects fat burning efficiency",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "21f379c7-fe4a-4560-a817-42431044ed20",
+      "text": "Success stories: 5 ordinary people who lost 100+ lbs",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "fd8d12b7-8387-47ae-ba82-4c53e6418e32",
+      "text": "Using wearable tech to monitor calorie burn accurately",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "365f6d61-1464-40fe-aac6-54bf15488a26",
+      "text": "Meal timing strategies for optimal fat oxidation",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "6f362e33-0835-47af-a609-4b50ba10bfbd",
+      "text": "Low-impact HIIT workouts for joint-friendly weight loss",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "c76efd12-bf29-4486-b4b5-d455247967de",
+      "text": "Understanding hormonal changes during menopause weight management",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "96a4f2e6-b479-41a1-9f39-dceb8104c8b5",
+      "text": "How to read nutrition labels for hidden calories",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "f44f7e6b-f278-4b40-80e6-36729b7d8f89",
+      "text": "The science of thermogenesis and calorie burning foods",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "2339b686-77d6-4259-8042-47569bba1c1c",
+      "text": "Budget-friendly grocery list for a week of weight loss meals",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "d67e7626-850a-4114-bf11-c995d24229fd",
+      "text": "Incorporating resistance bands into daily fat loss routines",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "40472238-6263-4d30-98ee-dcc118e26f09",
+      "text": "Mindful eating practices to reduce overeating episodes",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "beb926fb-5276-4e62-a4c0-67ebb0148149",
+      "text": "Exploring the role of thyroid health in metabolism",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "1d25abf1-06dd-45a3-aaa8-6a7efda39d82",
+      "text": "How to safely lose weight while traveling internationally",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "53de886b-16d7-4dd4-8ba6-a98b029d94f7",
+      "text": "Analyzing the impact of artificial sweeteners on weight loss",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "6ca30bf5-fd68-4580-8cfc-4bca8154e552",
+      "text": "Creating a calorie deficit with high-volume low-calorie foods",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "f22a0805-f17c-447e-a4e3-10bb54406ddb",
+      "text": "The effect of circadian rhythm on appetite regulation",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "0bd84c7c-4e68-4de9-9f4d-ccabfc834021",
+      "text": "Weight loss lessons from professional athletes' off-season diets",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "58750a88-9ef1-482c-b5d3-4233fcd889b0",
+      "text": "Using progressive overload to boost metabolism during weight loss",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "077a5ee7-23cf-4215-9266-30b67a7d6d26",
+      "text": "How to adjust macros after reaching a weight loss plateau",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "345594c6-9a37-4636-9a12-08ed67c0d6e9",
+      "text": "The role of fiber diversity in satiety and fat loss",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "f72520f3-8435-4071-a135-d87fbf20e070",
+      "text": "Designing a weekend cheat meal without derailing progress",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "0781bad8-4bd6-4ed5-ad57-b01477404654",
+      "text": "Comparing plant-based protein powders for weight loss effectiveness",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "91d4bcd2-45c2-4920-a0a4-c2c556c26281",
+      "text": "How to incorporate cold exposure for increased calorie burn",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "ca276b0a-b6b5-4a0d-a6b0-5110ee918356",
+      "text": "Psychology of body image shifts after significant weight loss",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "f75cdf2c-7a33-485d-9ccf-e47204418b17",
+      "text": "Evaluating the sustainability of popular fad diets over a year",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "8acd4680-2612-425d-bdbd-a11a62b777a2",
+      "text": "Integrating short walks into sedentary workdays for fat loss",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "a713efc5-f22e-418a-83d0-65b15fa54add",
+      "text": "Understanding the difference between weight loss and waist circumference reduction",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "8377d4fb-2326-494d-9afc-7fb1e369253e",
+      "text": "How to use visual progress tracking beyond the scale",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "d046de24-b67d-4b41-a71e-ff881e6c9150",
+      "text": "Intermittent fasting protocols for beginner fat loss",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "52c28449-f2b4-4802-bd8f-28f7d912bc25",
+      "text": "How sleep stages influence daily calorie expenditure",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "f8e778e9-c046-4dbe-913a-ba690a093e60",
+      "text": "Exploring traditional Japanese diet for sustainable weight loss",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "f66f378f-f818-4c4c-add1-52d2de5815d3",
+      "text": "Weight loss lessons from ancient Spartan training regimens",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "972d8642-42da-49d2-b5da-224a6a065f89",
+      "text": "Using visual portion guides to control overeating",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "c31c73a2-2a76-4084-80cb-dad0ea8f2f9c",
+      "text": "Impact of high-intensity walking on belly fat reduction",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "97d824e3-755b-4ff1-955c-df5297fab151",
+      "text": "Science behind adaptive thermogenesis during calorie restriction",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "cb7de8b9-50ab-41d4-85ff-e35a28dbb822",
+      "text": "Creating a home gym on a shoestring budget",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "cd1d14fd-1664-4dc2-86b3-0e4f6d6f14c4",
+      "text": "Weight loss myths debunked: carbs don’t cause fat",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "17bf0a75-7b55-418f-af84-bc53ba3d3786",
+      "text": "How stress hormones sabotage fat loss efforts",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "d2494969-d84d-47b7-bae6-78d42fab98ce",
+      "text": "Meal swaps: low-calorie alternatives for favorite comfort foods",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "11bf2b55-aae7-4c69-b7a3-60ce153b2b25",
+      "text": "Using interval fasting to improve insulin sensitivity",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "165cc7b5-095b-4c8f-9822-d3e16ccd3824",
+      "text": "Designing a weekly grocery list for keto beginners",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "51ef0955-774a-4dfd-bc60-6440567729b9",
+      "text": "Effect of dehydration on perceived hunger signals",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "85add3a5-c590-467f-b358-cd32b8782839",
+      "text": "How to incorporate active hobbies for daily calorie burn",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "45e9ca0b-9d17-40b5-9336-89f39a1a61d8",
+      "text": "Weight loss strategies for shift workers and night owls",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "6f956e36-6f70-442d-adac-535b1793a9da",
+      "text": "Analyzing the role of vitamin D in fat metabolism",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "2490afc9-9f22-444a-9139-f9a09e3fc052",
+      "text": "Creating a supportive accountability group for weight goals",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "277ecfe1-efaa-4a0b-98a9-78cc9a6b26fc",
+      "text": "How to use heart rate zones for fat-burning workouts",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "8e5790ab-6f59-49a5-a838-d4737bf75447",
+      "text": "Exploring the benefits of barefoot training for metabolism",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "8e6ef3a5-dcb8-476c-9ab7-364bb5c5daad",
+      "text": "Weight loss implications of chronic low-grade inflammation",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "447e229d-ba12-4842-a353-25cf0120d6c2",
+      "text": "Integrating short yoga flows to reduce stress eating",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "2496b860-229d-43f9-afba-6c0683da8cac",
+      "text": "How seasonal daylight changes affect appetite control",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "524eb4ed-99cb-4295-ac9d-f47d3bcd2215",
+      "text": "Practical guide to reading hidden sugars on labels",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "29840c5a-3ae9-4eac-9304-18d620aa0a60",
+      "text": "Using gamified challenges to stay motivated during dieting",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "a93dda35-1b23-4761-a64a-822d9a507579",
+      "text": "Effectiveness of probiotic strains for weight management",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "07d5fbbb-3812-474f-a1f2-a9a6d496f649",
+      "text": "Designing a low-cost intermittent fasting schedule for students",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "119c778e-6bba-405c-a700-88acf321d949",
+      "text": "How to transition from weight loss to weight maintenance",
+      "used": false,
+      "usedAt": null
+    }
+  ]
+}
