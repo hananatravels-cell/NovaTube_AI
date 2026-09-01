@@ -1,0 +1,28 @@
+{
+  "channels": [
+    {
+      "id": "d16bddaf-fc6c-4719-8ebb-22747ceb378a",
+      "name": "wealthnova",
+      "niche": "Personal Finance",
+      "category": "finance",
+      "youtubeAccount": "wealthnova",
+      "createdAt": "2026-08-30T09:32:07.987Z"
+    },
+    {
+      "id": "ba8acbbe-4e95-4bad-9890-e2e1aa070d0d",
+      "name": "True Crime",
+      "niche": "True Crime",
+      "category": "horror",
+      "youtubeAccount": "truecrime",
+      "createdAt": "2026-08-30T09:37:40.173Z"
+    },
+    {
+      "id": "63c45583-9e33-46b5-98d6-a38d2cdf5c08",
+      "name": "Historical Stories",
+      "niche": "History",
+      "category": "history",
+      "youtubeAccount": "default",
+      "createdAt": "2026-09-01T07:29:53.930Z"
+    }
+  ]
+}
