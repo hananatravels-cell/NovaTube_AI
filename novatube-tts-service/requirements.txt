@@ -1,0 +1,8 @@
+fastapi==0.115.0
+uvicorn==0.30.6
+edge-tts==6.1.19
+pydantic==2.9.2
+
+# Optional (only needed for Kokoro fallback — see README for setup)
+# kokoro-onnx==0.3.5
+# soundfile==0.12.1

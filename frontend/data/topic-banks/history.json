@@ -1,0 +1,307 @@
+{
+  "niche": "History",
+  "createdAt": "2026-08-27T07:35:45.849Z",
+  "updatedAt": "2026-09-01T10:01:57.096Z",
+  "topics": [
+    {
+      "id": "0fb6e5ec-1f74-41eb-a05c-79c15efa30eb",
+      "text": "Rise and fall of the Silk Road empire",
+      "used": true,
+      "usedAt": "2026-08-27T07:35:45.984Z"
+    },
+    {
+      "id": "48b14abe-f60c-4256-9998-43d277bc42eb",
+      "text": "How the printing press reshaped European societies",
+      "used": true,
+      "usedAt": "2026-09-01T07:30:04.946Z"
+    },
+    {
+      "id": "02142872-976e-4f19-ba86-45e9b272ec1d",
+      "text": "Women warriors of the Mongol Empire",
+      "used": true,
+      "usedAt": "2026-09-01T10:01:57.096Z"
+    },
+    {
+      "id": "53d67adc-eb58-4e5b-91e1-d9cdbaee7d4e",
+      "text": "The Black Death's impact on medieval economies",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "88fca618-6030-47b9-a967-fbf9298386fd",
+      "text": "Lost civilizations: The mystery of Göbekli Tepe",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "713b3e54-cedf-40e3-b3ef-db3be0f94fa8",
+      "text": "Why the Roman Republic collapsed into empire",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "a12f6664-7882-4931-ab55-4fe2c3edd365",
+      "text": "The invention of gunpowder and its global consequences",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "48cd70d3-f079-4ac5-ae4a-eb3215e78061",
+      "text": "Daily life of a Victorian London street child",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "76d2c15f-04ca-4204-8de1-f8d6a5e2ba73",
+      "text": "Ancient Egyptian medicine: practices and misconceptions",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "8d51a585-38f2-4b9b-933b-a95baec9bc67",
+      "text": "The secret codebreakers of Bletchley Park",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "3142efb9-af19-422a-b9a1-377f79c8db6e",
+      "text": "How jazz emerged from post‑World War I America",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "66d5b034-a658-416b-b3c3-6ee369ac772d",
+      "text": "The political intrigue behind the French Revolution",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "6c7f4c41-9082-423f-bd05-5e3912bee471",
+      "text": "Exploring the trade networks of the Indian Ocean",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "30080aec-215c-41e5-b10b-40b3eb16c808",
+      "text": "Myth vs reality: The Trojan War's origins",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "b1df0cbe-fb4e-4573-8b18-1a7f4ef8caab",
+      "text": "How the Cold War shaped modern technology",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "f969c991-ebc2-452e-b242-e48c790140da",
+      "text": "The story of the first women astronauts",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "197b39bd-3f49-4e8a-9d8c-2ab537362727",
+      "text": "Economic lessons from the Great Depression",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "eef72de3-1cb8-4367-ae40-3ac2682f5871",
+      "text": "The art of samurai swordsmithing in feudal Japan",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "80e4018d-0bc2-43eb-baf5-02da9a7d0e63",
+      "text": "Why the Library of Alexandria mattered to knowledge",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "ab734e54-9070-44a7-919a-b0552173145b",
+      "text": "The environmental consequences of the Industrial Revolution",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "09320bf8-22eb-443f-a9ab-d6f94218489b",
+      "text": "How the Space Race accelerated computer science",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "85927cd3-1794-4e5a-a5d9-6bfdfc717ede",
+      "text": "Stories of resistance: The Warsaw Ghetto Uprising",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "0c420090-e4b1-4324-b188-0ceed650187c",
+      "text": "The evolution of democratic ideas from Athens to today",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "5becc6af-c28c-4570-9f00-880f810c28f2",
+      "text": "The role of coffeehouses in Enlightenment Europe",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "4d939d97-c94f-431a-b436-978d8032656c",
+      "text": "Reconstructing ancient diets through archaeological science",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "5c1f4024-fe02-43cc-b979-69b43078890b",
+      "text": "The hidden politics of the 1905 Russian Revolution",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "83c9bec4-1300-4d18-856f-1a1f0ddcc2f2",
+      "text": "How the Magna Carta limited medieval monarch power",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "4ed26a74-23ba-484a-a6f5-d3d7e03cd57f",
+      "text": "Everyday cuisine of the Ottoman court kitchens",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "ed4e7342-61da-48ce-88fa-750c4501743f",
+      "text": "The role of espionage in the American Civil War",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "4ffbece1-721a-4dc5-9705-cc3d296fa260",
+      "text": "Why the Battle of Thermopylae remains a tactical study",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "a6e53f33-060b-4322-922a-a0425cf38312",
+      "text": "How the Transatlantic Slave Trade reshaped African societies",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "caa0ea84-d332-48c4-b557-e9b995de3004",
+      "text": "The scientific breakthroughs of the Islamic Golden Age",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "6c8264cf-e67e-4c84-bbb3-d8ffd6c82dcb",
+      "text": "Cultural impact of the 1920s Harlem Renaissance",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "2e987c8b-2006-4845-a11c-1e6323b65d40",
+      "text": "The engineering marvels of ancient Roman aqueducts",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "0312076e-2629-4bf3-96b4-ffde1e1ef194",
+      "text": "How the Treaty of Westphalia created modern nation‑states",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "4ed6b1e1-7da5-466f-870e-ed39bc789d5d",
+      "text": "The myth of the Viking ‘blood eagle’ ritual",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "a1801265-35ae-4e8e-bcb9-75ca2d133ca5",
+      "text": "Women’s suffrage movements across three continents in 1900s",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "96595eb1-e356-4ead-90ab-4f7fc1c51d65",
+      "text": "Economic causes behind the fall of the Mayan civilization",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "f17f4720-eaf5-4741-a78f-c216786618b1",
+      "text": "How the 1918 influenza pandemic altered global health policies",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "b1d4b893-195c-4208-8d83-1b90fb47963e",
+      "text": "The art and politics of Mughal miniature painting",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "86f86da0-6114-4945-9ca3-aad20a16d9b4",
+      "text": "Exploring the maritime routes of the Age of Exploration",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "4cac5050-9c8a-4063-b236-15197f35ccfc",
+      "text": "The influence of Confucianism on Imperial Chinese bureaucracy",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "a575c44d-11bc-4883-931d-cf844733e77e",
+      "text": "How the Great Fire of London reshaped urban planning",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "4df50769-b0be-42c8-8946-df7ac0cba364",
+      "text": "The psychological tactics used in World War I trench warfare",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "13019398-a3eb-4149-a780-f0a8b7b8b550",
+      "text": "The role of coffee in Ottoman diplomatic exchanges",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "f863418f-8dba-4450-860a-fd7519304558",
+      "text": "How ancient Greek theater reflected democratic ideals",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "c0e4969e-98fc-4e63-a5c1-125af12b8d98",
+      "text": "The secretive guilds behind medieval European craftsmanship",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "8dcc76f8-b2d8-4a31-90f6-03c0b174e353",
+      "text": "Impact of the 1973 oil crisis on global politics",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "10eb8052-d8ad-4878-abaa-4ce4e7661a74",
+      "text": "The evolution of protest symbols from 1960s to today",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "a6332afd-c4b1-463c-8145-9120d4d3f0bd",
+      "text": "How the discovery of DNA changed forensic history",
+      "used": false,
+      "usedAt": null
+    }
+  ]
+}
