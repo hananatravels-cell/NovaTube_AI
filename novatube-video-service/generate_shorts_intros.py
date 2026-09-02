@@ -3,7 +3,7 @@ import base64
 import requests
 from video_service import build_intro_clip
 
-TTS_URL = "http://localhost:8001/generate-voice"
+TTS_URL = "https://novatube-ai-1.onrender.com/generate-voice"
 OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "shorts_intros")
 
 # category slug -> {language: intro text}
