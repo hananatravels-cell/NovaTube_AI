@@ -242,7 +242,7 @@ def generate_with_kokoro(text: str, voice: str) -> bytes | None:
         from kokoro_onnx import Kokoro
         import soundfile as sf
 
-        model_path = os.getenv("KOKORO_MODEL_PATH", "kokoro-v0_19.onnx")
+        model_path = os.getenv("KOKORO_MODEL_PATH", "kokoro-v0_19.int8.onnx")
         voices_path = os.getenv("KOKORO_VOICES_PATH", "voices.bin")
 
         if not os.path.exists(model_path) or not os.path.exists(voices_path):
