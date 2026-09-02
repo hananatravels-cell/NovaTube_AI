@@ -268,28 +268,27 @@ async def generate_voice(req: VoiceRequest):
     if not req.text or not req.text.strip():
         raise HTTPException(status_code=400, detail="Text is required")
 
-    # 1. Try Edge TTS first (free, high quality, works for most cases —
-    #    including Urdu, which the other providers don't support)
-    audio_bytes = await generate_with_edge_tts(req.text, req.voice, req.language)
-    provider = "edge-tts"
+    # 1. Primary: Kokoro (Fully local, no internet restrictions or rate limits)
+    audio_bytes = generate_with_kokoro(req.text, req.voice)
+    provider = "kokoro"
     mime = "audio/mpeg"
 
-    # 2. Fallback to Groq Orpheus (reliable from cloud servers, English/Arabic only)
+    # 2. Fallback 1: Edge TTS
+    if audio_bytes is None:
+        audio_bytes = await generate_with_edge_tts(req.text, req.voice, req.language)
+        provider = "edge-tts"
+        mime = "audio/mpeg"
+
+    # 3. Last resort: Groq Orpheus
     if audio_bytes is None:
         audio_bytes = generate_with_groq(req.text, req.voice, req.language)
         provider = "groq"
         mime = "audio/wav"
 
-    # 3. Last resort: Kokoro (fully local, needs model files bundled)
-    if audio_bytes is None:
-        audio_bytes = generate_with_kokoro(req.text, req.voice)
-        provider = "kokoro"
-        mime = "audio/mpeg"
-
     if audio_bytes is None:
         raise HTTPException(
             status_code=500,
-            detail="Edge TTS, Groq, and Kokoro TTS all failed. Check server logs.",
+            detail="Kokoro, Edge TTS, and Groq all failed. Check server logs.",
         )
 
     b64_audio = base64.b64encode(audio_bytes).decode("utf-8")
@@ -297,7 +296,6 @@ async def generate_voice(req: VoiceRequest):
         "audio": f"data:{mime};base64,{b64_audio}",
         "provider": provider,
     }
-
 
 @app.get("/health")
 async def health():
