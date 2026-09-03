@@ -581,6 +581,7 @@ export default function AIContentAgentPage() {
     { name: 'Video Generator', icon: <Video className="w-5 h-5" />, id: 'video', href: '/dashboard/video' },
     { name: 'Thumbnails', icon: <ImageIcon className="w-5 h-5" />, id: 'thumbnails', href: '/dashboard/thumbnails' },
     { name: 'Analytics', icon: <TrendingUp className="w-5 h-5" />, id: 'analytics', href: '/dashboard' },
+    { name: 'Connections', icon: <Tv className="w-5 h-5" />, id: 'connections', href: '/dashboard/connections' },
     { name: 'Settings', icon: <Settings className="w-5 h-5" />, id: 'settings', href: '/dashboard' },
   ];
 
