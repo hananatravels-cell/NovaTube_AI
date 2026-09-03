@@ -235,7 +235,50 @@ def generate_with_groq(text: str, voice: str, language: str) -> bytes | None:
 
     return _concatenate_wav_bytes(wav_pieces)
 
+# ---------------------------------------------------------------------------
+# ElevenLabs TTS — reliable paid/free-tier fallback, works well from cloud
+# servers. Used when Edge TTS and Groq both fail.
+# ---------------------------------------------------------------------------
+ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
+ELEVENLABS_TTS_URL = "https://api.elevenlabs.io/v1/text-to-speech/{voice_id}"
 
+ELEVENLABS_VOICE_MAP = {
+    "Aria — Warm & Clear": "21m00Tcm4TlvDq8ikWAM",      # Rachel
+    "Noah — Deep & Confident": "pNInz6obpgDQGcFmaJgB",  # Adam
+    "Maya — Bright & Energetic": "EXAVITQu4vr4xnSDxMaL", # Bella
+    "Zayn — Calm & Reflective": "onwK4e9ZLuTAKqWW03F9",  # Daniel
+}
+
+
+def generate_with_elevenlabs(text: str, voice: str) -> bytes | None:
+    """Fallback provider: ElevenLabs TTS. Reliable from cloud servers."""
+    if not ELEVENLABS_API_KEY:
+        logger.warning("ElevenLabs TTS skipped: ELEVENLABS_API_KEY not set")
+        return None
+
+    voice_id = ELEVENLABS_VOICE_MAP.get(voice, "21m00Tcm4TlvDq8ikWAM")
+    url = ELEVENLABS_TTS_URL.format(voice_id=voice_id)
+
+    try:
+        resp = requests.post(
+            url,
+            headers={
+                "xi-api-key": ELEVENLABS_API_KEY,
+                "Content-Type": "application/json",
+            },
+            json={
+                "text": text,
+                "model_id": "eleven_multilingual_v2",
+            },
+            timeout=60,
+        )
+        if resp.status_code != 200:
+            logger.warning(f"ElevenLabs TTS failed ({resp.status_code}): {resp.text[:200]}")
+            return None
+        return resp.content
+    except Exception as e:
+        logger.warning(f"ElevenLabs TTS error: {e}")
+        return None
 def generate_with_kokoro(text: str, voice: str) -> bytes | None:
     """Last-resort fallback: Kokoro TTS (fully local, open-source)."""
     try:
@@ -262,28 +305,23 @@ def generate_with_kokoro(text: str, voice: str) -> bytes | None:
         logger.warning(f"Kokoro TTS failed: {e}")
         return None
 
-
-@app.post("/generate-voice")
-async def generate_voice(req: VoiceRequest):
-    if not req.text or not req.text.strip():
-        raise HTTPException(status_code=400, detail="Text is required")
-
-    # 1. Primary: Edge TTS
-    audio_bytes = await generate_with_edge_tts(req.text, req.voice, req.language)
-    provider = "edge-tts"
-    mime = "audio/mpeg"
-
     # 2. Fallback 1: Groq Orpheus
     if audio_bytes is None:
         audio_bytes = generate_with_groq(req.text, req.voice, req.language)
         provider = "groq"
         mime = "audio/wav"
 
-    # 3. Last resort: Kokoro
+    # 3. Fallback 2: ElevenLabs
+    if audio_bytes is None:
+        audio_bytes = generate_with_elevenlabs(req.text, req.voice)
+        provider = "elevenlabs"
+        mime = "audio/mpeg"
+
+    # 4. Last resort: Kokoro
     if audio_bytes is None:
         audio_bytes = generate_with_kokoro(req.text, req.voice)
         provider = "kokoro"
-        mime = "audio/mpeg"
+        mime = "audio/mpeg""
 
     if audio_bytes is None:
         raise HTTPException(
