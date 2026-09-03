@@ -5,7 +5,7 @@ import Link from 'next/link';
 import {
   LayoutDashboard, FileText, Mic, Video, Image as ImageIcon, TrendingUp, Settings,
   Bell, Search, LogOut, Play, Sparkles, CheckCircle2, XCircle, Loader2, Circle,
-  Globe, MessageCircle, Camera, Music2, Download, Copy, Check, Plus, X, Trash2, Tv,
+  Globe, MessageCircle, Camera, Music2, Download, Copy, Check, Plus, X, Trash2, Tv, Activity,
 } from 'lucide-react';
 
 type StageStatus = 'waiting' | 'working' | 'completed' | 'failed';
@@ -582,6 +582,7 @@ export default function AIContentAgentPage() {
     { name: 'Thumbnails', icon: <ImageIcon className="w-5 h-5" />, id: 'thumbnails', href: '/dashboard/thumbnails' },
     { name: 'Analytics', icon: <TrendingUp className="w-5 h-5" />, id: 'analytics', href: '/dashboard' },
     { name: 'Connections', icon: <Tv className="w-5 h-5" />, id: 'connections', href: '/dashboard/connections' },
+    { name: 'Platform Status', icon: <Activity className="w-5 h-5" />, id: 'status', href: '/dashboard/status' },
     { name: 'Settings', icon: <Settings className="w-5 h-5" />, id: 'settings', href: '/dashboard' },
   ];
 
