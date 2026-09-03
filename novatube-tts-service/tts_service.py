@@ -2,7 +2,8 @@
 NovaTube AI - Free Voice Generation Service
 Primary: Edge TTS (Microsoft, free, high quality, no API key needed)
 Fallback 1: Groq Orpheus TTS (fast, reliable from cloud servers, English/Arabic only)
-Fallback 2: Kokoro TTS (open-source, fully local, free forever)
+Fallback 2: ElevenLabs TTS (reliable cloud fallback)
+Fallback 3: Kokoro TTS (open-source, fully local, free forever)
 
 Run with: uvicorn tts_service:app --host 0.0.0.0 --port 8001 --reload
 """
@@ -82,6 +83,20 @@ GROQ_VOICE_MAP_AR = {
     "Noah — Deep & Confident": "fahad",
     "Maya — Bright & Energetic": "lulwa",
     "Zayn — Calm & Reflective": "sultan",
+}
+
+# ---------------------------------------------------------------------------
+# ElevenLabs TTS — reliable paid/free-tier fallback, works well from cloud
+# servers. Used when Edge TTS and Groq both fail.
+# ---------------------------------------------------------------------------
+ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
+ELEVENLABS_TTS_URL = "https://api.elevenlabs.io/v1/text-to-speech/{voice_id}"
+
+ELEVENLABS_VOICE_MAP = {
+    "Aria — Warm & Clear": "21m00Tcm4TlvDq8ikWAM",      # Rachel
+    "Noah — Deep & Confident": "pNInz6obpgDQGcFmaJgB",  # Adam
+    "Maya — Bright & Energetic": "EXAVITQu4vr4xnSDxMaL", # Bella
+    "Zayn — Calm & Reflective": "onwK4e9ZLuTAKqWW03F9",  # Daniel
 }
 
 
@@ -235,20 +250,6 @@ def generate_with_groq(text: str, voice: str, language: str) -> bytes | None:
 
     return _concatenate_wav_bytes(wav_pieces)
 
-# ---------------------------------------------------------------------------
-# ElevenLabs TTS — reliable paid/free-tier fallback, works well from cloud
-# servers. Used when Edge TTS and Groq both fail.
-# ---------------------------------------------------------------------------
-ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
-ELEVENLABS_TTS_URL = "https://api.elevenlabs.io/v1/text-to-speech/{voice_id}"
-
-ELEVENLABS_VOICE_MAP = {
-    "Aria — Warm & Clear": "21m00Tcm4TlvDq8ikWAM",      # Rachel
-    "Noah — Deep & Confident": "pNInz6obpgDQGcFmaJgB",  # Adam
-    "Maya — Bright & Energetic": "EXAVITQu4vr4xnSDxMaL", # Bella
-    "Zayn — Calm & Reflective": "onwK4e9ZLuTAKqWW03F9",  # Daniel
-}
-
 
 def generate_with_elevenlabs(text: str, voice: str) -> bytes | None:
     """Fallback provider: ElevenLabs TTS. Reliable from cloud servers."""
@@ -279,6 +280,8 @@ def generate_with_elevenlabs(text: str, voice: str) -> bytes | None:
     except Exception as e:
         logger.warning(f"ElevenLabs TTS error: {e}")
         return None
+
+
 def generate_with_kokoro(text: str, voice: str) -> bytes | None:
     """Last-resort fallback: Kokoro TTS (fully local, open-source)."""
     try:
@@ -305,6 +308,17 @@ def generate_with_kokoro(text: str, voice: str) -> bytes | None:
         logger.warning(f"Kokoro TTS failed: {e}")
         return None
 
+
+@app.post("/generate-voice")
+async def generate_voice(req: VoiceRequest):
+    if not req.text or not req.text.strip():
+        raise HTTPException(status_code=400, detail="Text is required")
+
+    # 1. Primary: Edge TTS
+    audio_bytes = await generate_with_edge_tts(req.text, req.voice, req.language)
+    provider = "edge-tts"
+    mime = "audio/mpeg"
+
     # 2. Fallback 1: Groq Orpheus
     if audio_bytes is None:
         audio_bytes = generate_with_groq(req.text, req.voice, req.language)
@@ -321,12 +335,12 @@ def generate_with_kokoro(text: str, voice: str) -> bytes | None:
     if audio_bytes is None:
         audio_bytes = generate_with_kokoro(req.text, req.voice)
         provider = "kokoro"
-        mime = "audio/mpeg""
+        mime = "audio/mpeg"
 
     if audio_bytes is None:
         raise HTTPException(
             status_code=500,
-            detail="Edge TTS, Groq, and Kokoro all failed. Check server logs.",
+            detail="Edge TTS, Groq, ElevenLabs, and Kokoro all failed. Check server logs.",
         )
 
     b64_audio = base64.b64encode(audio_bytes).decode("utf-8")
