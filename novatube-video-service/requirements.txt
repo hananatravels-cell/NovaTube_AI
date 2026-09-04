@@ -4,3 +4,4 @@ pydantic==2.9.2
 requests==2.32.3
 moviepy==1.0.3
 python-dotenv
+Pillow==9.5.0
