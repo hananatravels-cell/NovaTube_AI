@@ -38,6 +38,15 @@ from moviepy.editor import (
 )
 from PIL import Image, ImageDraw, ImageFont
 
+# Newer Pillow versions (10+) removed Image.ANTIALIAS in favor of
+# Image.LANCZOS. moviepy's resize code still references ANTIALIAS, so
+# without this shim every clip fails to resize with:
+#   "module 'PIL.Image' has no attribute 'ANTIALIAS'"
+# Restoring the old name (pointing at the modern equivalent) fixes this
+# regardless of which Pillow version ends up installed.
+if not hasattr(Image, "ANTIALIAS"):
+    Image.ANTIALIAS = Image.LANCZOS
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("novatube-video")
 
