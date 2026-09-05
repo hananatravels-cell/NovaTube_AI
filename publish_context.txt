@@ -1,0 +1,122 @@
+﻿
+  frontend\app\dashboard\agent\page.tsx:720:    }
+  frontend\app\dashboard\agent\page.tsx:721:
+  frontend\app\dashboard\agent\page.tsx:722:    const nextRes = await 
+fetch('/api/agent/topic-bank/next', {
+  frontend\app\dashboard\agent\page.tsx:723:      method: 'POST',
+  frontend\app\dashboard\agent\page.tsx:724:      headers: { 'Content-Type': 
+'application/json' },
+  frontend\app\dashboard\agent\page.tsx:725:      body: JSON.stringify({ niche: 
+nicheValue }),
+  frontend\app\dashboard\agent\page.tsx:726:    });
+  frontend\app\dashboard\agent\page.tsx:727:    const nextData = await 
+nextRes.json();
+  frontend\app\dashboard\agent\page.tsx:728:    if (!nextRes.ok || 
+!nextData.topic) {
+  frontend\app\dashboard\agent\page.tsx:729:      throw new Error(nextData.error 
+|| 'No topic available in bank');
+  frontend\app\dashboard\agent\page.tsx:730:    }
+  frontend\app\dashboard\agent\page.tsx:731:
+  frontend\app\dashboard\agent\page.tsx:732:    
+setBankRemaining(nextData.remaining);
+  frontend\app\dashboard\agent\page.tsx:733:    return nextData.topic.text;
+  frontend\app\dashboard\agent\page.tsx:734:  }
+  frontend\app\dashboard\agent\page.tsx:735:
+  frontend\app\dashboard\agent\page.tsx:736:  async function 
+publishToYouTube(params: {
+  frontend\app\dashboard\agent\page.tsx:737:    videoBase64: string;
+  frontend\app\dashboard\agent\page.tsx:738:    thumbnailBase64?: string;
+  frontend\app\dashboard\agent\page.tsx:739:    title: string;
+  frontend\app\dashboard\agent\page.tsx:740:    description: string;
+  frontend\app\dashboard\agent\page.tsx:741:    tags: string[];
+  frontend\app\dashboard\agent\page.tsx:742:    account: string;
+  frontend\app\dashboard\agent\page.tsx:743:    publishAt?: string;
+  frontend\app\dashboard\agent\page.tsx:744:  }) {
+  frontend\app\dashboard\agent\page.tsx:745:    setIsPublishing(true);
+  frontend\app\dashboard\agent\page.tsx:746:    setPublishError('');
+  frontend\app\dashboard\agent\page.tsx:747:    setPublishedUrl('');
+  frontend\app\dashboard\agent\page.tsx:748:    updateStage('publish', 'working');
+  frontend\app\dashboard\agent\page.tsx:749:    try {
+> frontend\app\dashboard\agent\page.tsx:750:      const res = await 
+fetch('/api/agent/publish', {
+  frontend\app\dashboard\agent\page.tsx:751:        method: 'POST',
+  frontend\app\dashboard\agent\page.tsx:752:        headers: { 'Content-Type': 
+'application/json' },
+  frontend\app\dashboard\agent\page.tsx:753:        body: JSON.stringify({
+  frontend\app\dashboard\agent\page.tsx:754:          videoBase64: 
+params.videoBase64,
+  frontend\app\dashboard\agent\page.tsx:755:          thumbnailBase64: 
+params.thumbnailBase64 || undefined,
+  frontend\app\dashboard\agent\page.tsx:756:          title: params.title,
+  frontend\app\dashboard\agent\page.tsx:757:          description: 
+params.description,
+  frontend\app\dashboard\agent\page.tsx:758:          tags: params.tags,
+  frontend\app\dashboard\agent\page.tsx:759:          account: params.account,
+  frontend\app\dashboard\agent\page.tsx:760:          publishAt: params.publishAt 
+|| undefined,
+  frontend\app\dashboard\agent\page.tsx:1003:        // don't fail the overall run 
+— the long video is already
+  frontend\app\dashboard\agent\page.tsx:1004:        // scheduled either way.
+  frontend\app\dashboard\agent\page.tsx:1005:        try {
+  frontend\app\dashboard\agent\page.tsx:1006:          setShortsStatus('Generating 
+Shorts…');
+  frontend\app\dashboard\agent\page.tsx:1007:          const shortsRes = await 
+fetch('/api/agent/auto-short', {
+  frontend\app\dashboard\agent\page.tsx:1008:            method: 'POST',
+  frontend\app\dashboard\agent\page.tsx:1009:            headers: { 
+'Content-Type': 'application/json' },
+  frontend\app\dashboard\agent\page.tsx:1010:            body: JSON.stringify({
+  frontend\app\dashboard\agent\page.tsx:1011:              video_base64: 
+videoData.video,
+  frontend\app\dashboard\agent\page.tsx:1012:              category: 
+detectedCategory,
+  frontend\app\dashboard\agent\page.tsx:1013:              num_shorts: numShorts,
+  frontend\app\dashboard\agent\page.tsx:1014:              aspect_ratio: '9:16',
+  frontend\app\dashboard\agent\page.tsx:1015:            }),
+  frontend\app\dashboard\agent\page.tsx:1016:          });
+  frontend\app\dashboard\agent\page.tsx:1017:          const shortsData = await 
+shortsRes.json();
+  frontend\app\dashboard\agent\page.tsx:1018:          const shorts: { video: 
+string }[] = shortsRes.ok && Array.isArray(shortsData.shorts) ? shortsData.shorts 
+: [];
+  frontend\app\dashboard\agent\page.tsx:1019:
+  frontend\app\dashboard\agent\page.tsx:1020:          for (let i = 0; i < 
+shorts.length; i++) {
+  frontend\app\dashboard\agent\page.tsx:1021:            
+setShortsStatus(`Scheduling Short ${i + 1}/${shorts.length}…`);
+  frontend\app\dashboard\agent\page.tsx:1022:            let shortThumb = '';
+  frontend\app\dashboard\agent\page.tsx:1023:            try {
+  frontend\app\dashboard\agent\page.tsx:1024:              shortThumb = await 
+generateThumbnailFromVideo(shorts[i].video, thumbnailText);
+  frontend\app\dashboard\agent\page.tsx:1025:            } catch (shortThumbErr) {
+  frontend\app\dashboard\agent\page.tsx:1026:              console.error(`Short 
+${i + 1} thumbnail failed:`, shortThumbErr);
+  frontend\app\dashboard\agent\page.tsx:1027:            }
+  frontend\app\dashboard\agent\page.tsx:1028:
+  frontend\app\dashboard\agent\page.tsx:1029:            const publishAt = new 
+Date(mainPublishAtMs + (i + 1) * shortGapHours * 60 * 60 * 1000).toISOString();
+  frontend\app\dashboard\agent\page.tsx:1030:            const baseTitle = 
+seoDataLocal?.title || topicValue || niche;
+  frontend\app\dashboard\agent\page.tsx:1031:
+  frontend\app\dashboard\agent\page.tsx:1032:            try {
+> frontend\app\dashboard\agent\page.tsx:1033:              await 
+fetch('/api/agent/publish', {
+  frontend\app\dashboard\agent\page.tsx:1034:                method: 'POST',
+  frontend\app\dashboard\agent\page.tsx:1035:                headers: { 
+'Content-Type': 'application/json' },
+  frontend\app\dashboard\agent\page.tsx:1036:                body: JSON.stringify({
+  frontend\app\dashboard\agent\page.tsx:1037:                  videoBase64: 
+shorts[i].video,
+  frontend\app\dashboard\agent\page.tsx:1038:                  thumbnailBase64: 
+shortThumb || undefined,
+  frontend\app\dashboard\agent\page.tsx:1039:                  title: 
+`${baseTitle} #Shorts`,
+  frontend\app\dashboard\agent\page.tsx:1040:                  description: 
+seoDataLocal?.description || '',
+  frontend\app\dashboard\agent\page.tsx:1041:                  tags: 
+seoDataLocal?.tags || [],
+  frontend\app\dashboard\agent\page.tsx:1042:                  account: 
+selectedYoutubeAccount,
+  frontend\app\dashboard\agent\page.tsx:1043:                  publishAt,
+
+
