@@ -770,7 +770,7 @@ def _run_generate_video(job_id: str, req: VideoRequest):
             logger=JobProgressLogger(job_id, "encoding_final"),
         )
 
-                _job_update(
+        _job_update(
             job_id,
             status="done",
             stage="done",
@@ -783,7 +783,7 @@ def _run_generate_video(job_id: str, req: VideoRequest):
     except Exception as e:
         logger.error(f"generate_video job {job_id} failed: {e}")
         _job_update(job_id, status="failed", error=str(e))
-      finally:
+    finally:
         safe_close(*open_clips)
         # Only clean up here on failure — a successful job's work_dir
         # (containing the finished video) must survive until
