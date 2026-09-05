@@ -25,6 +25,8 @@ import proglog
 
 import requests
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import FileResponse
+from starlette.background import BackgroundTask
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from moviepy.editor import (
@@ -125,7 +127,8 @@ def _job_init(job_id: str, scenes_total: int):
             "scenes_total": scenes_total,
             "scenes_done": 0,
             "error": None,
-            "video_base64": None,
+            "video_path": None,
+            "work_dir": None,
             "duration": None,
             "music_used": False,
             "last_update": _time.time(),
@@ -490,12 +493,41 @@ async def video_status(job_id: str):
         _job_update(job_id, status="failed", error=f"Rendering stalled — no progress for {STALL_SECONDS}s")
         job["status"] = "failed"
         job["error"] = f"Rendering stalled — no progress for {STALL_SECONDS}s"
-
-    # Don't ship the full base64 video on every poll — only once, when done.
-    response = {k: v for k, v in job.items() if k != "video_base64"}
+    # Never ship the internal filesystem path to the client — only a
+    # flag that the video is ready to download via /video-file/{job_id}.
+    response = {k: v for k, v in job.items() if k not in ("video_path", "work_dir")}
     if job["status"] == "done":
-        response["video"] = f"data:video/mp4;base64,{job['video_base64']}"
+        response["video_ready"] = True
     return response
+
+
+@app.get("/video-file/{job_id}")
+async def video_file(job_id: str):
+    """Streams the finished video as a plain file download instead of
+    embedding it as base64 inside a JSON response — base64 inflates
+    the payload by ~33% and large JSON bodies are exactly what was
+    tripping a size/timeout limit somewhere in the Render <-> browser
+    path, causing the frontend to receive an HTML error page instead
+    of JSON. Streaming raw bytes avoids that entirely, at any video
+    size. The work directory is cleaned up right after the file is
+    fully sent."""
+    with JOBS_LOCK:
+        job = JOBS.get(job_id)
+        if job is None or job.get("status") != "done" or not job.get("video_path"):
+            raise HTTPException(status_code=404, detail="Video not available")
+        video_path = job["video_path"]
+        work_dir = job.get("work_dir")
+
+    def _cleanup():
+        if work_dir:
+            shutil.rmtree(work_dir, ignore_errors=True)
+
+    return FileResponse(
+        video_path,
+        media_type="video/mp4",
+        filename="novatube-video.mp4",
+        background=BackgroundTask(_cleanup),
+    )
 
 
 def _run_generate_video(job_id: str, req: VideoRequest):
@@ -738,14 +770,12 @@ def _run_generate_video(job_id: str, req: VideoRequest):
             logger=JobProgressLogger(job_id, "encoding_final"),
         )
 
-        with open(output_path, "rb") as f:
-            video_b64 = base64.b64encode(f.read()).decode("utf-8")
-
-        _job_update(
+                _job_update(
             job_id,
             status="done",
             stage="done",
-            video_base64=video_b64,
+            video_path=output_path,
+            work_dir=work_dir,
             duration=final_video.duration,
             music_used=music_used,
         )
@@ -753,12 +783,18 @@ def _run_generate_video(job_id: str, req: VideoRequest):
     except Exception as e:
         logger.error(f"generate_video job {job_id} failed: {e}")
         _job_update(job_id, status="failed", error=str(e))
-    finally:
+      finally:
         safe_close(*open_clips)
-        try:
-            shutil.rmtree(work_dir, ignore_errors=True)
-        except Exception:
-            pass
+        # Only clean up here on failure — a successful job's work_dir
+        # (containing the finished video) must survive until
+        # /video-file/{job_id} has streamed and deleted it itself.
+        with JOBS_LOCK:
+            job_status = JOBS.get(job_id, {}).get("status")
+        if job_status != "done":
+            try:
+                shutil.rmtree(work_dir, ignore_errors=True)
+            except Exception:
+                pass
 
 
 INTROS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "shorts_intros")
