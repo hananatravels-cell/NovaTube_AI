@@ -228,9 +228,15 @@ function dataUrlToBlob(dataUrl: string): Blob {
   return new Blob([bytes], { type: mime });
 }
 
-function downloadDataUrl(dataUrl: string, filename: string) {
+async function downloadDataUrl(dataUrlOrUrl: string, filename: string) {
   try {
-    const blob = dataUrlToBlob(dataUrl);
+    let blob: Blob;
+    if (dataUrlOrUrl.startsWith('data:')) {
+      blob = dataUrlToBlob(dataUrlOrUrl);
+    } else {
+      const res = await fetch(dataUrlOrUrl);
+      blob = await res.blob();
+    }
     const objectUrl = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = objectUrl;
@@ -323,14 +329,14 @@ async function pollVideoJob(
       onProgress(data.stage || '', data.scenesDone ?? 0, data.scenesTotal ?? 0);
     }
 
-    if (data.status === 'done') {
-      return {
-        video: data.video,
-        duration: data.duration,
-        musicUsed: !!data.musicUsed,
-      };
-    }
-
+    
+if (data.status === 'done') {
+  return {
+    video: data.videoUrl,
+    duration: data.duration,
+    musicUsed: !!data.musicUsed,
+  };
+}
     if (data.status === 'failed') {
       throw new Error(data.error || 'Video rendering failed');
     }
@@ -934,14 +940,30 @@ export default function AIContentAgentPage() {
         }
       });
 
-      setVideoProgress('');
+           setVideoProgress('');
       updateStage('video', 'completed');
       updateStage('music', videoData.musicUsed ? 'completed' : 'failed');
       setResultVideo(videoData.video);
 
+      // Video ab URL hai (base64 nahi) — publish/download/shorts ke
+      // liye poora base64 chahiye, isliye ek hi baar convert kar lo.
+      let videoBase64Full: string = videoData.video;
+      try {
+        const videoRes = await fetch(videoData.video);
+        const videoBlob = await videoRes.blob();
+        videoBase64Full = await new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result as string);
+          reader.readAsDataURL(videoBlob);
+        });
+      } catch (convErr) {
+        console.error('Video to base64 conversion failed:', convErr);
+      }
+
       updateStage('thumbnail', 'working');
       let thumbDataUrlLocal = '';
       try {
+
         thumbDataUrlLocal = await generateThumbnailFromVideo(videoData.video, thumbnailText);
         setResultThumbnail(thumbDataUrlLocal);
         updateStage('thumbnail', 'completed');
@@ -1008,7 +1030,7 @@ export default function AIContentAgentPage() {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              video_base64: videoData.video,
+              video_base64: videoBase64Full,
               category: detectedCategory,
               num_shorts: numShorts,
               aspect_ratio: '9:16',
