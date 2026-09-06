@@ -493,6 +493,7 @@ function generateThumbnailFromVideo(videoUrl: string, overlayText: string): Prom
         cleanup();
         resolve(canvas.toDataURL('image/jpeg', 0.85));
       } catch (err) {
+        
         cleanup();
         reject(err instanceof Error ? err : new Error('Thumbnail generation failed'));
       }
@@ -897,17 +898,22 @@ export default function AIContentAgentPage() {
 
       updateStage('thumbnail', 'working');
       let thumbDataUrlLocal = '';
-      try {
-        thumbDataUrlLocal = await generateThumbnailFromVideo(videoData.videoUrl, thumbnailText);
+try {
+        const videoBlobRes = await fetch(videoData.videoUrl);
+        const videoBlob = await videoBlobRes.blob();
+        const videoBlobUrl = URL.createObjectURL(videoBlob);
+        thumbDataUrlLocal = await generateThumbnailFromVideo(videoBlobUrl, thumbnailText);
+        URL.revokeObjectURL(videoBlobUrl);
         setResultThumbnail(thumbDataUrlLocal);
         updateStage('thumbnail', 'completed');
         downloadDataUrl(thumbDataUrlLocal, `novatube-thumb-${slugify(topicValue)}-${Date.now()}.jpg`);
-      } catch (thumbErr) {
+          } catch (thumbErr) {
         console.error('Thumbnail generation failed:', thumbErr);
         updateStage('thumbnail', 'failed');
       }
 
       updateStage('seo', 'working');
+
       let seoDataLocal: SeoResult | null = null;
       try {
         const seoRes = await fetch('/api/agent/seo', {
