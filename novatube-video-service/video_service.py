@@ -503,30 +503,22 @@ async def video_status(job_id: str):
 
 @app.get("/video-file/{job_id}")
 async def video_file(job_id: str):
-    """Streams the finished video as a plain file download instead of
-    embedding it as base64 inside a JSON response — base64 inflates
-    the payload by ~33% and large JSON bodies are exactly what was
-    tripping a size/timeout limit somewhere in the Render <-> browser
-    path, causing the frontend to receive an HTML error page instead
-    of JSON. Streaming raw bytes avoids that entirely, at any video
-    size. The work directory is cleaned up right after the file is
-    fully sent."""
+    """Streams the finished video as a plain file download. The file
+    is NOT deleted right after being served — the frontend makes
+    several separate requests for the same video (auto-download, the
+    <video> player, and thumbnail-frame extraction), so deleting it
+    after the first one broke every request after it. Cleanup instead
+    happens on a delay (see _delayed_cleanup below)."""
     with JOBS_LOCK:
         job = JOBS.get(job_id)
         if job is None or job.get("status") != "done" or not job.get("video_path"):
             raise HTTPException(status_code=404, detail="Video not available")
         video_path = job["video_path"]
-        work_dir = job.get("work_dir")
-
-    def _cleanup():
-        if work_dir:
-            shutil.rmtree(work_dir, ignore_errors=True)
 
     return FileResponse(
         video_path,
         media_type="video/mp4",
         filename="novatube-video.mp4",
-        background=BackgroundTask(_cleanup),
     )
 
 
@@ -780,6 +772,13 @@ def _run_generate_video(job_id: str, req: VideoRequest):
             music_used=music_used,
         )
 
+        # Delay cleanup instead of deleting right after the first
+        # request — the frontend needs to fetch this same video
+        # several times (auto-download, the <video> player, and
+        # thumbnail extraction), all shortly after render finishes.
+        def _delayed_cleanup():
+            shutil.rmtree(work_dir, ignore_errors=True)
+        threading.Timer(1800, _delayed_cleanup).start()  # 30 minutes
     except Exception as e:
         logger.error(f"generate_video job {job_id} failed: {e}")
         _job_update(job_id, status="failed", error=str(e))
