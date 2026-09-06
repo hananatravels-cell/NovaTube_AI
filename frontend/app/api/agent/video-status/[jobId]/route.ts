@@ -27,17 +27,25 @@ export async function GET(
 
     const data = await statusRes.json();
 
-return NextResponse.json({
-  status: data.status,
-  stage: data.stage,
-  scenesDone: data.scenes_done,
-  scenesTotal: data.scenes_total,
-  error: data.error,
-  videoReady: data.status === "done" && data.video_ready,
-  videoUrl: data.status === "done" && data.video_ready ? `/api/agent/video-file/${jobId}` : undefined,
-  duration: data.duration,
-  musicUsed: data.music_used,
-});
+    // Deliberately NOT forwarding a base64 video field here anymore.
+    // Embedding the whole finished video as base64 inside this JSON
+    // response used to inflate the payload enormously (~33% larger
+    // than the raw file) and that huge response was what triggered
+    // "Unexpected token '<'" errors on the frontend — some proxy/limit
+    // between Render and the browser was replacing the oversized
+    // response with its own HTML error page. The actual video is now
+    // fetched separately, as a plain file stream, via
+    // /api/agent/video-file/[jobId] once status is "done".
+    return NextResponse.json({
+      status: data.status,
+      stage: data.stage,
+      scenesDone: data.scenes_done,
+      scenesTotal: data.scenes_total,
+      error: data.error,
+      duration: data.duration,
+      musicUsed: data.music_used,
+      videoReady: !!data.video_ready,
+    });
   } catch (err) {
     console.error('agent/video-status error:', err);
     return NextResponse.json({ error: 'Something went wrong' }, { status: 500 });
