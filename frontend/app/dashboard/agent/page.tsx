@@ -53,11 +53,6 @@ const PLATFORMS = [
   { id: 'tiktok', name: 'TikTok', icon: Music2 },
 ];
 
-// Sensible defaults for how many Shorts to auto-generate from each
-// long video, and how many hours apart to schedule them (so the
-// channel posts steadily through the day instead of dumping every
-// Short at once). Both are user-adjustable in the UI — these are just
-// the starting values.
 const DEFAULT_NUM_SHORTS = 4;
 const DEFAULT_SHORT_GAP_HOURS = 4;
 
@@ -89,10 +84,6 @@ const VOICE_OPTIONS = [
   { id: 'zayn', label: 'Zayn — Calm & Reflective' },
 ];
 
-// 50 curated niche presets shown in the dropdown. Each is mapped directly
-// to one of the 20 backend categories (video footage / music / thumbnail
-// style) so picking a preset guarantees correct matching, instead of
-// relying on keyword-detection against free-typed text.
 const NICHE_PRESETS: { label: string; category: string }[] = [
   { label: 'AI & Technology', category: 'tech' },
   { label: 'Make Money Online', category: 'finance' },
@@ -179,10 +170,6 @@ function detectCategory(niche: string): string {
   return 'storytelling';
 }
 
-// Sensible default video length (in minutes) per niche, used to
-// pre-fill the duration selector when a niche/channel is picked. This
-// is only a starting suggestion — the person can still click any
-// other duration button afterward to override it for that run.
 const NICHE_DEFAULT_DURATION: { keywords: string[]; minutes: number }[] = [
   { keywords: ['true crime'], minutes: 15 },
   { keywords: ['history', 'historical stor', 'documentary'], minutes: 15 },
@@ -204,7 +191,7 @@ function getDefaultDurationForNiche(nicheLabel: string): number {
       return entry.minutes;
     }
   }
-  return 5; // generic fallback default for niches not explicitly listed
+  return 5;
 }
 
 function slugify(text: string): string {
@@ -228,15 +215,9 @@ function dataUrlToBlob(dataUrl: string): Blob {
   return new Blob([bytes], { type: mime });
 }
 
-async function downloadDataUrl(dataUrlOrUrl: string, filename: string) {
+function downloadDataUrl(dataUrl: string, filename: string) {
   try {
-    let blob: Blob;
-    if (dataUrlOrUrl.startsWith('data:')) {
-      blob = dataUrlToBlob(dataUrlOrUrl);
-    } else {
-      const res = await fetch(dataUrlOrUrl);
-      blob = await res.blob();
-    }
+    const blob = dataUrlToBlob(dataUrl);
     const objectUrl = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = objectUrl;
@@ -250,27 +231,50 @@ async function downloadDataUrl(dataUrlOrUrl: string, filename: string) {
   }
 }
 
+// Downloads a plain (same-origin) URL — used for the finished video,
+// which is now served as a real file via /api/agent/video-file/[jobId]
+// instead of being embedded as a base64 data: URL.
+async function downloadFromUrl(url: string, filename: string) {
+  try {
+    const res = await fetch(url);
+    const blob = await res.blob();
+    const objectUrl = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = objectUrl;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(objectUrl), 15000);
+  } catch (e) {
+    console.error('Download failed:', e);
+  }
+}
+
+// Converts a same-origin video URL into a base64 data: URL. Only
+// called right before an action that actually needs base64 (publish,
+// schedule, or building Shorts) — never as part of the status-polling
+// response, which is what previously blew up into an oversized JSON
+// payload and broke on large videos.
+async function videoUrlToBase64(url: string): Promise<string> {
+  const res = await fetch(url);
+  const blob = await res.blob();
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => resolve(reader.result as string);
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
+}
+
 function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-// Given a preferred time of day ("HH:MM"), interpreted in a specific
-// target time zone (default: US Eastern — the channels here target a
-// US audience), returns an ISO timestamp for the next occurrence of
-// that time in that zone — today if it hasn't passed yet there,
-// otherwise tomorrow. Used to auto-schedule the main video at a
-// consistent daily time (in the audience's local evening) rather than
-// publishing the moment it finishes rendering here in Pakistan time,
-// since a steady posting schedule helps viewers build a habit of
-// checking back (YouTube hasn't confirmed the algorithm itself
-// rewards a fixed time, but consistency is widely considered good
-// practice among creators). Uses Intl.DateTimeFormat so US Eastern's
-// daylight-saving switch (EST/EDT) is handled automatically.
 function computeNextPublishTime(timeHHMM: string, timeZone: string = 'America/New_York'): string {
   const [hh, mm] = timeHHMM.split(':').map(Number);
   const now = new Date();
 
-  // Read "now" as wall-clock date/time in the target zone.
   const parts = new Intl.DateTimeFormat('en-US', {
     timeZone,
     year: 'numeric',
@@ -289,14 +293,9 @@ function computeNextPublishTime(timeHHMM: string, timeZone: string = 'America/Ne
   const Mi = get('minute');
   const S = get('second');
 
-  // Figure out the target zone's current UTC offset by comparing the
-  // real "now" epoch to what you'd get if those wall-clock numbers
-  // were (incorrectly) treated as UTC.
   const asUtcIfLocalWereUtc = Date.UTC(y, mo - 1, d, H, Mi, S);
   const offsetMs = now.getTime() - asUtcIfLocalWereUtc;
 
-  // Build today's target time in the zone using the same trick, then
-  // apply the offset to get the real UTC epoch.
   let targetEpoch = Date.UTC(y, mo - 1, d, hh || 0, mm || 0, 0) + offsetMs;
   if (targetEpoch <= now.getTime()) {
     targetEpoch += 24 * 60 * 60 * 1000;
@@ -305,16 +304,14 @@ function computeNextPublishTime(timeHHMM: string, timeZone: string = 'America/Ne
 }
 
 // Polls the render job status endpoint until it finishes (or fails).
-// This replaces waiting on one long blocking HTTP request: the video
-// service now returns a job_id immediately and does the actual work
-// in the background, reporting live progress. A job only gets treated
-// as hung if the backend itself detects no progress for a while
-// (STALL_SECONDS in video_service.py) — not because of a fixed
-// client-side timer here.
+// On success, returns a videoUrl (a plain file URL served via
+// /api/agent/video-file/[jobId]) instead of a base64 data: URL — the
+// finished video is streamed on demand rather than embedded in this
+// polling response.
 async function pollVideoJob(
   jobId: string,
   onProgress?: (stage: string, scenesDone: number, scenesTotal: number) => void
-): Promise<{ video: string; duration: number; musicUsed: boolean }> {
+): Promise<{ videoUrl: string; duration: number; musicUsed: boolean }> {
   const POLL_INTERVAL_MS = 4000;
 
   while (true) {
@@ -329,35 +326,29 @@ async function pollVideoJob(
       onProgress(data.stage || '', data.scenesDone ?? 0, data.scenesTotal ?? 0);
     }
 
-    
-if (data.status === 'done') {
-  return {
-    video: data.videoUrl,
-    duration: data.duration,
-    musicUsed: !!data.musicUsed,
-  };
-}
+    if (data.status === 'done') {
+      return {
+        videoUrl: `/api/agent/video-file/${jobId}`,
+        duration: data.duration,
+        musicUsed: !!data.musicUsed,
+      };
+    }
+
     if (data.status === 'failed') {
       throw new Error(data.error || 'Video rendering failed');
     }
 
-    // status === 'running' — wait and poll again
     await sleep(POLL_INTERVAL_MS);
   }
 }
 
-// Extracts several candidate frames from the generated video at
-// different points, scores each one for visual "punch" (contrast +
-// color vividness), and automatically picks the strongest one.
-// Overlays a bold, colorful hook-text banner on the winning frame.
-// Fully local (no external API call), so it's fast and never times out.
-function generateThumbnailFromVideo(videoDataUrl: string, overlayText: string): Promise<string> {
+function generateThumbnailFromVideo(videoUrl: string, overlayText: string): Promise<string> {
   return new Promise((resolve, reject) => {
     const video = document.createElement('video');
     video.crossOrigin = 'anonymous';
     video.muted = true;
     video.playsInline = true;
-    video.src = videoDataUrl;
+    video.src = videoUrl;
 
     const cleanup = () => {
       video.pause();
@@ -370,16 +361,12 @@ function generateThumbnailFromVideo(videoDataUrl: string, overlayText: string): 
       reject(new Error('Video frame extraction timed out'));
     }, 20000);
 
-    // Candidate points along the video to sample a frame from.
     const CANDIDATE_FRACTIONS = [0.15, 0.35, 0.55, 0.75];
 
     function scoreFrame(canvas: HTMLCanvasElement): number {
       const ctx = canvas.getContext('2d');
       if (!ctx) return 0;
       const { data } = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      // Sample a subset of pixels for speed, measuring luminance
-      // variance (contrast) plus average color saturation — a higher
-      // score means a more visually striking, punchier frame.
       let sumLum = 0;
       let sumLumSq = 0;
       let sumSat = 0;
@@ -439,7 +426,6 @@ function generateThumbnailFromVideo(videoDataUrl: string, overlayText: string): 
           return;
         }
 
-        // Pick whichever candidate scores highest for visual punch.
         let best = candidates[0];
         let bestScore = scoreFrame(best);
         for (const c of candidates.slice(1)) {
@@ -454,14 +440,12 @@ function generateThumbnailFromVideo(videoDataUrl: string, overlayText: string): 
         const ctx = canvas.getContext('2d');
         if (!ctx) throw new Error('Could not get canvas context');
 
-        // Dark gradient overlay at the bottom for text readability
         const bgGradient = ctx.createLinearGradient(0, canvas.height * 0.55, 0, canvas.height);
         bgGradient.addColorStop(0, 'rgba(0,0,0,0)');
         bgGradient.addColorStop(1, 'rgba(0,0,0,0.8)');
         ctx.fillStyle = bgGradient;
         ctx.fillRect(0, canvas.height * 0.55, canvas.width, canvas.height * 0.45);
 
-        // Hook text overlay — bold, colorful, universal font stack
         const text = overlayText.toUpperCase();
         const baseFontSize = Math.round(canvas.width * (text.length > 20 ? 0.055 : 0.075));
         ctx.font = `900 ${baseFontSize}px "Arial Black", Arial, sans-serif`;
@@ -473,7 +457,6 @@ function generateThumbnailFromVideo(videoDataUrl: string, overlayText: string): 
         ctx.shadowOffsetX = 2;
         ctx.shadowOffsetY = 2;
 
-        // Wrap text if too long for canvas width
         const maxWidth = canvas.width * 0.9;
         const words = text.split(' ');
         const lines: string[] = [];
@@ -492,8 +475,6 @@ function generateThumbnailFromVideo(videoDataUrl: string, overlayText: string): 
         const lineHeight = baseFontSize * 1.15;
         const startY = canvas.height - 40 - (lines.length - 1) * lineHeight;
 
-        // Colorful gradient fill (yellow -> orange -> red) for a
-        // punchy, attention-grabbing look instead of plain white text.
         const textGradient = ctx.createLinearGradient(
           0, startY - baseFontSize,
           0, startY + (lines.length - 1) * lineHeight + baseFontSize * 0.3
@@ -531,11 +512,6 @@ export default function AIContentAgentPage() {
   const [nicheCategoryOverride, setNicheCategoryOverride] = useState<string | null>(null);
   const [showNicheDropdown, setShowNicheDropdown] = useState(false);
   const nicheBoxRef = useRef<HTMLDivElement>(null);
-  // Synchronous guard against double-starting a render — a fast
-  // double-click can fire handleStart twice before React re-renders
-  // the disabled button, which previously caused the same video to be
-  // generated and published twice. A ref updates immediately (unlike
-  // state), so the second call is blocked before any work begins.
   const isStartingRef = useRef(false);
 
   const [channels, setChannels] = useState<Channel[]>([]);
@@ -631,15 +607,7 @@ export default function AIContentAgentPage() {
     setNiche(preset.label);
     setNicheCategoryOverride(preset.category);
     setShowNicheDropdown(false);
-    // Pre-fill a sensible default duration for this niche — the person
-    // can still click a different duration button afterward to override.
     setDurationMinutes(getDefaultDurationForNiche(preset.label));
-    // Picking a niche from the dropdown means the content no longer
-    // matches whatever channel was previously selected — clear the
-    // channel selection so publishing can't silently go to the wrong
-    // YouTube account. The person has to explicitly re-select a
-    // channel (or leave it unselected, which disables auto-publish)
-    // before this new niche can be auto-published.
     setSelectedChannelId(null);
     setSelectedYoutubeAccount('default');
   }
@@ -647,9 +615,6 @@ export default function AIContentAgentPage() {
   function handleNicheTyping(value: string) {
     setNiche(value);
     setNicheCategoryOverride(null);
-    // Typing a custom niche means we're no longer tied to a saved
-    // channel's account — reset to "default" and clear the selected
-    // channel highlight so it's obvious no specific channel is active.
     setSelectedChannelId(null);
     setSelectedYoutubeAccount('default');
   }
@@ -659,8 +624,6 @@ export default function AIContentAgentPage() {
     setNiche(channel.niche);
     setNicheCategoryOverride(channel.category);
     setSelectedYoutubeAccount(channel.youtubeAccount || 'default');
-    // Pre-fill this channel's niche default duration too — still
-    // overridable by clicking a different duration button.
     setDurationMinutes(getDefaultDurationForNiche(channel.niche));
   }
 
@@ -706,7 +669,7 @@ export default function AIContentAgentPage() {
     if (resultVideo && alreadyDownloadedFor.current !== resultVideo) {
       alreadyDownloadedFor.current = resultVideo;
       const filenameBase = `novatube-${slugify(resultTopic || niche)}-${Date.now()}`;
-      downloadDataUrl(resultVideo, `${filenameBase}.mp4`);
+      downloadFromUrl(resultVideo, `${filenameBase}.mp4`);
       setAutoDownloaded(true);
     }
   }, [resultVideo, resultTopic, niche]);
@@ -780,14 +743,7 @@ export default function AIContentAgentPage() {
 
   async function handleStart() {
     if (!niche.trim()) return;
-    // Safety check: auto-publish must not silently fall back to the
-    // "default" account (the original channel) just because no
-    // channel chip was selected — require an explicit channel pick
-    // first so publishing always goes to the intended channel.
     if (autoPublish && !selectedChannelId) return;
-    // Block a second overlapping run (e.g. a fast double-click) —
-    // checked synchronously via a ref so it takes effect immediately,
-    // before React has re-rendered the disabled button.
     if (isStartingRef.current) return;
     isStartingRef.current = true;
 
@@ -907,9 +863,6 @@ export default function AIContentAgentPage() {
         console.error('intro voice error:', introErr);
       }
 
-      // Start the render as a background job — /api/agent/video now
-      // returns a jobId immediately instead of holding this request
-      // open for the whole render.
       const startRes = await fetch('/api/agent/video', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -929,9 +882,6 @@ export default function AIContentAgentPage() {
       const jobId = startData.jobId;
       if (!jobId) throw new Error('Video service did not return a job id');
 
-      // Poll for progress until the render finishes (or fails). The
-      // backend fails the job itself if it stalls — no fixed client
-      // timeout here, so a slow-but-healthy render is never killed.
       const videoData = await pollVideoJob(jobId, (stage, scenesDone, scenesTotal) => {
         if (scenesTotal > 0) {
           setVideoProgress(`${stage.replace(/_/g, ' ')} (${scenesDone}/${scenesTotal} scenes)`);
@@ -940,31 +890,15 @@ export default function AIContentAgentPage() {
         }
       });
 
-           setVideoProgress('');
+      setVideoProgress('');
       updateStage('video', 'completed');
       updateStage('music', videoData.musicUsed ? 'completed' : 'failed');
-      setResultVideo(videoData.video);
-
-      // Video ab URL hai (base64 nahi) — publish/download/shorts ke
-      // liye poora base64 chahiye, isliye ek hi baar convert kar lo.
-      let videoBase64Full: string = videoData.video;
-      try {
-        const videoRes = await fetch(videoData.video);
-        const videoBlob = await videoRes.blob();
-        videoBase64Full = await new Promise((resolve) => {
-          const reader = new FileReader();
-          reader.onloadend = () => resolve(reader.result as string);
-          reader.readAsDataURL(videoBlob);
-        });
-      } catch (convErr) {
-        console.error('Video to base64 conversion failed:', convErr);
-      }
+      setResultVideo(videoData.videoUrl);
 
       updateStage('thumbnail', 'working');
       let thumbDataUrlLocal = '';
       try {
-
-        thumbDataUrlLocal = await generateThumbnailFromVideo(videoData.video, thumbnailText);
+        thumbDataUrlLocal = await generateThumbnailFromVideo(videoData.videoUrl, thumbnailText);
         setResultThumbnail(thumbDataUrlLocal);
         updateStage('thumbnail', 'completed');
         downloadDataUrl(thumbDataUrlLocal, `novatube-thumb-${slugify(topicValue)}-${Date.now()}.jpg`);
@@ -993,21 +927,17 @@ export default function AIContentAgentPage() {
 
       updateStage('schedule', 'failed');
 
-      // If auto-publish is enabled, publish immediately using the
-      // values just generated in this run. (Guarded above: this only
-      // runs when a channel was explicitly selected, so it never
-      // silently uses the "default" account.)
       if (autoPublish) {
-        // Schedule the main video for the next occurrence of the
-        // preferred daily upload time, rather than publishing the
-        // instant it finishes rendering — a consistent schedule helps
-        // build viewer habit, and it also gives a predictable anchor
-        // point for the Shorts scheduled below to spread out from.
         const mainPublishAt = computeNextPublishTime(preferredPublishTime);
         const mainPublishAtMs = new Date(mainPublishAt).getTime();
 
+        // Convert the finished video (now a plain file URL) to base64
+        // only right here, right before it's actually needed by the
+        // publish/Shorts APIs — not as part of every status poll.
+        const mainVideoBase64 = await videoUrlToBase64(videoData.videoUrl);
+
         await publishToYouTube({
-          videoBase64: videoData.video,
+          videoBase64: mainVideoBase64,
           thumbnailBase64: thumbDataUrlLocal || undefined,
           title: seoDataLocal?.title || topicValue || niche,
           description: seoDataLocal?.description || '',
@@ -1016,21 +946,13 @@ export default function AIContentAgentPage() {
           publishAt: mainPublishAt,
         });
 
-        // Also carve this long video into a handful of Shorts and
-        // schedule them a few hours apart *starting from the main
-        // video's scheduled time*, so the channel keeps posting
-        // steadily through the day after the main upload goes live.
-        // Each Short gets its own thumbnail (same scoring + hook-text
-        // overlay as the main video). Failures here are logged but
-        // don't fail the overall run — the long video is already
-        // scheduled either way.
         try {
           setShortsStatus('Generating Shorts…');
           const shortsRes = await fetch('/api/agent/auto-short', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              video_base64: videoBase64Full,
+              video_base64: mainVideoBase64,
               category: detectedCategory,
               num_shorts: numShorts,
               aspect_ratio: '9:16',
@@ -1087,8 +1009,9 @@ export default function AIContentAgentPage() {
 
   async function handlePublish() {
     if (!resultVideo) return;
+    const videoBase64 = await videoUrlToBase64(resultVideo);
     await publishToYouTube({
-      videoBase64: resultVideo,
+      videoBase64,
       thumbnailBase64: resultThumbnail || undefined,
       title: resultSeo?.title || resultTopic || niche,
       description: resultSeo?.description || '',
@@ -1102,11 +1025,12 @@ export default function AIContentAgentPage() {
     setIsScheduling(true);
     setScheduleSuccess('');
     try {
+      const videoBase64 = await videoUrlToBase64(resultVideo);
       const res = await fetch('/api/scheduler', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          video_base64: resultVideo,
+          video_base64: videoBase64,
           thumbnail_base64: resultThumbnail || undefined,
           title: resultSeo?.title || resultTopic || niche,
           description: resultSeo?.description || '',
@@ -1233,7 +1157,6 @@ export default function AIContentAgentPage() {
         </header>
 
         <div className="flex-1 p-10 overflow-y-auto">
-          {/* Channels bar */}
           <div className="mb-8">
             <div className="flex items-center justify-between mb-3">
               <h3 className="text-sm font-semibold text-white/70 flex items-center gap-2">
@@ -1344,7 +1267,7 @@ export default function AIContentAgentPage() {
             )}
           </div>
 
-          <div className="grid lg:grid-cols-[420px_410px] gap-8 items-start">
+          <div className="grid lg:grid-cols-[420px_1fr] gap-8 items-start">
             <div className="bg-[#0F0F15] border border-white/[0.07] rounded-2xl p-8">
               <h3 className="text-lg font-semibold mb-6">Start AI Content</h3>
 
@@ -1663,20 +1586,10 @@ export default function AIContentAgentPage() {
                       )}
                       <button
                         type="button"
-                        onClick={() => downloadDataUrl(resultVideo, `novatube-${slugify(resultTopic || niche)}-${Date.now()}.mp4`)}
+                        onClick={() => downloadFromUrl(resultVideo, `novatube-${slugify(resultTopic || niche)}-${Date.now()}.mp4`)}
                         className="flex items-center gap-1.5 text-[11px] font-semibold text-violet-200 bg-violet-500/[0.12] border border-violet-400/25 rounded-lg px-3 py-1.5 hover:bg-violet-500/[0.2] transition"
                       >
                         <Download className="w-3.5 h-3.5" /> Download Again
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          sessionStorage.setItem("novatube_short_source_video", resultVideo);
-                          window.location.href = "/dashboard/shorts?source=ai";
-                        }}
-                        className="flex items-center gap-1.5 text-[11px] font-semibold text-emerald-200 bg-emerald-500/[0.12] border border-emerald-400/25 rounded-lg px-3 py-1.5 hover:bg-emerald-500/[0.2] transition"
-                      >
-                        🎬 Create Short
                       </button>
                     </div>
                   </div>
@@ -1830,5 +1743,3 @@ export default function AIContentAgentPage() {
     </div>
   );
 }
-
-
