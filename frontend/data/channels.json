@@ -17,12 +17,11 @@
       "createdAt": "2026-08-30T09:37:40.173Z"
     },
     {
+          {
       "id": "63c45583-9e33-46b5-98d6-a38d2cdf5c08",
       "name": "Historical Stories",
       "niche": "History",
       "category": "history",
-      "youtubeAccount": "default",
+      "youtubeAccount": "hanana",
       "createdAt": "2026-09-01T07:29:53.930Z"
     }
-  ]
-}
