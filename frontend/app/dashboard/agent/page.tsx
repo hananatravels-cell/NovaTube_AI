@@ -507,6 +507,182 @@ function generateThumbnailFromVideo(videoUrl: string, overlayText: string): Prom
   });
 }
 
+// Waits until the given <video> element exists and has enough data
+// loaded (readyState >= 2) and a known duration — this is the
+// "watchdog": it watches the player's own element until the video
+// that's already loading there is actually ready to be captured from.
+function waitForVideoReady(
+  getVideo: () => HTMLVideoElement | null,
+  timeoutMs: number
+): Promise<HTMLVideoElement> {
+  return new Promise((resolve, reject) => {
+    const start = Date.now();
+    const check = () => {
+      const el = getVideo();
+      if (el && el.readyState >= 2 && el.duration > 0) {
+        resolve(el);
+        return;
+      }
+      if (Date.now() - start > timeoutMs) {
+        reject(new Error('Timed out waiting for video player to load'));
+        return;
+      }
+      requestAnimationFrame(check);
+    };
+    check();
+  });
+}
+
+// Same frame-scoring/overlay logic as generateThumbnailFromVideo, but
+// works on the ALREADY-LOADED <video> element visible in the player
+// instead of creating a new hidden video and re-fetching the file.
+function captureThumbnailFromVideoElement(video: HTMLVideoElement, overlayText: string): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const originalTime = video.currentTime;
+    const wasPaused = video.paused;
+
+    const restore = () => {
+      try {
+        video.currentTime = originalTime;
+        if (!wasPaused) video.play().catch(() => {});
+      } catch {}
+    };
+
+    const timeoutId = setTimeout(() => {
+      restore();
+      reject(new Error('Video frame extraction timed out'));
+    }, 20000);
+
+    const CANDIDATE_FRACTIONS = [0.15, 0.35, 0.55, 0.75];
+
+    function scoreFrame(canvas: HTMLCanvasElement): number {
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return 0;
+      const { data } = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      let sumLum = 0, sumLumSq = 0, sumSat = 0, count = 0;
+      for (let i = 0; i < data.length; i += 20 * 4) {
+        const r = data[i], g = data[i + 1], b = data[i + 2];
+        const lum = 0.299 * r + 0.587 * g + 0.114 * b;
+        const max = Math.max(r, g, b);
+        const min = Math.min(r, g, b);
+        const sat = max === 0 ? 0 : (max - min) / max;
+        sumLum += lum; sumLumSq += lum * lum; sumSat += sat; count++;
+      }
+      if (count === 0) return 0;
+      const meanLum = sumLum / count;
+      const variance = sumLumSq / count - meanLum * meanLum;
+      const meanSat = sumSat / count;
+      return variance * 0.7 + meanSat * 10000 * 0.3;
+    }
+
+    function captureFrameAt(fraction: number): Promise<HTMLCanvasElement | null> {
+      return new Promise((res) => {
+        const target = Math.min(video.duration * fraction, video.duration - 0.1);
+        const onSeeked = () => {
+          video.removeEventListener('seeked', onSeeked);
+          try {
+            const canvas = document.createElement('canvas');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            const ctx = canvas.getContext('2d');
+            if (!ctx) { res(null); return; }
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            res(canvas);
+          } catch {
+            res(null);
+          }
+        };
+        video.addEventListener('seeked', onSeeked);
+        video.currentTime = isFinite(target) && target > 0 ? target : 0;
+      });
+    }
+
+    (async () => {
+      try {
+        const candidates: HTMLCanvasElement[] = [];
+        for (const frac of CANDIDATE_FRACTIONS) {
+          const canvas = await captureFrameAt(frac);
+          if (canvas) candidates.push(canvas);
+        }
+        clearTimeout(timeoutId);
+
+        if (candidates.length === 0) {
+          restore();
+          reject(new Error('Could not extract any candidate frames'));
+          return;
+        }
+
+        let best = candidates[0];
+        let bestScore = scoreFrame(best);
+        for (const c of candidates.slice(1)) {
+          const s = scoreFrame(c);
+          if (s > bestScore) { best = c; bestScore = s; }
+        }
+
+        const canvas = best;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) throw new Error('Could not get canvas context');
+
+        const bgGradient = ctx.createLinearGradient(0, canvas.height * 0.55, 0, canvas.height);
+        bgGradient.addColorStop(0, 'rgba(0,0,0,0)');
+        bgGradient.addColorStop(1, 'rgba(0,0,0,0.8)');
+        ctx.fillStyle = bgGradient;
+        ctx.fillRect(0, canvas.height * 0.55, canvas.width, canvas.height * 0.45);
+
+        const text = overlayText.toUpperCase();
+        const baseFontSize = Math.round(canvas.width * (text.length > 20 ? 0.055 : 0.075));
+        ctx.font = `900 ${baseFontSize}px "Arial Black", Arial, sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.lineWidth = Math.max(4, Math.round(baseFontSize * 0.1));
+        ctx.strokeStyle = 'black';
+        ctx.shadowColor = 'rgba(0,0,0,0.9)';
+        ctx.shadowBlur = 12;
+        ctx.shadowOffsetX = 2;
+        ctx.shadowOffsetY = 2;
+
+        const maxWidth = canvas.width * 0.9;
+        const words = text.split(' ');
+        const lines: string[] = [];
+        let currentLine = '';
+        for (const word of words) {
+          const testLine = currentLine ? `${currentLine} ${word}` : word;
+          if (ctx.measureText(testLine).width > maxWidth && currentLine) {
+            lines.push(currentLine);
+            currentLine = word;
+          } else {
+            currentLine = testLine;
+          }
+        }
+        if (currentLine) lines.push(currentLine);
+
+        const lineHeight = baseFontSize * 1.15;
+        const startY = canvas.height - 40 - (lines.length - 1) * lineHeight;
+
+        const textGradient = ctx.createLinearGradient(
+          0, startY - baseFontSize,
+          0, startY + (lines.length - 1) * lineHeight + baseFontSize * 0.3
+        );
+        textGradient.addColorStop(0, '#FFF176');
+        textGradient.addColorStop(0.5, '#FFB300');
+        textGradient.addColorStop(1, '#FF5252');
+
+        lines.forEach((line, i) => {
+          const y = startY + i * lineHeight;
+          ctx.strokeText(line, canvas.width / 2, y);
+          ctx.fillStyle = textGradient;
+          ctx.fillText(line, canvas.width / 2, y);
+        });
+
+        restore();
+        resolve(canvas.toDataURL('image/jpeg', 0.85));
+      } catch (err) {
+        restore();
+        reject(err instanceof Error ? err : new Error('Thumbnail generation failed'));
+      }
+    })();
+  });
+}
+
 export default function AIContentAgentPage() {
   const [activeTab] = useState('agent');
   const [niche, setNiche] = useState('');
@@ -514,6 +690,7 @@ export default function AIContentAgentPage() {
   const [showNicheDropdown, setShowNicheDropdown] = useState(false);
   const nicheBoxRef = useRef<HTMLDivElement>(null);
   const isStartingRef = useRef(false);
+  const videoElRef = useRef<HTMLVideoElement>(null);
 
   const [channels, setChannels] = useState<Channel[]>([]);
   const [selectedChannelId, setSelectedChannelId] = useState<string | null>(null);
@@ -898,16 +1075,16 @@ export default function AIContentAgentPage() {
 
       updateStage('thumbnail', 'working');
       let thumbDataUrlLocal = '';
-try {
-        const videoBlobRes = await fetch(videoData.videoUrl);
-        const videoBlob = await videoBlobRes.blob();
-        const videoBlobUrl = URL.createObjectURL(videoBlob);
-        thumbDataUrlLocal = await generateThumbnailFromVideo(videoBlobUrl, thumbnailText);
-        URL.revokeObjectURL(videoBlobUrl);
+      try {
+        // Player ka <video> element pehle se hi ye video load kar raha
+        // hai — usi se thumbnail nikalo, dobara poori file fetch mat karo.
+        await new Promise(requestAnimationFrame);
+        const playerVideo = await waitForVideoReady(() => videoElRef.current, 20000);
+        thumbDataUrlLocal = await captureThumbnailFromVideoElement(playerVideo, thumbnailText);
         setResultThumbnail(thumbDataUrlLocal);
         updateStage('thumbnail', 'completed');
         downloadDataUrl(thumbDataUrlLocal, `novatube-thumb-${slugify(topicValue)}-${Date.now()}.jpg`);
-          } catch (thumbErr) {
+             } catch (thumbErr) {
         console.error('Thumbnail generation failed:', thumbErr);
         updateStage('thumbnail', 'failed');
       }
@@ -1600,7 +1777,8 @@ try {
                     </div>
                   </div>
                   <div className="max-w-[320px] mx-auto">
-                    <video
+                                       <video
+                      ref={videoElRef}
                       src={resultVideo}
                       controls
                       className="w-full max-h-[70vh] rounded-xl border border-white/[0.07] bg-black object-contain"

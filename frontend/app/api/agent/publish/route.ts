@@ -5,7 +5,7 @@ import { Agent, setGlobalDispatcher } from 'undici';
 // several minutes (upload bandwidth + YouTube API processing time).
 // Node's default undici headers-timeout is much shorter than that, so
 // without this the connection gets killed mid-upload with a
-// "HeadersTimeoutError" even though the upload was still progressing
+// "HeadersTimeoutError" even though the upload was still progressin
 // — this mirrors the same fix already applied in the video-generation
 // route for the same underlying reason.
 setGlobalDispatcher(new Agent({ headersTimeout: 15 * 60 * 1000, bodyTimeout: 15 * 60 * 1000 }));
