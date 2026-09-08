@@ -42,7 +42,7 @@ const INITIAL_STAGES: Stage[] = [
   { id: 'video', label: 'Creating Visuals & Rendering', emoji: '🎬', status: 'waiting', available: true },
   { id: 'thumbnail', label: 'Creating Thumbnail', emoji: '🖼️', status: 'waiting', available: true },
   { id: 'seo', label: 'Optimizing SEO', emoji: '🔍', status: 'waiting', available: true },
-  { id: 'schedule', label: 'Scheduling', emoji: '📅', status: 'waiting', available: true },
+  { id: 'schedule', label: 'Scheduling', emoji: '', status: 'waiting', available: true },
   { id: 'publish', label: 'Publishing', emoji: '🚀', status: 'waiting', available: true },
 ];
 
@@ -231,9 +231,6 @@ function downloadDataUrl(dataUrl: string, filename: string) {
   }
 }
 
-// Downloads a plain (same-origin) URL — used for the finished video,
-// which is now served as a real file via /api/agent/video-file/[jobId]
-// instead of being embedded as a base64 data: URL.
 async function downloadFromUrl(url: string, filename: string) {
   try {
     const res = await fetch(url);
@@ -251,11 +248,6 @@ async function downloadFromUrl(url: string, filename: string) {
   }
 }
 
-// Converts a same-origin video URL into a base64 data: URL. Only
-// called right before an action that actually needs base64 (publish,
-// schedule, or building Shorts) — never as part of the status-polling
-// response, which is what previously blew up into an oversized JSON
-// payload and broke on large videos.
 async function videoUrlToBase64(url: string): Promise<string> {
   const res = await fetch(url);
   const blob = await res.blob();
@@ -265,6 +257,17 @@ async function videoUrlToBase64(url: string): Promise<string> {
     reader.onerror = reject;
     reader.readAsDataURL(blob);
   });
+}
+
+async function getVideoPathForJob(jobId: string): Promise<string | null> {
+  try {
+    const res = await fetch(`/api/agent/video-path/${jobId}`);
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.video_path || null;
+  } catch {
+    return null;
+  }
 }
 
 function sleep(ms: number): Promise<void> {
@@ -303,11 +306,6 @@ function computeNextPublishTime(timeHHMM: string, timeZone: string = 'America/Ne
   return new Date(targetEpoch).toISOString();
 }
 
-// Polls the render job status endpoint until it finishes (or fails).
-// On success, returns a videoUrl (a plain file URL served via
-// /api/agent/video-file/[jobId]) instead of a base64 data: URL — the
-// finished video is streamed on demand rather than embedded in this
-// polling response.
 async function pollVideoJob(
   jobId: string,
   onProgress?: (stage: string, scenesDone: number, scenesTotal: number) => void
@@ -493,7 +491,6 @@ function generateThumbnailFromVideo(videoUrl: string, overlayText: string): Prom
         cleanup();
         resolve(canvas.toDataURL('image/jpeg', 0.85));
       } catch (err) {
-        
         cleanup();
         reject(err instanceof Error ? err : new Error('Thumbnail generation failed'));
       }
@@ -507,10 +504,6 @@ function generateThumbnailFromVideo(videoUrl: string, overlayText: string): Prom
   });
 }
 
-// Waits until the given <video> element exists and has enough data
-// loaded (readyState >= 2) and a known duration — this is the
-// "watchdog": it watches the player's own element until the video
-// that's already loading there is actually ready to be captured from.
 function waitForVideoReady(
   getVideo: () => HTMLVideoElement | null,
   timeoutMs: number
@@ -533,9 +526,6 @@ function waitForVideoReady(
   });
 }
 
-// Same frame-scoring/overlay logic as generateThumbnailFromVideo, but
-// works on the ALREADY-LOADED <video> element visible in the player
-// instead of creating a new hidden video and re-fetching the file.
 function captureThumbnailFromVideoElement(video: HTMLVideoElement, overlayText: string): Promise<string> {
   return new Promise((resolve, reject) => {
     const originalTime = video.currentTime;
@@ -710,6 +700,7 @@ export default function AIContentAgentPage() {
   const [resultTopic, setResultTopic] = useState('');
   const [bankRemaining, setBankRemaining] = useState<number | null>(null);
   const [resultVideo, setResultVideo] = useState('');
+  const [currentJobId, setCurrentJobId] = useState('');
   const [resultThumbnail, setResultThumbnail] = useState('');
   const [resultSeo, setResultSeo] = useState<SeoResult | null>(null);
   const [errorMsg, setErrorMsg] = useState('');
@@ -881,7 +872,8 @@ export default function AIContentAgentPage() {
   }
 
   async function publishToYouTube(params: {
-    videoBase64: string;
+    videoPath?: string;
+    videoBase64?: string;
     thumbnailBase64?: string;
     title: string;
     description: string;
@@ -898,7 +890,8 @@ export default function AIContentAgentPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          videoBase64: params.videoBase64,
+          videoPath: params.videoPath || undefined,
+          videoBase64: params.videoPath ? undefined : params.videoBase64,
           thumbnailBase64: params.thumbnailBase64 || undefined,
           title: params.title,
           description: params.description,
@@ -912,7 +905,9 @@ export default function AIContentAgentPage() {
       updateStage('publish', 'completed');
       setPublishedUrl(data.videoUrl || `https://youtube.com/watch?v=${data.videoId}`);
     } catch (err: any) {
-      setPublishError(err.message || 'Publish failed');
+      const errorMessage = err.message || 'Publish failed';
+      console.error('YouTube Publish Error:', errorMessage);
+      setPublishError(errorMessage);
       updateStage('publish', 'failed');
     } finally {
       setIsPublishing(false);
@@ -929,6 +924,7 @@ export default function AIContentAgentPage() {
     setErrorMsg('');
     setResultTopic('');
     setResultVideo('');
+    setCurrentJobId('');
     setResultThumbnail('');
     setResultSeo(null);
     setAutoDownloaded(false);
@@ -1059,6 +1055,7 @@ export default function AIContentAgentPage() {
       if (!startRes.ok) throw new Error(startData.error || 'Video step failed to start');
       const jobId = startData.jobId;
       if (!jobId) throw new Error('Video service did not return a job id');
+      setCurrentJobId(jobId);
 
       const videoData = await pollVideoJob(jobId, (stage, scenesDone, scenesTotal) => {
         if (scenesTotal > 0) {
@@ -1076,15 +1073,13 @@ export default function AIContentAgentPage() {
       updateStage('thumbnail', 'working');
       let thumbDataUrlLocal = '';
       try {
-        // Player ka <video> element pehle se hi ye video load kar raha
-        // hai — usi se thumbnail nikalo, dobara poori file fetch mat karo.
         await new Promise(requestAnimationFrame);
         const playerVideo = await waitForVideoReady(() => videoElRef.current, 20000);
         thumbDataUrlLocal = await captureThumbnailFromVideoElement(playerVideo, thumbnailText);
         setResultThumbnail(thumbDataUrlLocal);
         updateStage('thumbnail', 'completed');
         downloadDataUrl(thumbDataUrlLocal, `novatube-thumb-${slugify(topicValue)}-${Date.now()}.jpg`);
-             } catch (thumbErr) {
+      } catch (thumbErr) {
         console.error('Thumbnail generation failed:', thumbErr);
         updateStage('thumbnail', 'failed');
       }
@@ -1108,19 +1103,15 @@ export default function AIContentAgentPage() {
         updateStage('seo', 'failed');
       }
 
-      updateStage('schedule', 'failed');
-
       if (autoPublish) {
         const mainPublishAt = computeNextPublishTime(preferredPublishTime);
         const mainPublishAtMs = new Date(mainPublishAt).getTime();
 
-        // Convert the finished video (now a plain file URL) to base64
-        // only right here, right before it's actually needed by the
-        // publish/Shorts APIs — not as part of every status poll.
-        const mainVideoBase64 = await videoUrlToBase64(videoData.videoUrl);
+        const mainVideoPath = await getVideoPathForJob(jobId);
 
         await publishToYouTube({
-          videoBase64: mainVideoBase64,
+          videoPath: mainVideoPath || undefined,
+          videoBase64: mainVideoPath ? undefined : await videoUrlToBase64(videoData.videoUrl),
           thumbnailBase64: thumbDataUrlLocal || undefined,
           title: seoDataLocal?.title || topicValue || niche,
           description: seoDataLocal?.description || '',
@@ -1131,11 +1122,12 @@ export default function AIContentAgentPage() {
 
         try {
           setShortsStatus('Generating Shorts…');
+          const mainVideoBase64ForShorts = await videoUrlToBase64(videoData.videoUrl);
           const shortsRes = await fetch('/api/agent/auto-short', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              video_base64: mainVideoBase64,
+              video_base64: mainVideoBase64ForShorts,
               category: detectedCategory,
               num_shorts: numShorts,
               aspect_ratio: '9:16',
@@ -1192,9 +1184,10 @@ export default function AIContentAgentPage() {
 
   async function handlePublish() {
     if (!resultVideo) return;
-    const videoBase64 = await videoUrlToBase64(resultVideo);
+    const videoPath = currentJobId ? await getVideoPathForJob(currentJobId) : null;
     await publishToYouTube({
-      videoBase64,
+      videoPath: videoPath || undefined,
+      videoBase64: videoPath ? undefined : await videoUrlToBase64(resultVideo),
       thumbnailBase64: resultThumbnail || undefined,
       title: resultSeo?.title || resultTopic || niche,
       description: resultSeo?.description || '',
@@ -1207,6 +1200,7 @@ export default function AIContentAgentPage() {
     if (!resultVideo || !scheduleDate) return;
     setIsScheduling(true);
     setScheduleSuccess('');
+    updateStage('schedule', 'working');
     try {
       const videoBase64 = await videoUrlToBase64(resultVideo);
       const res = await fetch('/api/scheduler', {
@@ -1226,8 +1220,10 @@ export default function AIContentAgentPage() {
       if (!res.ok) throw new Error(data.error || 'Schedule failed');
       setScheduleSuccess(`Scheduled for ${new Date(scheduleDate).toLocaleString()}`);
       setShowScheduleForm(false);
+      updateStage('schedule', 'completed');
     } catch (err: any) {
       alert(err.message || 'Schedule failed');
+      updateStage('schedule', 'failed');
     } finally {
       setIsScheduling(false);
     }
@@ -1777,9 +1773,10 @@ export default function AIContentAgentPage() {
                     </div>
                   </div>
                   <div className="max-w-[320px] mx-auto">
-                                       <video
+                    <video
                       ref={videoElRef}
                       src={resultVideo}
+                      crossOrigin="anonymous"
                       controls
                       className="w-full max-h-[70vh] rounded-xl border border-white/[0.07] bg-black object-contain"
                     />
