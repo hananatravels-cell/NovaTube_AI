@@ -541,7 +541,7 @@ function captureThumbnailFromVideoElement(video: HTMLVideoElement, overlayText: 
     const timeoutId = setTimeout(() => {
       restore();
       reject(new Error('Video frame extraction timed out'));
-    }, 40000);
+    }, 60000);
 
     const CANDIDATE_FRACTIONS = [0.15, 0.35, 0.55, 0.75];
 
@@ -778,14 +778,12 @@ export default function AIContentAgentPage() {
     setShowNicheDropdown(false);
     setDurationMinutes(getDefaultDurationForNiche(preset.label));
     setSelectedChannelId(null);
-    setSelectedYoutubeAccount('default');
   }
 
   function handleNicheTyping(value: string) {
     setNiche(value);
     setNicheCategoryOverride(null);
     setSelectedChannelId(null);
-    setSelectedYoutubeAccount('default');
   }
 
   function selectChannel(channel: Channel) {
@@ -1119,20 +1117,6 @@ export default function AIContentAgentPage() {
         }
       }
 
-      // 7. THUMBNAIL - Publishing ke baad
-      updateStage('thumbnail', 'working');
-      let thumbDataUrlLocal = '';
-      try {
-        await new Promise(requestAnimationFrame);
-        const playerVideo = await waitForVideoReady(() => videoElRef.current, 40000);
-        thumbDataUrlLocal = await captureThumbnailFromVideoElement(playerVideo, thumbnailText);
-        setResultThumbnail(thumbDataUrlLocal);
-        updateStage('thumbnail', 'completed');
-        downloadDataUrl(thumbDataUrlLocal, `novatube-thumb-${slugify(topicValue)}-${Date.now()}.jpg`);
-      } catch (thumbErr) {
-        console.error('Thumbnail generation failed:', thumbErr);
-        updateStage('thumbnail', 'failed');
-      }
 
       // 8. SEO - Agar autoPublish nahi tha
       if (!autoPublish) {
@@ -1764,6 +1748,7 @@ export default function AIContentAgentPage() {
                       src={resultVideo}
                       crossOrigin="anonymous"
                       controls
+                       preload="none"
                       className="w-full max-h-[70vh] rounded-xl border border-white/[0.07] bg-black object-contain"
                     />
                   </div>
