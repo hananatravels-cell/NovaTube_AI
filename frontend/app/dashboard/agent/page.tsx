@@ -40,10 +40,10 @@ const INITIAL_STAGES: Stage[] = [
   { id: 'voice', label: 'Creating Voice', emoji: '🎙️', status: 'waiting', available: true },
   { id: 'music', label: 'Adding Music', emoji: '🎵', status: 'waiting', available: true },
   { id: 'video', label: 'Creating Visuals & Rendering', emoji: '🎬', status: 'waiting', available: true },
+  { id: 'publish', label: 'Publishing', emoji: '🚀', status: 'waiting', available: true },
   { id: 'thumbnail', label: 'Creating Thumbnail', emoji: '🖼️', status: 'waiting', available: true },
   { id: 'seo', label: 'Optimizing SEO', emoji: '🔍', status: 'waiting', available: true },
-  { id: 'schedule', label: 'Scheduling', emoji: '', status: 'waiting', available: true },
-  { id: 'publish', label: 'Publishing', emoji: '🚀', status: 'waiting', available: true },
+  { id: 'schedule', label: 'Scheduling', emoji: '📅', status: 'waiting', available: true },
 ];
 
 const PLATFORMS = [
@@ -541,7 +541,7 @@ function captureThumbnailFromVideoElement(video: HTMLVideoElement, overlayText: 
     const timeoutId = setTimeout(() => {
       restore();
       reject(new Error('Video frame extraction timed out'));
-    }, 20000);
+    }, 40000);
 
     const CANDIDATE_FRACTIONS = [0.15, 0.35, 0.55, 0.75];
 
@@ -936,16 +936,17 @@ export default function AIContentAgentPage() {
     let topicValue = '';
     let scriptValue = '';
     let sceneList: string[] = [];
-    let thumbnailPrompt = '';
-    let thumbnailText = '';
+    let thumbnailText = 'WATCH NOW';
     const detectedCategory = nicheCategoryOverride || detectCategory(niche);
 
     try {
+      // 1. Topic
       updateStage('topic', 'working');
       topicValue = await getNextTopicFromBank(niche);
       updateStage('topic', 'completed');
       setResultTopic(topicValue);
 
+      // 2. Script
       updateStage('script', 'working');
       const scriptRes = await fetch('/api/agent/script', {
         method: 'POST',
@@ -955,44 +956,9 @@ export default function AIContentAgentPage() {
       const scriptData = await scriptRes.json();
       if (!scriptRes.ok) throw new Error(scriptData.error || 'Script step failed');
       scriptValue = scriptData.script;
-
-      try {
-        const voiceSelectRes = await fetch('/api/agent/voice-select', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ topic: topicValue, category: detectedCategory }),
-        });
-        const voiceSelectData = await voiceSelectRes.json();
-        if (voiceSelectData?.voice) {
-          setVoice(voiceSelectData.voice);
-        }
-      } catch (voiceSelectErr) {
-        console.error('voice-select error:', voiceSelectErr);
-      }
-
-      try {
-        const scenesRes = await fetch('/api/agent/scenes', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ topic: topicValue, script: scriptValue, category: detectedCategory }),
-        });
-        const scenesData = await scenesRes.json();
-        if (scenesRes.ok && Array.isArray(scenesData.scenes) && scenesData.scenes.length > 0) {
-          sceneList = scenesData.scenes;
-          thumbnailPrompt = scenesData.thumbnailPrompt || topicValue;
-          thumbnailText = scenesData.thumbnailText || 'WATCH NOW';
-        } else {
-          thumbnailPrompt = topicValue;
-          thumbnailText = 'WATCH NOW';
-        }
-      } catch (scenesErr) {
-        console.error('Scene planning failed, falling back to raw script splitting:', scenesErr);
-        thumbnailPrompt = topicValue;
-        thumbnailText = 'WATCH NOW';
-      }
-
       updateStage('script', 'completed');
 
+      // 3. Voice
       updateStage('voice', 'working');
       const voiceRes = await fetch('/api/generate-voice', {
         method: 'POST',
@@ -1007,6 +973,7 @@ export default function AIContentAgentPage() {
       if (!voiceRes.ok) throw new Error(voiceData.error || 'Voice step failed');
       updateStage('voice', 'completed');
 
+      // 4. Music & 5. Video Rendering
       updateStage('music', 'working');
       updateStage('video', 'working');
 
@@ -1070,11 +1037,94 @@ export default function AIContentAgentPage() {
       updateStage('music', videoData.musicUsed ? 'completed' : 'failed');
       setResultVideo(videoData.videoUrl);
 
+      // 6. PUBLISHING - Video ready hote hi!
+      if (autoPublish) {
+        try {
+          const mainPublishAt = computeNextPublishTime(preferredPublishTime);
+          const mainPublishAtMs = new Date(mainPublishAt).getTime();
+          const mainVideoPath = await getVideoPathForJob(jobId);
+
+          // SEO data pehle generate karein
+          let seoDataLocal: SeoResult | null = null;
+          try {
+            const seoRes = await fetch('/api/agent/seo', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ topic: topicValue, script: scriptValue }),
+            });
+            const seoData = await seoRes.json();
+            if (seoRes.ok) {
+              seoDataLocal = seoData;
+              setResultSeo(seoData);
+            }
+          } catch (seoErr) {
+            console.error('SEO generation failed:', seoErr);
+          }
+
+          await publishToYouTube({
+            videoPath: mainVideoPath || undefined,
+            videoBase64: mainVideoPath ? undefined : await videoUrlToBase64(videoData.videoUrl),
+            thumbnailBase64: undefined,
+            title: seoDataLocal?.title || topicValue || niche,
+            description: seoDataLocal?.description || '',
+            tags: seoDataLocal?.tags || [],
+            account: selectedYoutubeAccount,
+            publishAt: mainPublishAt,
+          });
+
+          // Shorts generation
+          try {
+            setShortsStatus('Generating Shorts…');
+            const mainVideoBase64ForShorts = await videoUrlToBase64(videoData.videoUrl);
+            const shortsRes = await fetch('/api/agent/auto-short', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                video_base64: mainVideoBase64ForShorts,
+                category: detectedCategory,
+                num_shorts: numShorts,
+                aspect_ratio: '9:16',
+              }),
+            });
+            const shortsData = await shortsRes.json();
+            const shorts: { video: string }[] = shortsRes.ok && Array.isArray(shortsData.shorts) ? shortsData.shorts : [];
+
+            for (let i = 0; i < shorts.length; i++) {
+              setShortsStatus(`Scheduling Short ${i + 1}/${shorts.length}…`);
+              const publishAt = new Date(mainPublishAtMs + (i + 1) * shortGapHours * 60 * 60 * 1000).toISOString();
+              const baseTitle = seoDataLocal?.title || topicValue || niche;
+
+              await fetch('/api/agent/publish', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  videoBase64: shorts[i].video,
+                  thumbnailBase64: undefined,
+                  title: `${baseTitle} #Shorts`,
+                  description: seoDataLocal?.description || '',
+                  tags: seoDataLocal?.tags || [],
+                  account: selectedYoutubeAccount,
+                  publishAt,
+                }),
+              });
+            }
+            setShortsStatus(shorts.length > 0 ? `${shorts.length} Shorts scheduled` : '');
+          } catch (shortsErr) {
+            console.error('Auto-short generation failed:', shortsErr);
+            setShortsStatus('Shorts generation failed');
+          }
+        } catch (publishErr) {
+          console.error('Publishing failed:', publishErr);
+          updateStage('publish', 'failed');
+        }
+      }
+
+      // 7. THUMBNAIL - Publishing ke baad
       updateStage('thumbnail', 'working');
       let thumbDataUrlLocal = '';
       try {
         await new Promise(requestAnimationFrame);
-        const playerVideo = await waitForVideoReady(() => videoElRef.current, 20000);
+        const playerVideo = await waitForVideoReady(() => videoElRef.current, 40000);
         thumbDataUrlLocal = await captureThumbnailFromVideoElement(playerVideo, thumbnailText);
         setResultThumbnail(thumbDataUrlLocal);
         updateStage('thumbnail', 'completed');
@@ -1084,94 +1134,30 @@ export default function AIContentAgentPage() {
         updateStage('thumbnail', 'failed');
       }
 
-      updateStage('seo', 'working');
-
-      let seoDataLocal: SeoResult | null = null;
-      try {
-        const seoRes = await fetch('/api/agent/seo', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ topic: topicValue, script: scriptValue }),
-        });
-        const seoData = await seoRes.json();
-        if (!seoRes.ok) throw new Error(seoData.error || 'SEO step failed');
-        seoDataLocal = seoData;
-        setResultSeo(seoData);
-        updateStage('seo', 'completed');
-      } catch (seoErr) {
-        console.error('SEO generation failed:', seoErr);
-        updateStage('seo', 'failed');
-      }
-
-      if (autoPublish) {
-        const mainPublishAt = computeNextPublishTime(preferredPublishTime);
-        const mainPublishAtMs = new Date(mainPublishAt).getTime();
-
-        const mainVideoPath = await getVideoPathForJob(jobId);
-
-        await publishToYouTube({
-          videoPath: mainVideoPath || undefined,
-          videoBase64: mainVideoPath ? undefined : await videoUrlToBase64(videoData.videoUrl),
-          thumbnailBase64: thumbDataUrlLocal || undefined,
-          title: seoDataLocal?.title || topicValue || niche,
-          description: seoDataLocal?.description || '',
-          tags: seoDataLocal?.tags || [],
-          account: selectedYoutubeAccount,
-          publishAt: mainPublishAt,
-        });
-
+      // 8. SEO - Agar autoPublish nahi tha
+      if (!autoPublish) {
+        updateStage('seo', 'working');
         try {
-          setShortsStatus('Generating Shorts…');
-          const mainVideoBase64ForShorts = await videoUrlToBase64(videoData.videoUrl);
-          const shortsRes = await fetch('/api/agent/auto-short', {
+          const seoRes = await fetch('/api/agent/seo', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              video_base64: mainVideoBase64ForShorts,
-              category: detectedCategory,
-              num_shorts: numShorts,
-              aspect_ratio: '9:16',
-            }),
+            body: JSON.stringify({ topic: topicValue, script: scriptValue }),
           });
-          const shortsData = await shortsRes.json();
-          const shorts: { video: string }[] = shortsRes.ok && Array.isArray(shortsData.shorts) ? shortsData.shorts : [];
-
-          for (let i = 0; i < shorts.length; i++) {
-            setShortsStatus(`Scheduling Short ${i + 1}/${shorts.length}…`);
-            let shortThumb = '';
-            try {
-              shortThumb = await generateThumbnailFromVideo(shorts[i].video, thumbnailText);
-            } catch (shortThumbErr) {
-              console.error(`Short ${i + 1} thumbnail failed:`, shortThumbErr);
-            }
-
-            const publishAt = new Date(mainPublishAtMs + (i + 1) * shortGapHours * 60 * 60 * 1000).toISOString();
-            const baseTitle = seoDataLocal?.title || topicValue || niche;
-
-            try {
-              await fetch('/api/agent/publish', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                  videoBase64: shorts[i].video,
-                  thumbnailBase64: shortThumb || undefined,
-                  title: `${baseTitle} #Shorts`,
-                  description: seoDataLocal?.description || '',
-                  tags: seoDataLocal?.tags || [],
-                  account: selectedYoutubeAccount,
-                  publishAt,
-                }),
-              });
-            } catch (shortPublishErr) {
-              console.error(`Short ${i + 1} scheduling failed:`, shortPublishErr);
-            }
-          }
-          setShortsStatus(shorts.length > 0 ? `${shorts.length} Shorts scheduled` : '');
-        } catch (shortsErr) {
-          console.error('Auto-short generation failed:', shortsErr);
-          setShortsStatus('Shorts generation failed');
+          const seoData = await seoRes.json();
+          if (!seoRes.ok) throw new Error(seoData.error || 'SEO step failed');
+          setResultSeo(seoData);
+          updateStage('seo', 'completed');
+        } catch (seoErr) {
+          console.error('SEO generation failed:', seoErr);
+          updateStage('seo', 'failed');
         }
+      } else {
+        updateStage('seo', 'completed');
       }
+
+      // 9. SCHEDULING - Last
+      updateStage('schedule', 'completed');
+
     } catch (err: any) {
       setVideoProgress('');
       setErrorMsg(err.message || 'Something went wrong');
@@ -1470,7 +1456,7 @@ export default function AIContentAgentPage() {
                     disabled={!niche.trim() || loadingTrending}
                     className="mt-3 flex items-center gap-1.5 text-xs font-semibold text-amber-200 bg-amber-500/[0.12] border border-amber-400/25 rounded-lg px-3 py-1.5 hover:bg-amber-500/[0.2] transition disabled:opacity-40"
                   >
-                    {loadingTrending ? '⏳ Checking...' : '🔥 Suggest Trending Topic'}
+                    {loadingTrending ? ' Checking...' : '🔥 Suggest Trending Topic'}
                   </button>
 
                   {trendingError && (
@@ -1870,7 +1856,7 @@ export default function AIContentAgentPage() {
                     onClick={() => setShowScheduleForm((v) => !v)}
                     className="w-full mt-3 flex items-center justify-center gap-2.5 bg-white/[0.04] border border-white/[0.1] text-white/70 text-sm font-semibold py-3 rounded-xl hover:bg-white/[0.08] transition"
                   >
-                    📅 Schedule for Later
+                     Schedule for Later
                   </button>
                   {showScheduleForm && (
                     <div className="mt-3 p-4 bg-white/[0.02] border border-white/[0.06] rounded-xl">
