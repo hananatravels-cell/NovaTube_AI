@@ -5,7 +5,7 @@ import Link from 'next/link';
 import {
   LayoutDashboard, FileText, Mic, Video, Image as ImageIcon, TrendingUp, Settings,
   Bell, Search, LogOut, Play, Sparkles, CheckCircle2, XCircle, Loader2, Circle,
-  Globe, MessageCircle, Camera, Music2, Download, Copy, Check, Plus, X, Trash2, Tv,
+  Globe, MessageCircle, Camera, Music2, Download, Copy, Check, Plus, X, Trash2, Tv, Activity,
 } from 'lucide-react';
 
 type StageStatus = 'waiting' | 'working' | 'completed' | 'failed';
@@ -40,10 +40,10 @@ const INITIAL_STAGES: Stage[] = [
   { id: 'voice', label: 'Creating Voice', emoji: '🎙️', status: 'waiting', available: true },
   { id: 'music', label: 'Adding Music', emoji: '🎵', status: 'waiting', available: true },
   { id: 'video', label: 'Creating Visuals & Rendering', emoji: '🎬', status: 'waiting', available: true },
+  { id: 'publish', label: 'Publishing', emoji: '🚀', status: 'waiting', available: true },
   { id: 'thumbnail', label: 'Creating Thumbnail', emoji: '🖼️', status: 'waiting', available: true },
   { id: 'seo', label: 'Optimizing SEO', emoji: '🔍', status: 'waiting', available: true },
   { id: 'schedule', label: 'Scheduling', emoji: '📅', status: 'waiting', available: true },
-  { id: 'publish', label: 'Publishing', emoji: '🚀', status: 'waiting', available: true },
 ];
 
 const PLATFORMS = [
@@ -53,11 +53,6 @@ const PLATFORMS = [
   { id: 'tiktok', name: 'TikTok', icon: Music2 },
 ];
 
-// Sensible defaults for how many Shorts to auto-generate from each
-// long video, and how many hours apart to schedule them (so the
-// channel posts steadily through the day instead of dumping every
-// Short at once). Both are user-adjustable in the UI — these are just
-// the starting values.
 const DEFAULT_NUM_SHORTS = 4;
 const DEFAULT_SHORT_GAP_HOURS = 4;
 
@@ -89,10 +84,6 @@ const VOICE_OPTIONS = [
   { id: 'zayn', label: 'Zayn — Calm & Reflective' },
 ];
 
-// 50 curated niche presets shown in the dropdown. Each is mapped directly
-// to one of the 20 backend categories (video footage / music / thumbnail
-// style) so picking a preset guarantees correct matching, instead of
-// relying on keyword-detection against free-typed text.
 const NICHE_PRESETS: { label: string; category: string }[] = [
   { label: 'AI & Technology', category: 'tech' },
   { label: 'Make Money Online', category: 'finance' },
@@ -179,10 +170,6 @@ function detectCategory(niche: string): string {
   return 'storytelling';
 }
 
-// Sensible default video length (in minutes) per niche, used to
-// pre-fill the duration selector when a niche/channel is picked. This
-// is only a starting suggestion — the person can still click any
-// other duration button afterward to override it for that run.
 const NICHE_DEFAULT_DURATION: { keywords: string[]; minutes: number }[] = [
   { keywords: ['true crime'], minutes: 15 },
   { keywords: ['history', 'historical stor', 'documentary'], minutes: 15 },
@@ -204,7 +191,7 @@ function getDefaultDurationForNiche(nicheLabel: string): number {
       return entry.minutes;
     }
   }
-  return 5; // generic fallback default for niches not explicitly listed
+  return 5;
 }
 
 function slugify(text: string): string {
@@ -244,27 +231,53 @@ function downloadDataUrl(dataUrl: string, filename: string) {
   }
 }
 
+async function downloadFromUrl(url: string, filename: string) {
+  try {
+    const res = await fetch(url);
+    const blob = await res.blob();
+    const objectUrl = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = objectUrl;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(objectUrl), 15000);
+  } catch (e) {
+    console.error('Download failed:', e);
+  }
+}
+
+async function videoUrlToBase64(url: string): Promise<string> {
+  const res = await fetch(url);
+  const blob = await res.blob();
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => resolve(reader.result as string);
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
+}
+
+async function getVideoPathForJob(jobId: string): Promise<string | null> {
+  try {
+    const res = await fetch(`/api/agent/video-path/${jobId}`);
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.video_path || null;
+  } catch {
+    return null;
+  }
+}
+
 function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-// Given a preferred time of day ("HH:MM"), interpreted in a specific
-// target time zone (default: US Eastern — the channels here target a
-// US audience), returns an ISO timestamp for the next occurrence of
-// that time in that zone — today if it hasn't passed yet there,
-// otherwise tomorrow. Used to auto-schedule the main video at a
-// consistent daily time (in the audience's local evening) rather than
-// publishing the moment it finishes rendering here in Pakistan time,
-// since a steady posting schedule helps viewers build a habit of
-// checking back (YouTube hasn't confirmed the algorithm itself
-// rewards a fixed time, but consistency is widely considered good
-// practice among creators). Uses Intl.DateTimeFormat so US Eastern's
-// daylight-saving switch (EST/EDT) is handled automatically.
 function computeNextPublishTime(timeHHMM: string, timeZone: string = 'America/New_York'): string {
   const [hh, mm] = timeHHMM.split(':').map(Number);
   const now = new Date();
 
-  // Read "now" as wall-clock date/time in the target zone.
   const parts = new Intl.DateTimeFormat('en-US', {
     timeZone,
     year: 'numeric',
@@ -283,14 +296,9 @@ function computeNextPublishTime(timeHHMM: string, timeZone: string = 'America/Ne
   const Mi = get('minute');
   const S = get('second');
 
-  // Figure out the target zone's current UTC offset by comparing the
-  // real "now" epoch to what you'd get if those wall-clock numbers
-  // were (incorrectly) treated as UTC.
   const asUtcIfLocalWereUtc = Date.UTC(y, mo - 1, d, H, Mi, S);
   const offsetMs = now.getTime() - asUtcIfLocalWereUtc;
 
-  // Build today's target time in the zone using the same trick, then
-  // apply the offset to get the real UTC epoch.
   let targetEpoch = Date.UTC(y, mo - 1, d, hh || 0, mm || 0, 0) + offsetMs;
   if (targetEpoch <= now.getTime()) {
     targetEpoch += 24 * 60 * 60 * 1000;
@@ -298,17 +306,10 @@ function computeNextPublishTime(timeHHMM: string, timeZone: string = 'America/Ne
   return new Date(targetEpoch).toISOString();
 }
 
-// Polls the render job status endpoint until it finishes (or fails).
-// This replaces waiting on one long blocking HTTP request: the video
-// service now returns a job_id immediately and does the actual work
-// in the background, reporting live progress. A job only gets treated
-// as hung if the backend itself detects no progress for a while
-// (STALL_SECONDS in video_service.py) — not because of a fixed
-// client-side timer here.
 async function pollVideoJob(
   jobId: string,
   onProgress?: (stage: string, scenesDone: number, scenesTotal: number) => void
-): Promise<{ video: string; duration: number; musicUsed: boolean }> {
+): Promise<{ videoUrl: string; duration: number; musicUsed: boolean }> {
   const POLL_INTERVAL_MS = 4000;
 
   while (true) {
@@ -325,7 +326,7 @@ async function pollVideoJob(
 
     if (data.status === 'done') {
       return {
-        video: data.video,
+        videoUrl: `/api/agent/video-file/${jobId}`,
         duration: data.duration,
         musicUsed: !!data.musicUsed,
       };
@@ -335,23 +336,17 @@ async function pollVideoJob(
       throw new Error(data.error || 'Video rendering failed');
     }
 
-    // status === 'running' — wait and poll again
     await sleep(POLL_INTERVAL_MS);
   }
 }
 
-// Extracts several candidate frames from the generated video at
-// different points, scores each one for visual "punch" (contrast +
-// color vividness), and automatically picks the strongest one.
-// Overlays a bold, colorful hook-text banner on the winning frame.
-// Fully local (no external API call), so it's fast and never times out.
-function generateThumbnailFromVideo(videoDataUrl: string, overlayText: string): Promise<string> {
+function generateThumbnailFromVideo(videoUrl: string, overlayText: string): Promise<string> {
   return new Promise((resolve, reject) => {
     const video = document.createElement('video');
     video.crossOrigin = 'anonymous';
     video.muted = true;
     video.playsInline = true;
-    video.src = videoDataUrl;
+    video.src = videoUrl;
 
     const cleanup = () => {
       video.pause();
@@ -364,16 +359,12 @@ function generateThumbnailFromVideo(videoDataUrl: string, overlayText: string): 
       reject(new Error('Video frame extraction timed out'));
     }, 20000);
 
-    // Candidate points along the video to sample a frame from.
     const CANDIDATE_FRACTIONS = [0.15, 0.35, 0.55, 0.75];
 
     function scoreFrame(canvas: HTMLCanvasElement): number {
       const ctx = canvas.getContext('2d');
       if (!ctx) return 0;
       const { data } = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      // Sample a subset of pixels for speed, measuring luminance
-      // variance (contrast) plus average color saturation — a higher
-      // score means a more visually striking, punchier frame.
       let sumLum = 0;
       let sumLumSq = 0;
       let sumSat = 0;
@@ -433,7 +424,6 @@ function generateThumbnailFromVideo(videoDataUrl: string, overlayText: string): 
           return;
         }
 
-        // Pick whichever candidate scores highest for visual punch.
         let best = candidates[0];
         let bestScore = scoreFrame(best);
         for (const c of candidates.slice(1)) {
@@ -448,14 +438,12 @@ function generateThumbnailFromVideo(videoDataUrl: string, overlayText: string): 
         const ctx = canvas.getContext('2d');
         if (!ctx) throw new Error('Could not get canvas context');
 
-        // Dark gradient overlay at the bottom for text readability
         const bgGradient = ctx.createLinearGradient(0, canvas.height * 0.55, 0, canvas.height);
         bgGradient.addColorStop(0, 'rgba(0,0,0,0)');
         bgGradient.addColorStop(1, 'rgba(0,0,0,0.8)');
         ctx.fillStyle = bgGradient;
         ctx.fillRect(0, canvas.height * 0.55, canvas.width, canvas.height * 0.45);
 
-        // Hook text overlay — bold, colorful, universal font stack
         const text = overlayText.toUpperCase();
         const baseFontSize = Math.round(canvas.width * (text.length > 20 ? 0.055 : 0.075));
         ctx.font = `900 ${baseFontSize}px "Arial Black", Arial, sans-serif`;
@@ -467,7 +455,6 @@ function generateThumbnailFromVideo(videoDataUrl: string, overlayText: string): 
         ctx.shadowOffsetX = 2;
         ctx.shadowOffsetY = 2;
 
-        // Wrap text if too long for canvas width
         const maxWidth = canvas.width * 0.9;
         const words = text.split(' ');
         const lines: string[] = [];
@@ -486,8 +473,6 @@ function generateThumbnailFromVideo(videoDataUrl: string, overlayText: string): 
         const lineHeight = baseFontSize * 1.15;
         const startY = canvas.height - 40 - (lines.length - 1) * lineHeight;
 
-        // Colorful gradient fill (yellow -> orange -> red) for a
-        // punchy, attention-grabbing look instead of plain white text.
         const textGradient = ctx.createLinearGradient(
           0, startY - baseFontSize,
           0, startY + (lines.length - 1) * lineHeight + baseFontSize * 0.3
@@ -519,18 +504,183 @@ function generateThumbnailFromVideo(videoDataUrl: string, overlayText: string): 
   });
 }
 
+function waitForVideoReady(
+  getVideo: () => HTMLVideoElement | null,
+  timeoutMs: number
+): Promise<HTMLVideoElement> {
+  return new Promise((resolve, reject) => {
+    const start = Date.now();
+    const check = () => {
+      const el = getVideo();
+      if (el && el.readyState >= 2 && el.duration > 0) {
+        resolve(el);
+        return;
+      }
+      if (Date.now() - start > timeoutMs) {
+        reject(new Error('Timed out waiting for video player to load'));
+        return;
+      }
+      requestAnimationFrame(check);
+    };
+    check();
+  });
+}
+
+function captureThumbnailFromVideoElement(video: HTMLVideoElement, overlayText: string): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const originalTime = video.currentTime;
+    const wasPaused = video.paused;
+
+    const restore = () => {
+      try {
+        video.currentTime = originalTime;
+        if (!wasPaused) video.play().catch(() => {});
+      } catch {}
+    };
+
+    const timeoutId = setTimeout(() => {
+      restore();
+      reject(new Error('Video frame extraction timed out'));
+    }, 40000);
+
+    const CANDIDATE_FRACTIONS = [0.15, 0.35, 0.55, 0.75];
+
+    function scoreFrame(canvas: HTMLCanvasElement): number {
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return 0;
+      const { data } = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      let sumLum = 0, sumLumSq = 0, sumSat = 0, count = 0;
+      for (let i = 0; i < data.length; i += 20 * 4) {
+        const r = data[i], g = data[i + 1], b = data[i + 2];
+        const lum = 0.299 * r + 0.587 * g + 0.114 * b;
+        const max = Math.max(r, g, b);
+        const min = Math.min(r, g, b);
+        const sat = max === 0 ? 0 : (max - min) / max;
+        sumLum += lum; sumLumSq += lum * lum; sumSat += sat; count++;
+      }
+      if (count === 0) return 0;
+      const meanLum = sumLum / count;
+      const variance = sumLumSq / count - meanLum * meanLum;
+      const meanSat = sumSat / count;
+      return variance * 0.7 + meanSat * 10000 * 0.3;
+    }
+
+    function captureFrameAt(fraction: number): Promise<HTMLCanvasElement | null> {
+      return new Promise((res) => {
+        const target = Math.min(video.duration * fraction, video.duration - 0.1);
+        const onSeeked = () => {
+          video.removeEventListener('seeked', onSeeked);
+          try {
+            const canvas = document.createElement('canvas');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            const ctx = canvas.getContext('2d');
+            if (!ctx) { res(null); return; }
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            res(canvas);
+          } catch {
+            res(null);
+          }
+        };
+        video.addEventListener('seeked', onSeeked);
+        video.currentTime = isFinite(target) && target > 0 ? target : 0;
+      });
+    }
+
+    (async () => {
+      try {
+        const candidates: HTMLCanvasElement[] = [];
+        for (const frac of CANDIDATE_FRACTIONS) {
+          const canvas = await captureFrameAt(frac);
+          if (canvas) candidates.push(canvas);
+        }
+        clearTimeout(timeoutId);
+
+        if (candidates.length === 0) {
+          restore();
+          reject(new Error('Could not extract any candidate frames'));
+          return;
+        }
+
+        let best = candidates[0];
+        let bestScore = scoreFrame(best);
+        for (const c of candidates.slice(1)) {
+          const s = scoreFrame(c);
+          if (s > bestScore) { best = c; bestScore = s; }
+        }
+
+        const canvas = best;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) throw new Error('Could not get canvas context');
+
+        const bgGradient = ctx.createLinearGradient(0, canvas.height * 0.55, 0, canvas.height);
+        bgGradient.addColorStop(0, 'rgba(0,0,0,0)');
+        bgGradient.addColorStop(1, 'rgba(0,0,0,0.8)');
+        ctx.fillStyle = bgGradient;
+        ctx.fillRect(0, canvas.height * 0.55, canvas.width, canvas.height * 0.45);
+
+        const text = overlayText.toUpperCase();
+        const baseFontSize = Math.round(canvas.width * (text.length > 20 ? 0.055 : 0.075));
+        ctx.font = `900 ${baseFontSize}px "Arial Black", Arial, sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.lineWidth = Math.max(4, Math.round(baseFontSize * 0.1));
+        ctx.strokeStyle = 'black';
+        ctx.shadowColor = 'rgba(0,0,0,0.9)';
+        ctx.shadowBlur = 12;
+        ctx.shadowOffsetX = 2;
+        ctx.shadowOffsetY = 2;
+
+        const maxWidth = canvas.width * 0.9;
+        const words = text.split(' ');
+        const lines: string[] = [];
+        let currentLine = '';
+        for (const word of words) {
+          const testLine = currentLine ? `${currentLine} ${word}` : word;
+          if (ctx.measureText(testLine).width > maxWidth && currentLine) {
+            lines.push(currentLine);
+            currentLine = word;
+          } else {
+            currentLine = testLine;
+          }
+        }
+        if (currentLine) lines.push(currentLine);
+
+        const lineHeight = baseFontSize * 1.15;
+        const startY = canvas.height - 40 - (lines.length - 1) * lineHeight;
+
+        const textGradient = ctx.createLinearGradient(
+          0, startY - baseFontSize,
+          0, startY + (lines.length - 1) * lineHeight + baseFontSize * 0.3
+        );
+        textGradient.addColorStop(0, '#FFF176');
+        textGradient.addColorStop(0.5, '#FFB300');
+        textGradient.addColorStop(1, '#FF5252');
+
+        lines.forEach((line, i) => {
+          const y = startY + i * lineHeight;
+          ctx.strokeText(line, canvas.width / 2, y);
+          ctx.fillStyle = textGradient;
+          ctx.fillText(line, canvas.width / 2, y);
+        });
+
+        restore();
+        resolve(canvas.toDataURL('image/jpeg', 0.85));
+      } catch (err) {
+        restore();
+        reject(err instanceof Error ? err : new Error('Thumbnail generation failed'));
+      }
+    })();
+  });
+}
+
 export default function AIContentAgentPage() {
   const [activeTab] = useState('agent');
   const [niche, setNiche] = useState('');
   const [nicheCategoryOverride, setNicheCategoryOverride] = useState<string | null>(null);
   const [showNicheDropdown, setShowNicheDropdown] = useState(false);
   const nicheBoxRef = useRef<HTMLDivElement>(null);
-  // Synchronous guard against double-starting a render — a fast
-  // double-click can fire handleStart twice before React re-renders
-  // the disabled button, which previously caused the same video to be
-  // generated and published twice. A ref updates immediately (unlike
-  // state), so the second call is blocked before any work begins.
   const isStartingRef = useRef(false);
+  const videoElRef = useRef<HTMLVideoElement>(null);
 
   const [channels, setChannels] = useState<Channel[]>([]);
   const [selectedChannelId, setSelectedChannelId] = useState<string | null>(null);
@@ -550,6 +700,7 @@ export default function AIContentAgentPage() {
   const [resultTopic, setResultTopic] = useState('');
   const [bankRemaining, setBankRemaining] = useState<number | null>(null);
   const [resultVideo, setResultVideo] = useState('');
+  const [currentJobId, setCurrentJobId] = useState('');
   const [resultThumbnail, setResultThumbnail] = useState('');
   const [resultSeo, setResultSeo] = useState<SeoResult | null>(null);
   const [errorMsg, setErrorMsg] = useState('');
@@ -581,6 +732,8 @@ export default function AIContentAgentPage() {
     { name: 'Video Generator', icon: <Video className="w-5 h-5" />, id: 'video', href: '/dashboard/video' },
     { name: 'Thumbnails', icon: <ImageIcon className="w-5 h-5" />, id: 'thumbnails', href: '/dashboard/thumbnails' },
     { name: 'Analytics', icon: <TrendingUp className="w-5 h-5" />, id: 'analytics', href: '/dashboard' },
+    { name: 'Connections', icon: <Tv className="w-5 h-5" />, id: 'connections', href: '/dashboard/connections' },
+    { name: 'Platform Status', icon: <Activity className="w-5 h-5" />, id: 'status', href: '/dashboard/status' },
     { name: 'Settings', icon: <Settings className="w-5 h-5" />, id: 'settings', href: '/dashboard' },
   ];
 
@@ -623,27 +776,14 @@ export default function AIContentAgentPage() {
     setNiche(preset.label);
     setNicheCategoryOverride(preset.category);
     setShowNicheDropdown(false);
-    // Pre-fill a sensible default duration for this niche — the person
-    // can still click a different duration button afterward to override.
     setDurationMinutes(getDefaultDurationForNiche(preset.label));
-    // Picking a niche from the dropdown means the content no longer
-    // matches whatever channel was previously selected — clear the
-    // channel selection so publishing can't silently go to the wrong
-    // YouTube account. The person has to explicitly re-select a
-    // channel (or leave it unselected, which disables auto-publish)
-    // before this new niche can be auto-published.
     setSelectedChannelId(null);
-    setSelectedYoutubeAccount('default');
   }
 
   function handleNicheTyping(value: string) {
     setNiche(value);
     setNicheCategoryOverride(null);
-    // Typing a custom niche means we're no longer tied to a saved
-    // channel's account — reset to "default" and clear the selected
-    // channel highlight so it's obvious no specific channel is active.
     setSelectedChannelId(null);
-    setSelectedYoutubeAccount('default');
   }
 
   function selectChannel(channel: Channel) {
@@ -651,8 +791,6 @@ export default function AIContentAgentPage() {
     setNiche(channel.niche);
     setNicheCategoryOverride(channel.category);
     setSelectedYoutubeAccount(channel.youtubeAccount || 'default');
-    // Pre-fill this channel's niche default duration too — still
-    // overridable by clicking a different duration button.
     setDurationMinutes(getDefaultDurationForNiche(channel.niche));
   }
 
@@ -698,7 +836,7 @@ export default function AIContentAgentPage() {
     if (resultVideo && alreadyDownloadedFor.current !== resultVideo) {
       alreadyDownloadedFor.current = resultVideo;
       const filenameBase = `novatube-${slugify(resultTopic || niche)}-${Date.now()}`;
-      downloadDataUrl(resultVideo, `${filenameBase}.mp4`);
+      downloadFromUrl(resultVideo, `${filenameBase}.mp4`);
       setAutoDownloaded(true);
     }
   }, [resultVideo, resultTopic, niche]);
@@ -732,7 +870,8 @@ export default function AIContentAgentPage() {
   }
 
   async function publishToYouTube(params: {
-    videoBase64: string;
+    videoPath?: string;
+    videoBase64?: string;
     thumbnailBase64?: string;
     title: string;
     description: string;
@@ -749,7 +888,8 @@ export default function AIContentAgentPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          videoBase64: params.videoBase64,
+          videoPath: params.videoPath || undefined,
+          videoBase64: params.videoPath ? undefined : params.videoBase64,
           thumbnailBase64: params.thumbnailBase64 || undefined,
           title: params.title,
           description: params.description,
@@ -763,7 +903,9 @@ export default function AIContentAgentPage() {
       updateStage('publish', 'completed');
       setPublishedUrl(data.videoUrl || `https://youtube.com/watch?v=${data.videoId}`);
     } catch (err: any) {
-      setPublishError(err.message || 'Publish failed');
+      const errorMessage = err.message || 'Publish failed';
+      console.error('YouTube Publish Error:', errorMessage);
+      setPublishError(errorMessage);
       updateStage('publish', 'failed');
     } finally {
       setIsPublishing(false);
@@ -772,14 +914,7 @@ export default function AIContentAgentPage() {
 
   async function handleStart() {
     if (!niche.trim()) return;
-    // Safety check: auto-publish must not silently fall back to the
-    // "default" account (the original channel) just because no
-    // channel chip was selected — require an explicit channel pick
-    // first so publishing always goes to the intended channel.
     if (autoPublish && !selectedChannelId) return;
-    // Block a second overlapping run (e.g. a fast double-click) —
-    // checked synchronously via a ref so it takes effect immediately,
-    // before React has re-rendered the disabled button.
     if (isStartingRef.current) return;
     isStartingRef.current = true;
 
@@ -787,6 +922,7 @@ export default function AIContentAgentPage() {
     setErrorMsg('');
     setResultTopic('');
     setResultVideo('');
+    setCurrentJobId('');
     setResultThumbnail('');
     setResultSeo(null);
     setAutoDownloaded(false);
@@ -798,16 +934,17 @@ export default function AIContentAgentPage() {
     let topicValue = '';
     let scriptValue = '';
     let sceneList: string[] = [];
-    let thumbnailPrompt = '';
-    let thumbnailText = '';
+    let thumbnailText = 'WATCH NOW';
     const detectedCategory = nicheCategoryOverride || detectCategory(niche);
 
     try {
+      // 1. Topic
       updateStage('topic', 'working');
       topicValue = await getNextTopicFromBank(niche);
       updateStage('topic', 'completed');
       setResultTopic(topicValue);
 
+      // 2. Script
       updateStage('script', 'working');
       const scriptRes = await fetch('/api/agent/script', {
         method: 'POST',
@@ -817,44 +954,9 @@ export default function AIContentAgentPage() {
       const scriptData = await scriptRes.json();
       if (!scriptRes.ok) throw new Error(scriptData.error || 'Script step failed');
       scriptValue = scriptData.script;
-
-      try {
-        const voiceSelectRes = await fetch('/api/agent/voice-select', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ topic: topicValue, category: detectedCategory }),
-        });
-        const voiceSelectData = await voiceSelectRes.json();
-        if (voiceSelectData?.voice) {
-          setVoice(voiceSelectData.voice);
-        }
-      } catch (voiceSelectErr) {
-        console.error('voice-select error:', voiceSelectErr);
-      }
-
-      try {
-        const scenesRes = await fetch('/api/agent/scenes', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ topic: topicValue, script: scriptValue, category: detectedCategory }),
-        });
-        const scenesData = await scenesRes.json();
-        if (scenesRes.ok && Array.isArray(scenesData.scenes) && scenesData.scenes.length > 0) {
-          sceneList = scenesData.scenes;
-          thumbnailPrompt = scenesData.thumbnailPrompt || topicValue;
-          thumbnailText = scenesData.thumbnailText || 'WATCH NOW';
-        } else {
-          thumbnailPrompt = topicValue;
-          thumbnailText = 'WATCH NOW';
-        }
-      } catch (scenesErr) {
-        console.error('Scene planning failed, falling back to raw script splitting:', scenesErr);
-        thumbnailPrompt = topicValue;
-        thumbnailText = 'WATCH NOW';
-      }
-
       updateStage('script', 'completed');
 
+      // 3. Voice
       updateStage('voice', 'working');
       const voiceRes = await fetch('/api/generate-voice', {
         method: 'POST',
@@ -869,6 +971,7 @@ export default function AIContentAgentPage() {
       if (!voiceRes.ok) throw new Error(voiceData.error || 'Voice step failed');
       updateStage('voice', 'completed');
 
+      // 4. Music & 5. Video Rendering
       updateStage('music', 'working');
       updateStage('video', 'working');
 
@@ -899,9 +1002,6 @@ export default function AIContentAgentPage() {
         console.error('intro voice error:', introErr);
       }
 
-      // Start the render as a background job — /api/agent/video now
-      // returns a jobId immediately instead of holding this request
-      // open for the whole render.
       const startRes = await fetch('/api/agent/video', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -920,10 +1020,8 @@ export default function AIContentAgentPage() {
       if (!startRes.ok) throw new Error(startData.error || 'Video step failed to start');
       const jobId = startData.jobId;
       if (!jobId) throw new Error('Video service did not return a job id');
+      setCurrentJobId(jobId);
 
-      // Poll for progress until the render finishes (or fails). The
-      // backend fails the job itself if it stalls — no fixed client
-      // timeout here, so a slow-but-healthy render is never killed.
       const videoData = await pollVideoJob(jobId, (stage, scenesDone, scenesTotal) => {
         if (scenesTotal > 0) {
           setVideoProgress(`${stage.replace(/_/g, ' ')} (${scenesDone}/${scenesTotal} scenes)`);
@@ -935,12 +1033,97 @@ export default function AIContentAgentPage() {
       setVideoProgress('');
       updateStage('video', 'completed');
       updateStage('music', videoData.musicUsed ? 'completed' : 'failed');
-      setResultVideo(videoData.video);
+      setResultVideo(videoData.videoUrl);
 
+      // 6. PUBLISHING - Video ready hote hi!
+      if (autoPublish) {
+        try {
+          const mainPublishAt = computeNextPublishTime(preferredPublishTime);
+          const mainPublishAtMs = new Date(mainPublishAt).getTime();
+          const mainVideoPath = await getVideoPathForJob(jobId);
+
+          // SEO data pehle generate karein
+          let seoDataLocal: SeoResult | null = null;
+          try {
+            const seoRes = await fetch('/api/agent/seo', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ topic: topicValue, script: scriptValue }),
+            });
+            const seoData = await seoRes.json();
+            if (seoRes.ok) {
+              seoDataLocal = seoData;
+              setResultSeo(seoData);
+            }
+          } catch (seoErr) {
+            console.error('SEO generation failed:', seoErr);
+          }
+
+          await publishToYouTube({
+            videoPath: mainVideoPath || undefined,
+            videoBase64: mainVideoPath ? undefined : await videoUrlToBase64(videoData.videoUrl),
+            thumbnailBase64: undefined,
+            title: seoDataLocal?.title || topicValue || niche,
+            description: seoDataLocal?.description || '',
+            tags: seoDataLocal?.tags || [],
+            account: selectedYoutubeAccount,
+            publishAt: mainPublishAt,
+          });
+
+          // Shorts generation
+          try {
+            setShortsStatus('Generating Shorts…');
+            const mainVideoBase64ForShorts = await videoUrlToBase64(videoData.videoUrl);
+            const shortsRes = await fetch('/api/agent/auto-short', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                video_base64: mainVideoBase64ForShorts,
+                category: detectedCategory,
+                num_shorts: numShorts,
+                aspect_ratio: '9:16',
+              }),
+            });
+            const shortsData = await shortsRes.json();
+            const shorts: { video: string }[] = shortsRes.ok && Array.isArray(shortsData.shorts) ? shortsData.shorts : [];
+
+            for (let i = 0; i < shorts.length; i++) {
+              setShortsStatus(`Scheduling Short ${i + 1}/${shorts.length}…`);
+              const publishAt = new Date(mainPublishAtMs + (i + 1) * shortGapHours * 60 * 60 * 1000).toISOString();
+              const baseTitle = seoDataLocal?.title || topicValue || niche;
+
+              await fetch('/api/agent/publish', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  videoBase64: shorts[i].video,
+                  thumbnailBase64: undefined,
+                  title: `${baseTitle} #Shorts`,
+                  description: seoDataLocal?.description || '',
+                  tags: seoDataLocal?.tags || [],
+                  account: selectedYoutubeAccount,
+                  publishAt,
+                }),
+              });
+            }
+            setShortsStatus(shorts.length > 0 ? `${shorts.length} Shorts scheduled` : '');
+          } catch (shortsErr) {
+            console.error('Auto-short generation failed:', shortsErr);
+            setShortsStatus('Shorts generation failed');
+          }
+        } catch (publishErr) {
+          console.error('Publishing failed:', publishErr);
+          updateStage('publish', 'failed');
+        }
+      }
+
+      // 7. THUMBNAIL - Publishing ke baad
       updateStage('thumbnail', 'working');
       let thumbDataUrlLocal = '';
       try {
-        thumbDataUrlLocal = await generateThumbnailFromVideo(videoData.video, thumbnailText);
+        await new Promise(requestAnimationFrame);
+        const playerVideo = await waitForVideoReady(() => videoElRef.current, 40000);
+        thumbDataUrlLocal = await captureThumbnailFromVideoElement(playerVideo, thumbnailText);
         setResultThumbnail(thumbDataUrlLocal);
         updateStage('thumbnail', 'completed');
         downloadDataUrl(thumbDataUrlLocal, `novatube-thumb-${slugify(topicValue)}-${Date.now()}.jpg`);
@@ -949,108 +1132,30 @@ export default function AIContentAgentPage() {
         updateStage('thumbnail', 'failed');
       }
 
-      updateStage('seo', 'working');
-      let seoDataLocal: SeoResult | null = null;
-      try {
-        const seoRes = await fetch('/api/agent/seo', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ topic: topicValue, script: scriptValue }),
-        });
-        const seoData = await seoRes.json();
-        if (!seoRes.ok) throw new Error(seoData.error || 'SEO step failed');
-        seoDataLocal = seoData;
-        setResultSeo(seoData);
-        updateStage('seo', 'completed');
-      } catch (seoErr) {
-        console.error('SEO generation failed:', seoErr);
-        updateStage('seo', 'failed');
-      }
-
-      updateStage('schedule', 'failed');
-
-      // If auto-publish is enabled, publish immediately using the
-      // values just generated in this run. (Guarded above: this only
-      // runs when a channel was explicitly selected, so it never
-      // silently uses the "default" account.)
-      if (autoPublish) {
-        // Schedule the main video for the next occurrence of the
-        // preferred daily upload time, rather than publishing the
-        // instant it finishes rendering — a consistent schedule helps
-        // build viewer habit, and it also gives a predictable anchor
-        // point for the Shorts scheduled below to spread out from.
-        const mainPublishAt = computeNextPublishTime(preferredPublishTime);
-        const mainPublishAtMs = new Date(mainPublishAt).getTime();
-
-        await publishToYouTube({
-          videoBase64: videoData.video,
-          thumbnailBase64: thumbDataUrlLocal || undefined,
-          title: seoDataLocal?.title || topicValue || niche,
-          description: seoDataLocal?.description || '',
-          tags: seoDataLocal?.tags || [],
-          account: selectedYoutubeAccount,
-          publishAt: mainPublishAt,
-        });
-
-        // Also carve this long video into a handful of Shorts and
-        // schedule them a few hours apart *starting from the main
-        // video's scheduled time*, so the channel keeps posting
-        // steadily through the day after the main upload goes live.
-        // Each Short gets its own thumbnail (same scoring + hook-text
-        // overlay as the main video). Failures here are logged but
-        // don't fail the overall run — the long video is already
-        // scheduled either way.
+      // 8. SEO - Agar autoPublish nahi tha
+      if (!autoPublish) {
+        updateStage('seo', 'working');
         try {
-          setShortsStatus('Generating Shorts…');
-          const shortsRes = await fetch('/api/agent/auto-short', {
+          const seoRes = await fetch('/api/agent/seo', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              video_base64: videoData.video,
-              category: detectedCategory,
-              num_shorts: numShorts,
-              aspect_ratio: '9:16',
-            }),
+            body: JSON.stringify({ topic: topicValue, script: scriptValue }),
           });
-          const shortsData = await shortsRes.json();
-          const shorts: { video: string }[] = shortsRes.ok && Array.isArray(shortsData.shorts) ? shortsData.shorts : [];
-
-          for (let i = 0; i < shorts.length; i++) {
-            setShortsStatus(`Scheduling Short ${i + 1}/${shorts.length}…`);
-            let shortThumb = '';
-            try {
-              shortThumb = await generateThumbnailFromVideo(shorts[i].video, thumbnailText);
-            } catch (shortThumbErr) {
-              console.error(`Short ${i + 1} thumbnail failed:`, shortThumbErr);
-            }
-
-            const publishAt = new Date(mainPublishAtMs + (i + 1) * shortGapHours * 60 * 60 * 1000).toISOString();
-            const baseTitle = seoDataLocal?.title || topicValue || niche;
-
-            try {
-              await fetch('/api/agent/publish', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                  videoBase64: shorts[i].video,
-                  thumbnailBase64: shortThumb || undefined,
-                  title: `${baseTitle} #Shorts`,
-                  description: seoDataLocal?.description || '',
-                  tags: seoDataLocal?.tags || [],
-                  account: selectedYoutubeAccount,
-                  publishAt,
-                }),
-              });
-            } catch (shortPublishErr) {
-              console.error(`Short ${i + 1} scheduling failed:`, shortPublishErr);
-            }
-          }
-          setShortsStatus(shorts.length > 0 ? `${shorts.length} Shorts scheduled` : '');
-        } catch (shortsErr) {
-          console.error('Auto-short generation failed:', shortsErr);
-          setShortsStatus('Shorts generation failed');
+          const seoData = await seoRes.json();
+          if (!seoRes.ok) throw new Error(seoData.error || 'SEO step failed');
+          setResultSeo(seoData);
+          updateStage('seo', 'completed');
+        } catch (seoErr) {
+          console.error('SEO generation failed:', seoErr);
+          updateStage('seo', 'failed');
         }
+      } else {
+        updateStage('seo', 'completed');
       }
+
+      // 9. SCHEDULING - Last
+      updateStage('schedule', 'completed');
+
     } catch (err: any) {
       setVideoProgress('');
       setErrorMsg(err.message || 'Something went wrong');
@@ -1063,8 +1168,10 @@ export default function AIContentAgentPage() {
 
   async function handlePublish() {
     if (!resultVideo) return;
+    const videoPath = currentJobId ? await getVideoPathForJob(currentJobId) : null;
     await publishToYouTube({
-      videoBase64: resultVideo,
+      videoPath: videoPath || undefined,
+      videoBase64: videoPath ? undefined : await videoUrlToBase64(resultVideo),
       thumbnailBase64: resultThumbnail || undefined,
       title: resultSeo?.title || resultTopic || niche,
       description: resultSeo?.description || '',
@@ -1077,12 +1184,14 @@ export default function AIContentAgentPage() {
     if (!resultVideo || !scheduleDate) return;
     setIsScheduling(true);
     setScheduleSuccess('');
+    updateStage('schedule', 'working');
     try {
+      const videoBase64 = await videoUrlToBase64(resultVideo);
       const res = await fetch('/api/scheduler', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          video_base64: resultVideo,
+          video_base64: videoBase64,
           thumbnail_base64: resultThumbnail || undefined,
           title: resultSeo?.title || resultTopic || niche,
           description: resultSeo?.description || '',
@@ -1095,8 +1204,10 @@ export default function AIContentAgentPage() {
       if (!res.ok) throw new Error(data.error || 'Schedule failed');
       setScheduleSuccess(`Scheduled for ${new Date(scheduleDate).toLocaleString()}`);
       setShowScheduleForm(false);
+      updateStage('schedule', 'completed');
     } catch (err: any) {
       alert(err.message || 'Schedule failed');
+      updateStage('schedule', 'failed');
     } finally {
       setIsScheduling(false);
     }
@@ -1209,7 +1320,6 @@ export default function AIContentAgentPage() {
         </header>
 
         <div className="flex-1 p-10 overflow-y-auto">
-          {/* Channels bar */}
           <div className="mb-8">
             <div className="flex items-center justify-between mb-3">
               <h3 className="text-sm font-semibold text-white/70 flex items-center gap-2">
@@ -1344,7 +1454,7 @@ export default function AIContentAgentPage() {
                     disabled={!niche.trim() || loadingTrending}
                     className="mt-3 flex items-center gap-1.5 text-xs font-semibold text-amber-200 bg-amber-500/[0.12] border border-amber-400/25 rounded-lg px-3 py-1.5 hover:bg-amber-500/[0.2] transition disabled:opacity-40"
                   >
-                    {loadingTrending ? '⏳ Checking...' : '🔥 Suggest Trending Topic'}
+                    {loadingTrending ? ' Checking...' : '🔥 Suggest Trending Topic'}
                   </button>
 
                   {trendingError && (
@@ -1639,26 +1749,18 @@ export default function AIContentAgentPage() {
                       )}
                       <button
                         type="button"
-                        onClick={() => downloadDataUrl(resultVideo, `novatube-${slugify(resultTopic || niche)}-${Date.now()}.mp4`)}
+                        onClick={() => downloadFromUrl(resultVideo, `novatube-${slugify(resultTopic || niche)}-${Date.now()}.mp4`)}
                         className="flex items-center gap-1.5 text-[11px] font-semibold text-violet-200 bg-violet-500/[0.12] border border-violet-400/25 rounded-lg px-3 py-1.5 hover:bg-violet-500/[0.2] transition"
                       >
                         <Download className="w-3.5 h-3.5" /> Download Again
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          sessionStorage.setItem("novatube_short_source_video", resultVideo);
-                          window.location.href = "/dashboard/shorts?source=ai";
-                        }}
-                        className="flex items-center gap-1.5 text-[11px] font-semibold text-emerald-200 bg-emerald-500/[0.12] border border-emerald-400/25 rounded-lg px-3 py-1.5 hover:bg-emerald-500/[0.2] transition"
-                      >
-                        🎬 Create Short
                       </button>
                     </div>
                   </div>
                   <div className="max-w-[320px] mx-auto">
                     <video
+                      ref={videoElRef}
                       src={resultVideo}
+                      crossOrigin="anonymous"
                       controls
                       className="w-full max-h-[70vh] rounded-xl border border-white/[0.07] bg-black object-contain"
                     />
@@ -1752,7 +1854,7 @@ export default function AIContentAgentPage() {
                     onClick={() => setShowScheduleForm((v) => !v)}
                     className="w-full mt-3 flex items-center justify-center gap-2.5 bg-white/[0.04] border border-white/[0.1] text-white/70 text-sm font-semibold py-3 rounded-xl hover:bg-white/[0.08] transition"
                   >
-                    📅 Schedule for Later
+                     Schedule for Later
                   </button>
                   {showScheduleForm && (
                     <div className="mt-3 p-4 bg-white/[0.02] border border-white/[0.06] rounded-xl">
