@@ -1,0 +1,457 @@
+{
+  "niche": "Business & Entrepreneurship",
+  "createdAt": "2026-08-25T10:54:41.783Z",
+  "updatedAt": "2026-08-25T10:55:25.540Z",
+  "topics": [
+    {
+      "id": "339a0a8c-e1dd-447e-8cca-78b365548250",
+      "text": "Bootstrapping a SaaS startup in six months",
+      "used": true,
+      "usedAt": "2026-08-25T10:54:41.956Z"
+    },
+    {
+      "id": "010d326d-d64e-4906-80b7-74852958a7e2",
+      "text": "Lessons from the rise and fall of Blockbuster",
+      "used": true,
+      "usedAt": "2026-08-25T10:55:00.609Z"
+    },
+    {
+      "id": "c25a8992-cf9d-47c4-8272-7df5184cb833",
+      "text": "How to validate a business idea with zero budget",
+      "used": true,
+      "usedAt": "2026-08-25T10:55:12.818Z"
+    },
+    {
+      "id": "9b0487d3-ee68-4cc4-83dc-04ab373e8be3",
+      "text": "Common myths about entrepreneurship debunked today",
+      "used": true,
+      "usedAt": "2026-08-25T10:55:25.540Z"
+    },
+    {
+      "id": "5f581f5c-af8b-4706-92b3-ef9b1d103bcb",
+      "text": "Top 10 productivity tools for solo founders",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "588534cb-a752-40ba-a828-3fe84e514e26",
+      "text": "Story of a garage startup that became a unicorn",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "eef6b3d9-6046-4f44-9672-e42e548d2eb9",
+      "text": "Building a brand identity from scratch",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "9558ebce-0601-43bc-ba31-905ca4bb1174",
+      "text": "Negotiation tactics for securing seed funding",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "2eb231b0-df0b-4123-ab20-88cb8ba0db56",
+      "text": "Pivot strategies when market demand shifts",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "fe20683d-77db-4768-8267-7ba69a119358",
+      "text": "Financial modeling basics for early-stage startups",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "fd22edbf-d46b-4c0e-b36a-2e29ea2e1e82",
+      "text": "The psychology behind pricing premium products",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "9bc1806a-0fdf-483b-91f0-562c9f829174",
+      "text": "Hiring your first employee: red flags to watch",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "ad110446-f4c5-4580-8daf-1f24c0d84588",
+      "text": "Leveraging TikTok for B2B lead generation",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "0aff62fe-73fe-4131-bec8-1e032b5386bc",
+      "text": "Case study: turning a hobby into a profitable business",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "5600a083-1661-45d7-9fb1-b42d51187d7a",
+      "text": "Legal essentials every entrepreneur must know",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "c16cf741-ac75-4c9c-8d26-30ba19416905",
+      "text": "How to create a compelling elevator pitch",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "56559db6-cbde-4f9c-9f4b-fdb995e1100b",
+      "text": "Scaling operations without sacrificing company culture",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "d971b311-7e21-45f4-bbcf-d2d0938b4524",
+      "text": "Analyzing the impact of remote work on startups",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "6ec8e2ee-0642-4abe-b866-b0006b6c9817",
+      "text": "Funding options beyond venture capital for growth",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "431d73ad-758d-4b0f-a8a1-5ab14c9d7389",
+      "text": "Customer acquisition cost vs lifetime value explained",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "d9e385bc-781a-4b9f-bfe4-c648d75735d3",
+      "text": "Storytelling techniques for persuasive investor presentations",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "7dc59521-0d13-48cd-b563-66add3c152c5",
+      "text": "Sustainable business models for the climate era",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "e335145b-b2e3-4634-b87e-a075790e1576",
+      "text": "Mistakes new founders make in their first year",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "8b70a077-20cf-4776-8e6b-7522b179a154",
+      "text": "Using data analytics to drive product decisions",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "2a47f4dc-3724-42ed-88a9-a7d6c1268a1e",
+      "text": "Emotional resilience strategies for entrepreneurial burnout",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "92a884b0-490b-45f2-a80f-c794492a2ec5",
+      "text": "Designing a subscription model for niche markets",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "d2ca1dda-b51c-4bcd-8601-ce6941a1ee9d",
+      "text": "Micro‑learning strategies for busy startup CEOs",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "6a2eb7f6-62d3-4d55-aaf2-d5af4a98f9fb",
+      "text": "Analyzing the gig economy's effect on traditional hiring",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "25b35939-e3c5-44eb-b756-e0a528fcf905",
+      "text": "Creating a cash‑flow forecast using simple spreadsheets",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "a4078a56-7fa3-4329-9528-79b5712cb490",
+      "text": "Brand storytelling through customer success videos",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "82b36363-4242-4c59-a264-5e0824cc071f",
+      "text": "Negotiating equity splits with co‑founders fairly",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "a12ced77-4541-47c8-997a-9249d500bb69",
+      "text": "Applying lean principles to service‑based businesses",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "26499126-2866-4e15-a1a1-5ba64940d8d9",
+      "text": "How AI chatbots can boost small business sales",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "9d807cfd-1861-4170-8435-1310a3eef279",
+      "text": "Building a remote culture that retains top talent",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "7f758c08-b67d-4793-b6ea-e10f75a13321",
+      "text": "Strategic partnerships for rapid market entry",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "e37f7fe5-b0cc-4fbd-a3ca-183888232d7c",
+      "text": "Evaluating the ROI of influencer marketing campaigns",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "543570ef-ac79-404b-8f01-7241536803a2",
+      "text": "Design thinking workshops to spark product innovation",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "d1568b69-8a53-4d0d-bc22-cb2391d292de",
+      "text": "Legal structures comparison: LLC vs. C‑Corporation for founders",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "2b860e8a-9830-47d7-b991-199df1e4cd68",
+      "text": "Crowdfunding tactics that convert browsers into backers",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "44c8e1e6-45b0-40e3-a2b2-881327eb3fae",
+      "text": "Implementing OKRs to align cross‑functional teams",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "2acb5a2a-6bbf-4e02-86d5-4d0978fc61b7",
+      "text": "Using customer journey maps to reduce churn rates",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "29334846-d13b-47f6-82b0-fa6602d65e82",
+      "text": "Exit strategies for founders without acquisition offers",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "8e6bb441-edbc-4691-b159-134d01a019fb",
+      "text": "Profitability hacks for e‑commerce stores during holidays",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "527cc44e-215f-4e57-a466-54ab1b7ce80c",
+      "text": "The role of corporate social responsibility in brand loyalty",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "922f93e2-cbba-4652-9729-33b0d8f92c4b",
+      "text": "Pricing experiments: A/B testing subscription tiers effectively",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "524172a7-78e2-48d5-9e58-7b4db57bd491",
+      "text": "Mentorship programs that accelerate startup growth",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "fa6efb64-5207-48f1-bb25-b77b4575664b",
+      "text": "Turnaround tactics for businesses facing cash shortages",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "87ff492c-455c-429e-b5bf-90d9245c13f1",
+      "text": "Leveraging LinkedIn groups for B2B lead nurturing",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "4863d0f7-92b3-4c54-9a02-eaff9f65f3d6",
+      "text": "How to conduct a competitive SWOT analysis quickly",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "6e1f5049-7101-4faa-8bca-90af2bd96757",
+      "text": "Founder’s comeback: rebuilding brand after market collapse",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "ba128428-3840-42d1-ab62-346afe7a2626",
+      "text": "Bootstrapping a tech startup with zero investors",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "2097bdc8-3a0f-47ab-bc6a-2fbefda1661d",
+      "text": "Pivot strategies when market demand shifts dramatically",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "c7a38b76-fa9e-4ae8-9484-98e4e7d14fe5",
+      "text": "Building a brand identity from scratch in 2024",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "184e45a3-7db2-42f0-a2d5-f00280de6834",
+      "text": "How to negotiate supplier contracts for better margins",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "02bad553-aa58-4cd1-87d5-06a12936ddc0",
+      "text": "Story of a founder who failed twice before succeeding",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "d8e2b3b2-8d5d-4ee5-8e42-26c7c8a47b60",
+      "text": "Top five productivity tools for solo entrepreneurs",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "3c67bcd8-398a-4583-a41d-2cd3f93b77c5",
+      "text": "Myth: Entrepreneurs must work 80‑hour weeks debunked",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "9b9eaafb-fd4d-4dd1-9a2b-b03f590c3a93",
+      "text": "Historical rise of coworking spaces and business impact",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "29234403-5553-4508-92c0-209725efbd4d",
+      "text": "Creating a minimum viable product in under two weeks",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "acfcd008-ab8c-443c-9134-1152746408cc",
+      "text": "Using customer referrals to halve acquisition costs",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "6a8a53b2-bc65-449c-988e-bd96c13893da",
+      "text": "Financial modeling basics for first‑time CEOs",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "9fa23941-7109-4b53-bb4b-4fa087b5ece5",
+      "text": "Emotional intelligence techniques for effective team leadership",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "6826c54f-0214-4671-b20b-b4078fd5c8f7",
+      "text": "How blockchain can streamline supply chain transparency",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "c51c5077-8da8-469e-85a5-48bda5758d72",
+      "text": "Lessons from the dot‑com bubble for modern startups",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "274432c6-7d5b-4af2-ac22-3d5a20d26440",
+      "text": "Designing a loyalty program that drives repeat purchases",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "7d685061-c580-41ff-9529-3392dd9df6fd",
+      "text": "Effective email sequences for nurturing warm leads",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "7b886623-65eb-4eb2-b8af-3f1a265e5508",
+      "text": "Crowd‑sourced product development: pros and cons",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "8e07d723-6a07-406e-a7e4-a2a48597ef4e",
+      "text": "Scaling customer support with AI without losing personal touch",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "dfa334d0-ca17-4aab-8132-ec02431dc8e6",
+      "text": "Legal pitfalls when expanding internationally for the first time",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "8bb08490-6183-40cc-ade5-d8caae75ef1a",
+      "text": "How to set up a founder’s equity vesting schedule",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "59a3ada2-2c57-4c46-87d6-788ab0a720d9",
+      "text": "Case study: turning a local service into a franchise network",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "211cdb16-3206-4773-b9f7-94d56f334f50",
+      "text": "Using gamification to increase employee engagement remotely",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "13ab231f-43f0-465f-a40b-22f080648771",
+      "text": "Analyzing competitor pricing strategies to find market gaps",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "c860fb9a-5b2f-4de1-a333-2ee185ace01f",
+      "text": "Fundraising pitch deck templates that investors love",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "49f4c5fa-d52b-4b4c-b407-1f27ee6c2b70",
+      "text": "Balancing sustainability and profitability in manufacturing startups",
+      "used": false,
+      "usedAt": null
+    }
+  ]
+}
