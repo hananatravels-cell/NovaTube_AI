@@ -541,7 +541,7 @@ function captureThumbnailFromVideoElement(video: HTMLVideoElement, overlayText: 
     const timeoutId = setTimeout(() => {
       restore();
       reject(new Error('Video frame extraction timed out'));
-    }, 40000);
+    }, 60000);
 
     const CANDIDATE_FRACTIONS = [0.15, 0.35, 0.55, 0.75];
 
@@ -1117,21 +1117,39 @@ export default function AIContentAgentPage() {
         }
       }
 
-      // 7. THUMBNAIL - Publishing ke baad
+      // 7. THUMBNAIL - Publishing ke baad (Fast Version)
       updateStage('thumbnail', 'working');
       let thumbDataUrlLocal = '';
       try {
-        await new Promise(requestAnimationFrame);
-        const playerVideo = await waitForVideoReady(() => videoElRef.current, 40000);
-        thumbDataUrlLocal = await captureThumbnailFromVideoElement(playerVideo, thumbnailText);
-        setResultThumbnail(thumbDataUrlLocal);
-        updateStage('thumbnail', 'completed');
-        downloadDataUrl(thumbDataUrlLocal, `novatube-thumb-${slugify(topicValue)}-${Date.now()}.jpg`);
+        if (videoElRef.current) {
+          // Pura video download hone ka wait nahi karenge, sirf metadata load hone ka wait karenge
+          videoElRef.current.load();
+          
+          await new Promise((resolve) => {
+            const onMeta = () => {
+              videoElRef.current.removeEventListener('loadedmetadata', onMeta);
+              resolve(true);
+            };
+            videoElRef.current.addEventListener('loadedmetadata', onMeta);
+            // Agar 10 second mein metadata na aaye to bhi aage barh jayen
+            setTimeout(() => resolve(false), 10000); 
+          });
+
+          // Ab thumbnail generate karein
+          thumbDataUrlLocal = await captureThumbnailFromVideoElement(videoElRef.current, thumbnailText);
+        }
+        
+        if (thumbDataUrlLocal) {
+          setResultThumbnail(thumbDataUrlLocal);
+          updateStage('thumbnail', 'completed');
+          downloadDataUrl(thumbDataUrlLocal, `novatube-thumb-${slugify(topicValue)}-${Date.now()}.jpg`);
+        } else {
+          updateStage('thumbnail', 'failed');
+        }
       } catch (thumbErr) {
         console.error('Thumbnail generation failed:', thumbErr);
         updateStage('thumbnail', 'failed');
       }
-
       // 8. SEO - Agar autoPublish nahi tha
       if (!autoPublish) {
         updateStage('seo', 'working');
