@@ -1742,16 +1742,10 @@ export default function AIContentAgentPage() {
                       </button>
                     </div>
                   </div>
-                  <div className="max-w-[320px] mx-auto">
-                    <video
-                      ref={videoElRef}
-                      src={resultVideo}
-                      crossOrigin="anonymous"
-                      controls
-                       preload="none"
-                      className="w-full max-h-[70vh] rounded-xl border border-white/[0.07] bg-black object-contain"
-                    />
-                  </div>
+                  <div className="max-w-[320px] mx-auto py-8 text-center">
+  <p className="text-white/60 text-sm">✅ Video ready — check your Downloads folder.</p>
+  <video ref={videoElRef} src={resultVideo} crossOrigin="anonymous" className="hidden" />
+</div>
                 </div>
               )}
 
