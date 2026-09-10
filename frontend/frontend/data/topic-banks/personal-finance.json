@@ -1,0 +1,457 @@
+{
+  "niche": "Personal Finance",
+  "createdAt": "2026-08-25T12:27:45.659Z",
+  "updatedAt": "2026-09-01T05:59:20.250Z",
+  "topics": [
+    {
+      "id": "b6ac99dc-5978-4114-ba0a-e43bdb8bc311",
+      "text": "Building an emergency fund with zero‑interest credit cards",
+      "used": true,
+      "usedAt": "2026-08-25T12:27:45.829Z"
+    },
+    {
+      "id": "b8e1432b-89ad-48a1-94b8-363e2da41598",
+      "text": "How to automate monthly savings using banking apps",
+      "used": true,
+      "usedAt": "2026-08-26T11:20:12.066Z"
+    },
+    {
+      "id": "8dc7c1c9-52cc-4e23-a2c2-bc2756a7c8f3",
+      "text": "The true cost of buying versus leasing a car",
+      "used": true,
+      "usedAt": "2026-08-27T11:32:50.923Z"
+    },
+    {
+      "id": "babd54fd-184a-41c2-a77e-08ab62e0fa4f",
+      "text": "Breaking down the 50/30/20 budgeting rule for beginners",
+      "used": true,
+      "usedAt": "2026-08-29T04:19:17.599Z"
+    },
+    {
+      "id": "dec5d26f-0eb5-4fe8-8908-3abfd9c1c5df",
+      "text": "My first $10,000 investment: lessons learned and mistakes",
+      "used": true,
+      "usedAt": "2026-08-30T09:50:06.921Z"
+    },
+    {
+      "id": "d7487d63-c6bf-4340-a6d4-ad412c900f8a",
+      "text": "Historical evolution of credit scores and their modern impact",
+      "used": true,
+      "usedAt": "2026-08-30T09:51:13.060Z"
+    },
+    {
+      "id": "97ea741c-c171-448d-9749-c1d8577cb446",
+      "text": "Mythbusting: Do high‑interest savings accounts really beat inflation?",
+      "used": true,
+      "usedAt": "2026-08-30T09:55:57.168Z"
+    },
+    {
+      "id": "0951020a-a615-4c78-869d-729c79f10fdb",
+      "text": "Side‑hustle ideas that generate passive income under $100",
+      "used": true,
+      "usedAt": "2026-08-30T11:06:44.968Z"
+    },
+    {
+      "id": "7b6adb75-b285-43d1-bdcd-10761ddb80f4",
+      "text": "Understanding tax brackets: why marginal rates matter",
+      "used": true,
+      "usedAt": "2026-08-31T04:04:00.144Z"
+    },
+    {
+      "id": "e4fadaa9-8b98-4615-b64d-890773aeac74",
+      "text": "How to negotiate a higher salary during performance reviews",
+      "used": true,
+      "usedAt": "2026-08-31T04:06:07.904Z"
+    },
+    {
+      "id": "04892ea8-0512-4406-96ea-5460cd26433a",
+      "text": "The psychology behind impulse buying and how to stop it",
+      "used": true,
+      "usedAt": "2026-08-31T04:07:07.916Z"
+    },
+    {
+      "id": "6c7c9c8b-a7cd-4221-b6c6-cd3469af3774",
+      "text": "Using Roth IRAs for tax‑free retirement growth strategies",
+      "used": true,
+      "usedAt": "2026-08-31T05:00:21.183Z"
+    },
+    {
+      "id": "a05ce7de-209d-4d10-b870-3dedbe7f2ddd",
+      "text": "Analyzing the 2024 housing market crash predictions",
+      "used": true,
+      "usedAt": "2026-08-31T06:29:31.727Z"
+    },
+    {
+      "id": "ac44b94f-894f-490b-b8aa-d919d6818988",
+      "text": "Zero‑based budgeting: allocating every dollar for financial control",
+      "used": true,
+      "usedAt": "2026-08-31T06:29:45.577Z"
+    },
+    {
+      "id": "caa430fc-b493-4724-9d29-85f8487f61c4",
+      "text": "How student loans affect credit scores and repayment options",
+      "used": true,
+      "usedAt": "2026-08-31T07:47:48.001Z"
+    },
+    {
+      "id": "f969f8af-df5b-4db7-b999-13fb5c4f89b9",
+      "text": "Investing in dividend stocks: building a cash‑flow portfolio",
+      "used": true,
+      "usedAt": "2026-08-31T09:42:58.122Z"
+    },
+    {
+      "id": "07ed3a41-7788-4093-b79f-63b5abfb8a05",
+      "text": "Financial lessons from the Great Depression for modern investors",
+      "used": true,
+      "usedAt": "2026-08-31T12:28:34.362Z"
+    },
+    {
+      "id": "e5f61016-4d90-4315-8e14-2a70fbb38098",
+      "text": "Creating a family financial vision board for shared goals",
+      "used": true,
+      "usedAt": "2026-09-01T03:28:25.204Z"
+    },
+    {
+      "id": "03e4a819-8655-443a-994a-347a39f6b997",
+      "text": "How to refinance student loans and save thousands",
+      "used": true,
+      "usedAt": "2026-09-01T03:32:46.274Z"
+    },
+    {
+      "id": "28496c9d-b474-4d0a-9035-981c79b32b55",
+      "text": "Understanding crypto tax reporting requirements for 2024",
+      "used": true,
+      "usedAt": "2026-09-01T05:58:32.363Z"
+    },
+    {
+      "id": "7c44868f-42d0-4998-8125-8ad7203b1589",
+      "text": "Frugal travel hacks that keep your budget intact",
+      "used": true,
+      "usedAt": "2026-09-01T05:59:20.250Z"
+    },
+    {
+      "id": "bd9e6032-ab68-481a-8ed6-fdddfb2e8114",
+      "text": "The impact of credit utilization on loan approval odds",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "9b030e97-dbde-4f49-b745-6748f07df235",
+      "text": "How to set up a 401(k) match maximization strategy",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "15a4fe44-53ae-4513-88a7-ab487eb2a7a7",
+      "text": "Breaking down the FIRE movement: realistic timelines explained",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "360d7fb9-61ac-4da5-8a4a-892ebb15c261",
+      "text": "Emotional budgeting: aligning spending with personal values",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "c7f4ebe3-d800-4e05-bc66-e58e547bd48d",
+      "text": "Credit card rewards optimization for everyday purchases",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "ac8bca0c-17cc-4d49-8093-5438e90f8ca5",
+      "text": "Navigating mortgage refinancing during rising interest rates",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "b4e5ac8a-3afa-4d97-b000-1a7f4d378e89",
+      "text": "How to build credit without taking a loan",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "6439801c-3896-4473-98e6-64a53f5a30f8",
+      "text": "Teaching kids financial literacy through interactive games",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "244c5cb3-b9bf-4648-a483-79fe8791aa47",
+      "text": "Analyzing the hidden fees in subscription services",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "e1bd3084-5492-4eaf-9060-de96b8e2c0b1",
+      "text": "Using cash envelope system for discretionary spending control",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "368683cc-3677-4e61-8f52-f626128d721d",
+      "text": "The impact of inflation on retirement savings strategies",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "04b61662-6e39-41e0-b7e3-ecf3348aa625",
+      "text": "How to evaluate employer stock options effectively",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "f9fc4cfd-efec-410d-be6f-9f5574b4ceda",
+      "text": "Minimalist living as a tool for financial freedom",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "5143a0c6-4c39-40a3-83cc-2fcf13349b69",
+      "text": "Understanding the tax advantages of Health Savings Accounts",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "e7bcfd68-06ae-4a4c-8b55-d9d998b1da7f",
+      "text": "Creating a debt snowball plan for multiple loans",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "d2fd6106-f3cd-40c8-9615-b9505f42671c",
+      "text": "The role of insurance in protecting net worth",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "5a1eeef2-f6c4-49f0-b00d-43427cc6f138",
+      "text": "Investing in index funds versus actively managed funds",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "6d36fb02-0ddc-46eb-8993-19629b1f7300",
+      "text": "How to negotiate lower interest rates on credit cards",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "40e19d65-cb1e-42e5-b6ca-cd5614d8f6c5",
+      "text": "Financial implications of gig economy work schedules",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "83a57e66-ab10-462b-8eb1-9316b13cb064",
+      "text": "Step‑by‑step guide to filing taxes as a freelancer",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "3d3e7bbb-48a7-406d-88de-fa988005d6d5",
+      "text": "Analyzing the long‑term costs of buying a home",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "3acf7f56-c7a0-42d6-9e0b-550d63e44ce4",
+      "text": "Using peer‑to‑peer lending platforms for portfolio diversification",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "34b33cdf-4250-48e3-972d-fb926e0cde34",
+      "text": "How to set realistic financial goals for the next decade",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "b753c102-f420-4540-810f-22fb26a2e34a",
+      "text": "The psychology of financial regret and how to overcome it",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "ef06b194-2dc0-437e-99bb-562a394509b8",
+      "text": "Evaluating the risk of investing in emerging market ETFs",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "0ff17491-99e3-48ec-af6d-795fe13cf1cf",
+      "text": "Ways to reduce utility bills without sacrificing comfort",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "b71591f8-2c89-4dc8-b9aa-3a4726ce4b99",
+      "text": "How to create a will that protects your assets",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "f8b9b1b3-91c6-4a10-9347-662c5d7e814a",
+      "text": "Understanding the impact of credit inquiries on scores",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "7292412a-e51c-469e-95f4-a7a3a5d8982b",
+      "text": "Financial lessons from famous bankruptcies and recoveries",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "a00148ae-a4e0-4d9b-8528-b76c5d1374c7",
+      "text": "Building an emergency fund with automated weekly transfers",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "9838874c-fdcb-4455-a177-603a662144f1",
+      "text": "Comparing traditional brokerage fees versus robo-advisor costs",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "74e480c6-2e75-466f-82fb-eb8641bbafa4",
+      "text": "How to read a stock's earnings report effectively",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "0a9f01d0-5682-43c7-8313-f589ca7561f3",
+      "text": "Side-hustle ideas that generate passive income streams",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "5b3d50c8-a91f-4822-9d6a-784e2bba7949",
+      "text": "Understanding the tax implications of selling crypto assets",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "51a77b03-6ebd-42a2-8351-a945277096ad",
+      "text": "Renting versus buying: financial pros and cons for millennials",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "d001619e-6611-4806-b569-86d4d04ad7c8",
+      "text": "Credit score myths debunked by industry experts",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "728f50d0-12ed-451d-a19c-596b425edf89",
+      "text": "Investing in sustainable companies: ESG criteria explained",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "4ca20dac-0c2e-49d1-91f4-e960ba6e238c",
+      "text": "Step-by-step guide to creating a monthly cash-flow statement",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "09a9b190-00f1-4339-a60c-a316a03576a6",
+      "text": "Using a high-yield savings account to beat inflation",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "9c9d79fc-0579-479b-ac5e-5ff7285eaa34",
+      "text": "How to negotiate a salary raise with data-driven arguments",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "a267f54e-fe6b-4678-a7d7-b94cc5a10ac5",
+      "text": "Teaching teenagers budgeting through real-world expense tracking",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "aad1f39c-4db6-471f-9ffd-f05649011bd2",
+      "text": "Impact of student loan forgiveness policies on long-term finances",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "25cc9a84-b07a-47ec-843f-3aa73bd8adb6",
+      "text": "Analyzing the cost-benefit of buying a used versus new car",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "420c0375-b96d-493c-bdb9-7e769e0b72e7",
+      "text": "Leveraging credit card sign-up bonuses without harming credit",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "eb31aa8d-333e-40e8-ab96-87b17001047d",
+      "text": "Retirement planning for self-employed professionals without employer benefits",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "5424b661-4215-4f5c-b576-adbf68c2b3e7",
+      "text": "Understanding the difference between APR and APY in loans",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "53b8212b-979c-4d0a-b0a2-4e9cf8a48e07",
+      "text": "How to avoid hidden fees in online banking services",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "fe1e28e0-34a3-46e1-8c11-25979601f425",
+      "text": "Using dividend reinvestment plans to compound wealth early",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "dc120c86-dc57-4c2d-9e34-9da54ff011e8",
+      "text": "Financial checklist before moving to a different country",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "3f72654b-6028-40d8-bc66-6d37195bdfa1",
+      "text": "Evaluating peer-to-peer rental platforms as alternative investments",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "0392f27b-25b2-4368-8e3e-19fd7e2868a0",
+      "text": "How inflation-indexed bonds protect purchasing power over time",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "626acc85-6520-49c9-8ff7-0cb8f5d1ecf1",
+      "text": "Creating a minimalist wardrobe to reduce recurring expenses",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "6b24b477-06aa-4f8c-b408-5417818b43cb",
+      "text": "Strategies for paying off a mortgage early without penalties",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "ea48db2d-8693-44cd-9d7b-eb0e65d1b198",
+      "text": "The role of estate planning for digital assets and crypto",
+      "used": false,
+      "usedAt": null
+    }
+  ]
+}
