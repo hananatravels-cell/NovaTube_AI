@@ -343,7 +343,7 @@ async function pollVideoJob(
 function generateThumbnailFromVideo(videoUrl: string, overlayText: string): Promise<string> {
   return new Promise((resolve, reject) => {
     const video = document.createElement('video');
-    video.crossOrigin = 'anonymous';
+    // video.crossOrigin = 'anonymous'; // Hata diya gaya taake Tainted Canvas error na aaye
     video.muted = true;
     video.playsInline = true;
     video.src = videoUrl;
@@ -1119,13 +1119,18 @@ export default function AIContentAgentPage() {
         }
       }
 
-      // 7. THUMBNAIL - Publishing ke baad
+      // 7. THUMBNAIL - Fixed Logic
       updateStage('thumbnail', 'working');
       let thumbDataUrlLocal = '';
       try {
-        await new Promise(requestAnimationFrame);
-        const playerVideo = await waitForVideoReady(() => videoElRef.current, 40000);
-        thumbDataUrlLocal = await captureThumbnailFromVideoElement(playerVideo, thumbnailText);
+        if (!resultVideo) throw new Error('Video URL is missing');
+        
+        // 1 second delay taake browser video file ko memory mein load kar sake
+        await sleep(1000); 
+        
+        // DOM element (videoElRef) ke bajaye direct URL se thumbnail bana rahe hain
+        thumbDataUrlLocal = await generateThumbnailFromVideo(resultVideo, thumbnailText);
+        
         setResultThumbnail(thumbDataUrlLocal);
         updateStage('thumbnail', 'completed');
         downloadDataUrl(thumbDataUrlLocal, `novatube-thumb-${slugify(topicValue)}-${Date.now()}.jpg`);
@@ -1762,7 +1767,6 @@ export default function AIContentAgentPage() {
                     <video
                       ref={videoElRef}
                       src={resultVideo}
-                      crossOrigin="anonymous"
                       controls
                       className="w-full max-h-[70vh] rounded-xl border border-white/[0.07] bg-black object-contain"
                     />
