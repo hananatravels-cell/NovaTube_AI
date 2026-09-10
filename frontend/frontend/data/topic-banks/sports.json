@@ -1,0 +1,457 @@
+{
+  "niche": "Sports",
+  "createdAt": "2026-08-26T03:13:43.776Z",
+  "updatedAt": "2026-08-29T13:20:18.538Z",
+  "topics": [
+    {
+      "id": "1399b841-a68e-453e-a017-79dd20642015",
+      "text": "Evolution of soccer formations from 2-3-5 to 4-3-3",
+      "used": true,
+      "usedAt": "2026-08-26T03:13:43.911Z"
+    },
+    {
+      "id": "fec47765-65ac-43df-9e45-85ae24326076",
+      "text": "How to improve vertical jump for basketball players",
+      "used": true,
+      "usedAt": "2026-08-26T03:30:37.800Z"
+    },
+    {
+      "id": "ec4b9d7c-a22b-4934-b600-ea137715923d",
+      "text": "Top 10 underdog stories in Olympic history",
+      "used": true,
+      "usedAt": "2026-08-26T03:53:41.161Z"
+    },
+    {
+      "id": "ea6a8939-ebb4-4b9f-b1ca-6cb9e11f4d4a",
+      "text": "Myth-busting: Do professional athletes need protein shakes?",
+      "used": true,
+      "usedAt": "2026-08-26T03:55:14.509Z"
+    },
+    {
+      "id": "ef77942b-6be6-4fb8-8509-b0c739871532",
+      "text": "The science behind marathon pacing strategies",
+      "used": true,
+      "usedAt": "2026-08-26T04:24:51.370Z"
+    },
+    {
+      "id": "5b033948-4b34-401c-8364-eeaefec766ea",
+      "text": "Breaking down the biomechanics of a perfect tennis serve",
+      "used": true,
+      "usedAt": "2026-08-26T04:52:19.287Z"
+    },
+    {
+      "id": "76fb67b7-a729-4481-8bca-80119cb50bc8",
+      "text": "Historical rivalry: Yankees vs Red Sox over a century",
+      "used": true,
+      "usedAt": "2026-08-26T05:54:22.004Z"
+    },
+    {
+      "id": "a22b59b5-e14e-4a03-8172-26eda44dea4b",
+      "text": "DIY home gym equipment for strength training",
+      "used": true,
+      "usedAt": "2026-08-26T05:56:28.070Z"
+    },
+    {
+      "id": "c5a1150e-6056-4776-a4d9-82fe55c91170",
+      "text": "Emotional comeback: Athlete who returned after severe injury",
+      "used": true,
+      "usedAt": "2026-08-26T07:58:03.140Z"
+    },
+    {
+      "id": "4f84a47b-c30a-4972-8ba4-b27617dc7e3d",
+      "text": "Understanding VAR controversies in modern football",
+      "used": true,
+      "usedAt": "2026-08-26T07:58:40.666Z"
+    },
+    {
+      "id": "763792e1-6a12-4de6-9181-f7b6f8dd1c4c",
+      "text": "Top 5 mental preparation techniques for competition",
+      "used": true,
+      "usedAt": "2026-08-26T08:00:45.482Z"
+    },
+    {
+      "id": "1b510e1a-8570-4ea3-80ff-f9c8b48e6807",
+      "text": "How climate change impacts winter sports schedules",
+      "used": true,
+      "usedAt": "2026-08-27T07:10:22.193Z"
+    },
+    {
+      "id": "e52ee3cd-721d-4ebf-ba9b-e088162372e4",
+      "text": "Exploring the origins of the Olympic torch relay",
+      "used": true,
+      "usedAt": "2026-08-27T11:26:33.545Z"
+    },
+    {
+      "id": "7fafb827-834b-4b64-9d38-5d9f396b1b20",
+      "text": "Beginner's guide to proper rowing technique",
+      "used": true,
+      "usedAt": "2026-08-29T04:14:22.705Z"
+    },
+    {
+      "id": "8b32a17e-b2ba-47ec-8b06-8ef3071f18c4",
+      "text": "Analyzing the rise of eSports as competitive sport",
+      "used": true,
+      "usedAt": "2026-08-29T13:20:18.538Z"
+    },
+    {
+      "id": "27a7c8ad-7037-4062-8c87-7edf5d5c6e18",
+      "text": "Top 7 most influential women in sports history",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "0c9a8467-0dd1-43df-beaa-74d3ed3858cc",
+      "text": "How to prevent common running injuries naturally",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "85dff59e-fcdc-49d0-a899-85310a768107",
+      "text": "The role of nutrition timing for peak performance",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "2a15e5c9-aa22-499f-8c59-4e9b3bd34277",
+      "text": "Story of a small town producing multiple NFL stars",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "c20ef861-da14-49f0-96f4-6c82a4e9637d",
+      "text": "Comparing training regimens of sprinters vs distance runners",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "1fb162a1-ae26-4f75-ad43-f41bf43b5a6b",
+      "text": "Impact of virtual reality on athlete skill development",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "325d7e31-3ed7-4f0f-a3d3-bac1eca9cdc9",
+      "text": "Top 5 underrated sports that deserve mainstream attention",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "2be934e6-59ef-4466-b86c-9572e30ef65b",
+      "text": "Step-by-step tutorial for mastering a basketball crossover",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "4ffa1254-f106-4012-8dac-af597ff394b3",
+      "text": "Cultural significance of cricket in South Asian societies",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "5c381b2e-7408-4ba6-a640-1990ac032819",
+      "text": "Analyzing why certain athletes excel under pressure",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "fef3aa3c-a240-4d29-981b-ccc8db138bf8",
+      "text": "Training adaptations of elite swimmers during altitude camps",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "0c726e0d-75e5-44d1-a70e-8cb37aefbecd",
+      "text": "Analyzing the tactical evolution of NBA small-ball lineups",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "674dd150-0d77-4d8f-92de-bb4dc76025c5",
+      "text": "Psychological impact of crowd noise on football referees",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "affc6fb2-54f9-4ef4-b468-f3d230500c7a",
+      "text": "Breakdown of injury prevention drills for youth soccer",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "64d66ce1-2885-4fe4-a7d3-c61d1c15bad8",
+      "text": "How wearable tech is reshaping marathon training plans",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "197c9a69-e2d1-44d3-88d1-70b6a9604db5",
+      "text": "Story of a high school team winning state without scholarships",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "bef1bc44-f34e-409e-b1a0-ccdbe7a1387d",
+      "text": "Comparing biomechanics of a baseball pitch versus a fastball",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "2713c7d3-d334-498f-aa61-26b1ab6add91",
+      "text": "Economic effects of hosting a major sporting event on local businesses",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "cf919bc4-40a9-4d0a-ae5b-b54e9022929c",
+      "text": "Nutrition strategies for peak performance in ultra-endurance cycling",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "82dd0b93-0605-4970-88b6-cb2915af9074",
+      "text": "Exploring the rise of women's rugby in North America",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "ccab1d59-7632-487c-97ee-44495c53bd30",
+      "text": "How sleep quality influences reaction time in combat sports",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "5982532c-67d9-42c7-af7f-abf9b730ecd6",
+      "text": "Analysis of clutch free-throw shooting under high pressure",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "1fafceee-b3cf-4c47-b312-7dfbf43c8d86",
+      "text": "The role of genetics in talent identification for sprinters",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "4d56a6dd-0e42-49d5-bf36-6df7ed7cd946",
+      "text": "DIY foam roller alternatives for athletes on a budget",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "002ae132-4318-46bd-a9fe-64de8b7384d6",
+      "text": "Historical overview of the first women's Olympic marathon",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "9d5145e2-b173-4e1e-9431-dfb2eb0e9f24",
+      "text": "Tactical use of zone defense in modern college basketball",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "f223108c-7d72-43dc-96be-8ea994219093",
+      "text": "Impact of crowdless arenas on player performance during pandemics",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "45c31586-74c6-4977-acd0-858ec1eb7f9f",
+      "text": "Training periodization models for peak timing in track meets",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "6fa426df-d229-4ba2-87ec-8aeaea44306d",
+      "text": "Cultural rituals of pre-game haka in New Zealand rugby",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "8baf6692-0189-4e35-9c7e-84f05dd1d0ab",
+      "text": "Analyzing the physics behind a perfect golf swing arc",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "b9bd2b1d-57b6-4713-8d01-230d0fff4741",
+      "text": "How climate-controlled indoor stadiums affect athlete hydration needs",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "ca37aa9c-d8e5-40cd-8db4-4a76515c72e8",
+      "text": "Story of a refugee athlete competing in the Olympics",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "09d250d1-5416-489c-8365-f6b8a9d03c2b",
+      "text": "Evaluating the effectiveness of concussion protocols in youth hockey",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "9b1e01c9-3e0c-499c-aac2-7cfb6e8195dc",
+      "text": "Exploring the mental benefits of mindfulness for competitive swimmers",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "2a14ee9c-1873-4f4d-aae0-33620c137745",
+      "text": "Breakdown of scoring systems across different international martial arts",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "daf4f837-801f-4891-9804-9790f33e8783",
+      "text": "Science behind optimal warm‑up sequencing for sprinters",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "c73b3efc-6f4e-4cfb-9944-f468054cd33a",
+      "text": "How adaptive equipment transforms Paralympic track events",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "5be0a79a-fb0a-4200-bd29-5c00ee798a5d",
+      "text": "Rise of micro‑team training in elite tennis",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "6ae113bc-56f0-40b0-bef2-c5ab9e797d93",
+      "text": "Analyzing the biomechanics of a perfect soccer free kick",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "ada62348-de9a-4894-866b-dc88d4e89c6c",
+      "text": "Story of a teenage prodigy breaking national swimming records",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "3b24bfc4-dc6d-4f83-999d-2ebda8c20eb7",
+      "text": "Economic impact of stadium naming rights on franchise revenue",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "ff2769d9-baad-408a-ba22-fcdc4d53450c",
+      "text": "Nutrition myths debunked for high‑intensity interval training",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "99d660e0-ca54-4351-82a2-0a3733db8709",
+      "text": "Historical rivalry between the Boston Celtics and Los Angeles Lakers",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "2a0e7247-39e2-49d3-95ed-41f024fe04df",
+      "text": "Practical guide to building a home boxing speed bag",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "ffa589d9-8fdb-4b6c-8e77-4ae82f27ff0b",
+      "text": "Effect of altitude on ball trajectory in baseball games",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "f67c4e08-a04a-4d7f-8fc3-d2a727c5e306",
+      "text": "Cultural importance of sumo wrestling in modern Japan",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "8e8cb603-0817-4800-ba89-3fd7a4567508",
+      "text": "How data analytics reshapes scouting in Major League Baseball",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "862d5f5e-a77e-4531-878a-49cea12bdea8",
+      "text": "Psychology of comeback victories in Olympic gymnastics",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "6c55302e-b7a7-43e9-b57f-abcda1d52995",
+      "text": "DIY low‑budget agility ladder for youth sports",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "b3ee7e24-af2c-4fcb-9ec4-a18ac3b92848",
+      "text": "Evolution of protective headgear in American football",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "39a68315-1b54-4ec7-9a39-47d85d864f21",
+      "text": "Impact of fan chants on player morale in European soccer",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "571a8e89-db08-45ed-b382-8a34900e8e14",
+      "text": "Training periodization for peak performance in triathlon season",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "bf53165d-f284-4299-be98-981d2f035ff6",
+      "text": "Story of an underdog rugby club reaching national finals",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "2af69553-adbf-484c-9db2-35e41777f90a",
+      "text": "Analyzing the role of pacing strategies in marathon races",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "f256ad02-a628-4c1f-ab9d-8af78a3a7d4d",
+      "text": "How virtual coaching platforms improve amateur golfer swing consistency",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "2d86b2e5-3a82-4cab-8717-7cd06650ee63",
+      "text": "Environmental sustainability practices in large‑scale sports venues",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "3e42fb24-4791-4ef2-aa91-3dfc61381208",
+      "text": "Biomechanical comparison of left‑handed versus right‑handed pitchers",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "e7232cc6-2978-4305-89eb-9f1fd6389e15",
+      "text": "Historical development of women's boxing as an Olympic sport",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "85bef1be-653e-47f9-b84d-50f020e0c1ee",
+      "text": "Practical drills to improve hand‑eye coordination for baseball hitters",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "b6fe61fb-14e9-4fca-9d52-e3d5d1f3a96b",
+      "text": "Influence of music tempo on sprinting speed in training",
+      "used": false,
+      "usedAt": null
+    }
+  ]
+}
