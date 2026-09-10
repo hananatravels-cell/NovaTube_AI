@@ -1,0 +1,457 @@
+{
+  "niche": "Health & Fitness",
+  "createdAt": "2026-08-29T06:16:15.060Z",
+  "updatedAt": "2026-08-29T07:01:24.056Z",
+  "topics": [
+    {
+      "id": "79037969-de32-40a8-929d-9e13d2fd0d6e",
+      "text": "Beginner's guide to effective home HIIT workouts",
+      "used": true,
+      "usedAt": "2026-08-29T06:16:15.248Z"
+    },
+    {
+      "id": "cba39401-1441-4361-9c5f-c4abd7e36d09",
+      "text": "How sleep quality impacts muscle recovery and growth",
+      "used": true,
+      "usedAt": "2026-08-29T06:32:05.977Z"
+    },
+    {
+      "id": "9f95b98b-96ae-4547-be67-7b16f241faed",
+      "text": "Debunking common myths about low-carb diets",
+      "used": true,
+      "usedAt": "2026-08-29T06:35:16.657Z"
+    },
+    {
+      "id": "ab0f7e87-9f3d-419c-9084-9877ff2a7462",
+      "text": "The evolution of yoga: from ancient practice to modern fitness",
+      "used": true,
+      "usedAt": "2026-08-29T07:01:24.056Z"
+    },
+    {
+      "id": "f5220d61-4f02-4887-82c3-e3455e2671a4",
+      "text": "Top 5 portable gym equipment for traveling athletes",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "a234f2ab-7197-4c66-8ab4-2cf04c1a8bea",
+      "text": "Story of a marathoner who overcame injury adversity",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "1066671a-bb8e-42ad-834b-e797f9011917",
+      "text": "Understanding macro-nutrient timing for optimal performance",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "d0b67ca8-0950-4ef5-b8a2-18a38361ca48",
+      "text": "Why strength training matters for women over 40",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "ef243f6c-5f4e-4fa3-8c0d-62f903b2104a",
+      "text": "Quick 10‑minute office stretch routine for desk workers",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "f44ca892-1d97-4c8d-9e52-18fca6ba5126",
+      "text": "Exploring the science behind intermittent fasting benefits",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "8db44b64-1292-4798-ad59-c0c5048a5a09",
+      "text": "How to set realistic fitness goals using SMART framework",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "cc1c1e6f-fa14-43b7-ad9e-0f6052109e71",
+      "text": "Historical origins of the modern calorie counting method",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "de1b5d40-430a-49dc-9941-83d51e441f36",
+      "text": "Emotional benefits of regular group exercise classes",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "4807fed1-cb94-411d-8f26-2d2437771325",
+      "text": "Comparing plant‑based protein powders: taste, cost, effectiveness",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "9bc03622-fe3c-4fef-b9f0-af4e681e743d",
+      "text": "How to prevent common running injuries with proper form",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "f557df1c-f038-4124-82be-2088d6a50655",
+      "text": "The role of gut microbiome in weight management",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "4b2842e5-a8f9-4015-91a0-7af404882386",
+      "text": "DIY home gym setup on a $500 budget",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "aad0a8be-ee84-4235-acc5-38efb512f692",
+      "text": "Mental health impact of consistent cardio training",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "b4ef3a6c-9502-426e-b020-889db6009d8a",
+      "text": "Top 7 underrated bodyweight exercises for full‑body strength",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "af16fe67-9246-4a0b-b3df-79a2c1d2b7f3",
+      "text": "How wearable tech data can improve workout efficiency",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "b3be3180-c01a-4982-9e3b-f335d3d108ef",
+      "text": "Explaining the difference between aerobic vs anaerobic training",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "0a79adf7-46bd-4af6-aa02-a45b525c40a4",
+      "text": "A day in the life of a professional triathlete",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "3cac9e43-3db3-4a68-907a-fcf14ad2af57",
+      "text": "Nutrition hacks for faster post‑workout muscle repair",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "6dd279db-e8ba-4db7-865f-07111a28d73c",
+      "text": "Why flexibility training reduces injury risk for seniors",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "ad1b0c24-e5fd-402e-96ca-6497485b92b4",
+      "text": "Celebrating personal fitness milestones: real stories and tips",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "6b483c30-97c7-4aa2-ad87-87d5591fefff",
+      "text": "Science of post-workout protein absorption timing",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "79bc3c20-3877-482e-86aa-18d52537d5c0",
+      "text": "How cold-water immersion accelerates muscle recovery",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "e6d36ee2-dbdf-4937-aba9-5273989d403a",
+      "text": "Exploring the benefits of barefoot running techniques",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "5fb89c9d-0a6b-4307-9500-ec5b18f9ef1a",
+      "text": "Designing a 30‑day progressive calisthenics challenge",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "dbdc9c54-7251-4852-aa15-65af38237c68",
+      "text": "Understanding heart rate variability for training optimization",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "d2062396-26c7-42c5-b54e-6ea3cc42a544",
+      "text": "Myths about cardio causing muscle loss debunked",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "bda64b60-51ae-44f2-9dc6-3e63e6528e60",
+      "text": "Historical rise of CrossFit and its cultural impact",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "0b07aabf-6296-4cd1-bc4a-dc957c568544",
+      "text": "Practical guide to meal prepping for busy professionals",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "d4c1c292-1742-4930-a2d0-bf8230207659",
+      "text": "How mindfulness meditation improves workout performance",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "289f6216-9504-4956-9f1b-f7cabbc9daca",
+      "text": "Analyzing the effects of high‑intensity interval training on metabolism",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "93384357-adb4-4790-9054-34c90fa8696c",
+      "text": "Creating a balanced weekly mobility routine for athletes",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "06ca55e8-3631-4320-8bed-626bd450746f",
+      "text": "The role of vitamin D in bone health and strength",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "5bd2e63d-5709-44ad-83dc-af65f9b74b82",
+      "text": "How to use foam rolling for injury prevention",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "0dd72857-16cf-4e73-bce5-2bde125bf66f",
+      "text": "Exploring the psychology behind exercise adherence",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "a1a0fce0-412b-4500-ae32-7d2a7ca43b67",
+      "text": "Nutrition strategies for training during high-altitude climbs",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "8c0dfe89-62a1-4896-abeb-9d48b03e529f",
+      "text": "Comparing low‑impact versus high‑impact cardio for joint health",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "6dc537e2-3af6-4e3b-91a8-e37e2cf592b6",
+      "text": "How to transition from sedentary lifestyle to active routine",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "74705bb5-b345-402a-82dc-a5166171e5c1",
+      "text": "The science behind muscle hypertrophy phases and periodization",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "8889b552-c102-4568-a6bd-a79844e0e18d",
+      "text": "Using resistance bands for full‑body strength without weights",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "66779ec1-70ca-4177-9a6f-91ae46eb3176",
+      "text": "Impact of chronic stress on cardiovascular fitness levels",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "5ac73bcc-519e-4440-91b0-482ef203f3df",
+      "text": "How to safely incorporate plyometrics into beginner workouts",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "881fdabc-0950-450f-b7a6-53366dbdd07f",
+      "text": "Evaluating the effectiveness of virtual reality fitness programs",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "2df9448f-4067-4291-b43c-8ae69444732f",
+      "text": "Story of a senior who completed first Ironman at 70",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "446f1b14-fbec-4c5c-a485-147e84e77cc5",
+      "text": "Guidelines for staying hydrated during ultra‑endurance events",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "ca230b26-4557-4388-a1ac-e67e3ea39cd1",
+      "text": "Benefits of incorporating dance routines into cardio workouts",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "7da16632-beac-4367-8e80-db769346510d",
+      "text": "Integrating intermittent fasting with strength training protocols",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "742ee542-c37e-4112-b97b-270f636d0b2a",
+      "text": "Biomechanics of kettlebell swings for hip power",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "b1e9d348-0aa5-4eec-9f1f-608c09de6d2a",
+      "text": "Assessing sleep quality's effect on muscle recovery",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "46a6a5c1-5c2a-4fb5-86f6-cb4c93cb9995",
+      "text": "Using heart rate zones to optimize fat-burning workouts",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "54766cc8-b6c6-47f0-b8df-929c9bcfa447",
+      "text": "Cultural variations in traditional martial arts conditioning methods",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "fe1fa8ab-43f0-4b69-b427-c43b4280cbee",
+      "text": "Designing a microcycle for beginner marathon training",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "99f9420d-eaa7-4540-a9d9-534c2f50b02a",
+      "text": "Impact of high-altitude training on VO2 max improvements",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "a2f97e88-6808-44ed-b747-6e88e75d43f2",
+      "text": "Exploring the science behind exercise-induced endorphin release",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "7d3678a2-9034-470f-ba1f-ed2f4b5860bd",
+      "text": "How to incorporate plyometric drills into senior fitness",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "c4beffe9-2dec-4b71-bcee-bdd681067167",
+      "text": "Evaluating the benefits of Nordic walking for joint health",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "ffa82578-88a4-4772-96ec-7638cfea4018",
+      "text": "Creating a sustainable plant-based meal plan for athletes",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "4f239098-4b4a-42d8-9573-3a85a0703305",
+      "text": "Analyzing the role of hydration timing during interval sessions",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "9c399880-a413-44b4-b341-950e955b42e6",
+      "text": "Understanding the hormonal response to resistance training in women",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "a5cb7f78-7e77-41e7-9506-139ed1ddf8d2",
+      "text": "Developing a 15‑minute office stretch routine for desk workers",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "6825ef78-55c4-4b9b-bd62-8541a25c02a1",
+      "text": "Comparing benefits of swimming versus cycling for cross‑training",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "95ad1c69-9de0-4eb4-beaf-90b243199c8a",
+      "text": "Science behind cold exposure showers for recovery enhancement",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "5868c2b2-82b4-4524-975d-0a7547e65553",
+      "text": "How to track progressive overload without heavy equipment",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "a6ce2f1d-7d71-4b3d-bd50-abb142f8fcf5",
+      "text": "Exploring functional fitness movements for everyday life activities",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "5e95b54f-7ef9-4231-b364-a976518041c3",
+      "text": "The psychological impact of achieving micro‑fitness milestones",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "5ca195fb-6ef6-4715-b6e8-f867c1a800fe",
+      "text": "Integrating yoga breathing techniques into high‑intensity workouts",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "3704cbc5-608f-4475-84ee-412f3e90f66c",
+      "text": "Assessing the effectiveness of blood flow restriction training for beginners",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "d5e0fdda-cbc0-47f4-bb16-200eda8c052f",
+      "text": "Understanding the gut‑brain axis's influence on exercise motivation",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "42f43493-76ff-488c-8bee-63dc80dadf80",
+      "text": "Designing a low‑impact cardio routine for knee arthritis sufferers",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "023edf4a-be73-4dde-a475-0c9b00f5fb91",
+      "text": "Analyzing how music tempo affects workout intensity perception",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "80b3e12e-82cd-459d-a3f7-c4bac5223473",
+      "text": "Building a habit loop for consistent morning workouts",
+      "used": false,
+      "usedAt": null
+    }
+  ]
+}

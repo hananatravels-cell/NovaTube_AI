@@ -541,7 +541,7 @@ function captureThumbnailFromVideoElement(video: HTMLVideoElement, overlayText: 
     const timeoutId = setTimeout(() => {
       restore();
       reject(new Error('Video frame extraction timed out'));
-    }, 60000);
+    }, 40000);
 
     const CANDIDATE_FRACTIONS = [0.15, 0.35, 0.55, 0.75];
 
@@ -778,12 +778,14 @@ export default function AIContentAgentPage() {
     setShowNicheDropdown(false);
     setDurationMinutes(getDefaultDurationForNiche(preset.label));
     setSelectedChannelId(null);
+    setSelectedYoutubeAccount('default');
   }
 
   function handleNicheTyping(value: string) {
     setNiche(value);
     setNicheCategoryOverride(null);
     setSelectedChannelId(null);
+    setSelectedYoutubeAccount('default');
   }
 
   function selectChannel(channel: Channel) {
@@ -1117,7 +1119,6 @@ export default function AIContentAgentPage() {
         }
       }
 
-<<<<<<< HEAD
       // 7. THUMBNAIL - Fixed Logic
       updateStage('thumbnail', 'working');
       let thumbDataUrlLocal = '';
@@ -1137,8 +1138,6 @@ export default function AIContentAgentPage() {
         console.error('Thumbnail generation failed:', thumbErr);
         updateStage('thumbnail', 'failed');
       }
-=======
->>>>>>> bee11ef977c2db2c7f18ada28eaae97033322277
 
       // 8. SEO - Agar autoPublish nahi tha
       if (!autoPublish) {
@@ -1764,7 +1763,6 @@ export default function AIContentAgentPage() {
                       </button>
                     </div>
                   </div>
-<<<<<<< HEAD
                   <div className="max-w-[320px] mx-auto">
                     <video
                       ref={videoElRef}
@@ -1773,12 +1771,6 @@ export default function AIContentAgentPage() {
                       className="w-full max-h-[70vh] rounded-xl border border-white/[0.07] bg-black object-contain"
                     />
                   </div>
-=======
-                  <div className="max-w-[320px] mx-auto py-8 text-center">
-  <p className="text-white/60 text-sm">✅ Video ready — check your Downloads folder.</p>
-  <video ref={videoElRef} src={resultVideo} crossOrigin="anonymous" className="hidden" />
-</div>
->>>>>>> bee11ef977c2db2c7f18ada28eaae97033322277
                 </div>
               )}
 
