@@ -1,0 +1,307 @@
+{
+  "niche": "True Crime",
+  "createdAt": "2026-08-28T12:15:24.716Z",
+  "updatedAt": "2026-08-30T06:34:44.817Z",
+  "topics": [
+    {
+      "id": "43d5c561-ff75-47ad-bde3-2d5e1c741f1d",
+      "text": "The forensic breakthroughs that solved the Golden State Killer",
+      "used": true,
+      "usedAt": "2026-08-28T12:15:24.844Z"
+    },
+    {
+      "id": "2a6471f2-c568-4bb2-8bac-71b1e2528c20",
+      "text": "How cold cases are reopened with modern DNA technology",
+      "used": true,
+      "usedAt": "2026-08-29T03:12:36.297Z"
+    },
+    {
+      "id": "4ceedd1a-28c2-48d6-ba1e-7785e1c6efc2",
+      "text": "Uncovering the true story behind the Dyatlov Pass mystery",
+      "used": true,
+      "usedAt": "2026-08-29T03:12:50.423Z"
+    },
+    {
+      "id": "a568d3cb-1999-4e4e-bc24-45cbe2bbcc51",
+      "text": "Psychological profile of serial killers: common traits explained",
+      "used": true,
+      "usedAt": "2026-08-29T03:13:59.583Z"
+    },
+    {
+      "id": "705af23c-66f6-445b-8cc6-091ba6f4f99d",
+      "text": "The role of media in shaping public perception of crime",
+      "used": true,
+      "usedAt": "2026-08-29T03:33:25.461Z"
+    },
+    {
+      "id": "2ee15397-391c-49db-80bf-634e5a0776ff",
+      "text": "Top five unsolved murders that still baffle investigators",
+      "used": true,
+      "usedAt": "2026-08-29T04:31:57.928Z"
+    },
+    {
+      "id": "7091e6ef-1d48-4ce5-ad63-32816a8ad71d",
+      "text": "A deep dive into the infamous Black Dahlia case",
+      "used": true,
+      "usedAt": "2026-08-29T05:27:41.588Z"
+    },
+    {
+      "id": "3ccb8dac-dacb-459b-9b9b-40ffb4ee77e4",
+      "text": "How wrongful convictions happen and ways to prevent them",
+      "used": true,
+      "usedAt": "2026-08-29T07:11:42.679Z"
+    },
+    {
+      "id": "d68ea707-3f7f-4100-85be-fdda6d90f241",
+      "text": "The evolution of forensic anthropology from the 19th century",
+      "used": true,
+      "usedAt": "2026-08-29T08:15:23.624Z"
+    },
+    {
+      "id": "00addff2-6d13-4d2d-bc18-211418673e92",
+      "text": "Inside the mind of a heist mastermind: planning techniques",
+      "used": true,
+      "usedAt": "2026-08-29T10:17:37.310Z"
+    },
+    {
+      "id": "14c4fcca-c254-4672-b03b-f4bf619a4bf1",
+      "text": "True crime tourism: ethical considerations for visiting crime scenes",
+      "used": true,
+      "usedAt": "2026-08-29T10:25:53.945Z"
+    },
+    {
+      "id": "df19c81c-588e-4819-9b24-b8d88a9e109a",
+      "text": "The impact of social media on modern criminal investigations",
+      "used": true,
+      "usedAt": "2026-08-29T10:50:54.100Z"
+    },
+    {
+      "id": "b8df86a7-182d-4c96-9fc7-a3b97e6077ab",
+      "text": "Historical crimes that changed U.S. law enforcement policies",
+      "used": true,
+      "usedAt": "2026-08-29T10:54:17.498Z"
+    },
+    {
+      "id": "6c6e30b8-1194-4e46-b0b8-750cec7a13c8",
+      "text": "How to protect yourself from identity theft scams",
+      "used": true,
+      "usedAt": "2026-08-29T10:59:02.787Z"
+    },
+    {
+      "id": "74268309-75c2-4023-a270-4eed87149d19",
+      "text": "The mysterious disappearance of the Sodder children explained",
+      "used": true,
+      "usedAt": "2026-08-29T11:04:26.594Z"
+    },
+    {
+      "id": "e4820873-68e6-475e-890b-8d9dfa8594ef",
+      "text": "Analyzing the motives behind corporate fraud scandals",
+      "used": true,
+      "usedAt": "2026-08-29T11:14:39.459Z"
+    },
+    {
+      "id": "1c48c7b5-2874-4db8-a187-56e8d786d158",
+      "text": "The role of forensic psychology in courtroom testimonies",
+      "used": true,
+      "usedAt": "2026-08-29T11:20:53.630Z"
+    },
+    {
+      "id": "4ee28357-3702-44e3-9885-d33467e88a93",
+      "text": "The untold story of the 1970s Zodiac killer letters",
+      "used": true,
+      "usedAt": "2026-08-29T11:41:32.864Z"
+    },
+    {
+      "id": "3d9208c1-79d3-4d6c-b8d2-e38c654f0052",
+      "text": "Legal loopholes that allow serial offenders to avoid prosecution",
+      "used": true,
+      "usedAt": "2026-08-30T06:34:44.817Z"
+    },
+    {
+      "id": "6d14ff78-72cb-4f60-bf60-334085ab3f18",
+      "text": "Exploring the link between childhood trauma and violent behavior",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "c37a8ff9-27b8-476d-bbfc-94f3234dba95",
+      "text": "How community policing can reduce violent crime rates",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "a2958785-7097-42dd-adb2-53c34e3ee178",
+      "text": "The most shocking courtroom confessions caught on tape",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "15d0a1a0-276e-4cbf-a415-7c647f9e8f97",
+      "text": "Investigating the role of organized crime in modern politics",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "f863316a-5c3a-48e8-bd73-7b9aae8884b5",
+      "text": "True crime podcasts: what makes them so addictive?",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "cebf99f1-db5d-483e-9230-22fd13380793",
+      "text": "Steps to start a personal crime scene investigation kit",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "1a69f88a-54ea-4025-88ed-dfb35c2f8d1e",
+      "text": "The unsolved disappearance of the Beaumont children",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "545cb368-eb7a-49da-8ffe-e1ca843d92e9",
+      "text": "How digital footprints help catch online stalkers",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "3a0a77bb-1670-4ed3-af33-cc95ca79cf6e",
+      "text": "Analyzing the forensic evidence in the West Memphis Three",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "2a6a0757-7bfc-4813-b8a7-2ca03e1b8273",
+      "text": "The rise and fall of the Yakuza's financial empire",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "ba4b3756-6ae7-4528-b282-ac38a56a7057",
+      "text": "Cold case solved by genetic genealogy: the 1994 Murder of Jane Doe",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "ce018918-ff5e-42dc-91f3-77b76c5d223f",
+      "text": "The psychology behind false confessions in police interrogations",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "5a4898d7-af3b-4f20-95cc-de205181f549",
+      "text": "Examining how forensic entomology estimates time of death",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "934e5752-d251-4e73-b48b-bc33d7177686",
+      "text": "The role of blood spatter analysis in courtroom testimony",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "1f878758-5b0b-4a6d-a665-a7acc555e4e8",
+      "text": "A timeline of the 1993 World Trade Center bombing investigation",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "6a919b00-4d92-4161-aef6-57044f948f90",
+      "text": "How community DNA databases are changing murder investigations",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "1872ac88-14e9-4dda-93c3-9498d5f9bfc5",
+      "text": "The unsolved mystery of the Isdal Woman’s death",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "b7dafe44-cea5-4b10-a028-9ab34833f264",
+      "text": "Comparing investigative techniques of 19th century detectives vs modern FBI",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "e15b2541-9403-4e94-a99b-9ecb6a843f8f",
+      "text": "The impact of victim advocacy groups on case outcomes",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "4f6b4155-01b6-4bf9-a1c6-24c161d21bc6",
+      "text": "How satellite imagery assists in locating hidden crime scenes",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "fa9526be-7a7a-4a87-b703-35fedadff97b",
+      "text": "The story behind the 1971 D.B. Cooper hijacking",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "436f4bde-5541-4d1c-a22a-41d4dbdcab9d",
+      "text": "Exploring the forensic challenges of mass disaster victim identification",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "021f9016-04e3-4cbd-ac08-791d36f47fe7",
+      "text": "The influence of true crime documentaries on jury bias",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "d17c2943-0d9d-4ae5-8080-c5f0f964ea1b",
+      "text": "How social media sleuths helped solve a 2018 kidnapping",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "70ddadf6-73b6-40f3-b855-1cd786aaca7f",
+      "text": "The legal battle over DNA evidence admissibility in court",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "a2d7e30b-6173-41dc-863d-35235f6c8c1b",
+      "text": "Examining the role of forensic linguistics in ransom note analysis",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "fed05a04-9198-4b1b-af09-63b2cf00b3f2",
+      "text": "The hidden crimes of famous historical figures revealed",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "4a1c2329-141e-42c8-975a-20ed5e1573f9",
+      "text": "Understanding how wrongful death settlements affect families financially",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "7ef9c0ad-e7ba-4af6-8745-a9e4378218ac",
+      "text": "The evolution of cyberstalking laws across the past decade",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "0884993d-f174-427d-a5b1-1a111fe6b09e",
+      "text": "How forensic accountants trace money in complex fraud schemes",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "464aaaff-499d-400b-aa0b-746399e885c9",
+      "text": "The story of the 1978 Son of Sam's final capture",
+      "used": false,
+      "usedAt": null
+    }
+  ]
+}

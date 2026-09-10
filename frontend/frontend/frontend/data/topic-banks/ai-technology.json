@@ -1,0 +1,2107 @@
+{
+  "niche": "AI & Technology",
+  "createdAt": "2026-08-24T05:24:37.232923Z",
+  "updatedAt": "2026-08-30T03:54:07.509Z",
+  "topics": [
+    {
+      "id": "526a2ad8-ddb6-4d92-84b8-bf5a51b23614",
+      "text": "5 AI Tools That Will Replace Jobs by 2027",
+      "used": true,
+      "usedAt": "2026-08-24T07:42:19.054Z",
+      "title": "5 AI Tools That Will Replace Jobs by 2027",
+      "subtitle": "Some of these tools are already doing full-time work better than the people who trained them.",
+      "description": "From customer support to graphic design, these five AI tools are already outperforming entry-level employees. We look at which jobs are most at risk and what skills stay safe.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#AIJobs",
+        "#Automation"
+      ],
+      "seoKeywords": [
+        "AI replacing jobs",
+        "future of work AI",
+        "jobs AI will replace 2027"
+      ]
+    },
+    {
+      "id": "f64df80f-71a3-458c-9bcb-e7f8d4bde8eb",
+      "text": "How ChatGPT Actually Works Explained Simply",
+      "used": true,
+      "usedAt": "2026-08-24T07:45:09.145Z",
+      "title": "How ChatGPT Actually Works Explained Simply",
+      "subtitle": "It's not thinking. It's predicting the next word — and that changes everything about how you should use it.",
+      "description": "We strip away the hype and explain, in plain language, how a language model turns a prompt into a coherent answer, and where its real limits are.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#ChatGPT",
+        "#LLM"
+      ],
+      "seoKeywords": [
+        "how ChatGPT works",
+        "large language model explained",
+        "AI language model basics"
+      ]
+    },
+    {
+      "id": "f262d39b-c5c3-4b14-818f-0d44ac1d03b0",
+      "text": "The Rise of Humanoid Robots in Factories",
+      "used": true,
+      "usedAt": "2026-08-24T07:46:00.128Z",
+      "title": "The Rise of Humanoid Robots in Factories",
+      "subtitle": "Car factories are quietly replacing entire shifts with robots that walk, not just weld.",
+      "description": "Companies like Tesla and Figure are testing humanoid robots on real production lines. We look at how far they've actually come and where they still fall short.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#HumanoidRobots",
+        "#Manufacturing"
+      ],
+      "seoKeywords": [
+        "humanoid robots factory",
+        "robots replacing factory workers",
+        "Tesla Optimus robot"
+      ]
+    },
+    {
+      "id": "692f7a6c-8c08-49d5-baa9-739ca7bbe5db",
+      "text": "Why Nvidia Became the Most Valuable AI Company",
+      "used": true,
+      "usedAt": "2026-08-24T10:15:55.553Z",
+      "title": "Why Nvidia Became the Most Valuable AI Company",
+      "subtitle": "A graphics card company for gamers accidentally became the backbone of the entire AI industry.",
+      "description": "Nvidia's chips were built for video games — now they power almost every major AI model on Earth. Here's the story of how that happened and why it matters.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#Nvidia",
+        "#AIChips"
+      ],
+      "seoKeywords": [
+        "why is Nvidia so valuable",
+        "Nvidia AI chips",
+        "Nvidia stock explained"
+      ]
+    },
+    {
+      "id": "a81d8713-ae6a-4700-8c15-bff6b012f93c",
+      "text": "What Happens When AI Writes Its Own Code",
+      "used": true,
+      "usedAt": "2026-08-24T10:18:17.646Z",
+      "title": "What Happens When AI Writes Its Own Code",
+      "subtitle": "AI systems are already rewriting parts of themselves — and nobody fully agrees on how far that should go.",
+      "description": "Self-improving code sounds like science fiction, but early versions already exist. We explain the real capability today versus the far-off fear.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#AICoding",
+        "#SelfImprovingAI"
+      ],
+      "seoKeywords": [
+        "AI writing its own code",
+        "self-improving AI",
+        "AI code generation"
+      ]
+    },
+    {
+      "id": "887e5667-9d30-4c1e-8ad9-1de92033be93",
+      "text": "Self-Driving Cars: How Close Are We Really",
+      "used": true,
+      "usedAt": "2026-08-24T10:21:12.145Z",
+      "title": "Self-Driving Cars: How Close Are We Really",
+      "subtitle": "Robotaxis are already driving paying passengers in three US cities — just not the ones you'd expect.",
+      "description": "We separate marketing promises from what self-driving cars can actually do on real roads today, and what's still years away.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#SelfDrivingCars",
+        "#Robotaxi"
+      ],
+      "seoKeywords": [
+        "self driving cars 2026",
+        "autonomous vehicles progress",
+        "robotaxi cities"
+      ]
+    },
+    {
+      "id": "7563c2c9-70cd-47df-84fb-2f50fae191b1",
+      "text": "The Dark Side of Facial Recognition Technology",
+      "used": true,
+      "usedAt": "2026-08-26T11:07:01.406Z",
+      "title": "The Dark Side of Facial Recognition Technology",
+      "subtitle": "Your face might already be in a database you never agreed to join.",
+      "description": "Facial recognition is used far more widely than most people realize — from stores to police departments. We look at the privacy trade-offs nobody explains clearly.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#FacialRecognition",
+        "#DigitalPrivacy"
+      ],
+      "seoKeywords": [
+        "facial recognition privacy",
+        "facial recognition dangers",
+        "how facial recognition works"
+      ]
+    },
+    {
+      "id": "fdc2fda1-ef3f-4f24-8c5e-87ba9d2d3fb7",
+      "text": "How Neural Networks Learn Like a Human Brain",
+      "used": true,
+      "usedAt": "2026-08-30T03:54:07.509Z",
+      "title": "How Neural Networks Learn Like a Human Brain",
+      "subtitle": "They're named after neurons, but the way they actually learn is stranger than that comparison suggests.",
+      "description": "We break down what a neural network really is, using simple visuals instead of heavy math, and where the brain comparison breaks down.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#NeuralNetworks",
+        "#MachineLearning"
+      ],
+      "seoKeywords": [
+        "how neural networks work",
+        "neural network explained simply",
+        "AI learning process"
+      ]
+    },
+    {
+      "id": "66258fe5-e220-4287-a7ef-d8abbc8ab3bd",
+      "text": "AI Girlfriends and the Loneliness Epidemic",
+      "used": false,
+      "usedAt": null,
+      "title": "AI Girlfriends and the Loneliness Epidemic",
+      "subtitle": "Millions of people are talking to an AI partner every single day — and for some, it's replacing real relationships.",
+      "description": "AI companion apps have exploded in popularity. We look at why people use them, what psychologists are warning about, and where the line really is.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#AICompanion",
+        "#DigitalLoneliness"
+      ],
+      "seoKeywords": [
+        "AI girlfriend apps",
+        "AI companion psychology",
+        "loneliness and technology"
+      ]
+    },
+    {
+      "id": "4e9c4c1b-e876-470e-b9dd-50d2cd691551",
+      "text": "Quantum Computers Explained for Beginners",
+      "used": false,
+      "usedAt": null,
+      "title": "Quantum Computers Explained for Beginners",
+      "subtitle": "A quantum computer can be in two states at once — and that single fact could break modern encryption.",
+      "description": "Forget the jargon. We explain qubits, superposition, and why governments are racing to build quantum computers first.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#QuantumComputing",
+        "#Qubits"
+      ],
+      "seoKeywords": [
+        "quantum computing explained",
+        "what is a qubit",
+        "quantum computers for beginners"
+      ]
+    },
+    {
+      "id": "914349fc-17ae-454c-936d-f13156d25bfb",
+      "text": "The AI Arms Race Between USA and China",
+      "used": false,
+      "usedAt": null,
+      "title": "The AI Arms Race Between USA and China",
+      "subtitle": "Whoever controls the best AI chips may end up controlling the next century of global power.",
+      "description": "Export bans, chip smuggling, and billion-dollar investments — we map out how the US and China are really competing over AI.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#USChinaTech",
+        "#AIRace"
+      ],
+      "seoKeywords": [
+        "US China AI race",
+        "AI chip war",
+        "global AI competition"
+      ]
+    },
+    {
+      "id": "d0256005-651a-4169-be8e-da0812801765",
+      "text": "How Deepfakes Are Fooling Millions of People",
+      "used": false,
+      "usedAt": null,
+      "title": "How Deepfakes Are Fooling Millions of People",
+      "subtitle": "One fake video of a CEO wiped out billions in company value in under an hour.",
+      "description": "Deepfakes have gone from obvious fakes to nearly undetectable. We show real cases and the tools now being used to catch them.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#Deepfakes",
+        "#AIFraud"
+      ],
+      "seoKeywords": [
+        "deepfake technology explained",
+        "how to spot a deepfake",
+        "deepfake scams"
+      ]
+    },
+    {
+      "id": "25e22c53-f7a7-45d7-895a-3f15843d5161",
+      "text": "Inside the Data Centers Powering AI",
+      "used": false,
+      "usedAt": null,
+      "title": "Inside the Data Centers Powering AI",
+      "subtitle": "One AI data center can use as much electricity as an entire small city.",
+      "description": "We go inside the massive server farms that make ChatGPT and other AI tools possible — and the huge energy cost behind every answer.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#DataCenters",
+        "#AIInfrastructure"
+      ],
+      "seoKeywords": [
+        "AI data centers explained",
+        "how much energy does AI use",
+        "AI server farms"
+      ]
+    },
+    {
+      "id": "6bc99b9b-b1ea-42f0-81e0-f02c6630982e",
+      "text": "Will Robots Take Over Human Jobs Completely",
+      "used": false,
+      "usedAt": null,
+      "title": "Will Robots Take Over Human Jobs Completely",
+      "subtitle": "Every major tech shift in history created more jobs than it destroyed — but AI might be different.",
+      "description": "We look at historical automation waves versus what's happening now, and which predictions from experts actually hold up.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#FutureOfWork",
+        "#AIJobs"
+      ],
+      "seoKeywords": [
+        "will AI take all jobs",
+        "automation and employment",
+        "AI job displacement"
+      ]
+    },
+    {
+      "id": "5dab2a06-c5e3-43bb-b2a6-d37498be0e42",
+      "text": "The Truth About AI Consciousness Debate",
+      "used": false,
+      "usedAt": null,
+      "title": "The Truth About AI Consciousness Debate",
+      "subtitle": "A Google engineer was fired for claiming an AI chatbot was alive — was he completely wrong?",
+      "description": "We explain what AI researchers actually mean by \"consciousness,\" and why most experts say today's AI isn't close, despite how convincing it feels.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#AIConsciousness",
+        "#AIEthics"
+      ],
+      "seoKeywords": [
+        "is AI conscious",
+        "AI sentience debate",
+        "artificial consciousness explained"
+      ]
+    },
+    {
+      "id": "c1d49fe7-dd6c-4f86-9c9c-b7338e95a16b",
+      "text": "How Elon Musk's Neuralink Actually Works",
+      "used": false,
+      "usedAt": null,
+      "title": "How Elon Musk's Neuralink Actually Works",
+      "subtitle": "The first human patient with a Neuralink chip can already move a cursor using thought alone.",
+      "description": "We break down how the brain implant reads neural signals, what it's been used for so far, and the risks nobody's talking about.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#Neuralink",
+        "#BrainImplant"
+      ],
+      "seoKeywords": [
+        "how Neuralink works",
+        "brain computer interface explained",
+        "Neuralink first patient"
+      ]
+    },
+    {
+      "id": "536868c1-efc5-4503-a648-04242d06dc12",
+      "text": "5G vs 6G: What Actually Changes",
+      "used": false,
+      "usedAt": null,
+      "title": "5G vs 6G: What Actually Changes",
+      "subtitle": "6G promises speeds 100 times faster than 5G — but most people still don't know what 5G actually did.",
+      "description": "We compare what 5G really delivered versus the hype, and what 6G is expected to genuinely change when it arrives.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#5Gvs6G",
+        "#MobileNetworks"
+      ],
+      "seoKeywords": [
+        "5G vs 6G difference",
+        "what is 6G",
+        "6G network speed"
+      ]
+    },
+    {
+      "id": "c6479d48-8c6e-4d80-9174-40f49af63a11",
+      "text": "The Hidden Cost of Training AI Models",
+      "used": false,
+      "usedAt": null,
+      "title": "The Hidden Cost of Training AI Models",
+      "subtitle": "Training one large AI model can cost more than $100 million — and that's before it answers a single question.",
+      "description": "We break down where that money actually goes, from chips to electricity to the data itself.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#AITrainingCost",
+        "#AIEconomics"
+      ],
+      "seoKeywords": [
+        "cost to train AI model",
+        "AI model training expenses",
+        "how expensive is AI"
+      ]
+    },
+    {
+      "id": "c0606ec4-305f-46c6-8ab5-7dbd7cd59101",
+      "text": "How AI Is Diagnosing Diseases Faster Than Doctors",
+      "used": false,
+      "usedAt": null,
+      "title": "How AI Is Diagnosing Diseases Faster Than Doctors",
+      "subtitle": "In some trials, an AI spotted cancer that three radiologists missed.",
+      "description": "We look at real hospitals using AI to catch diseases earlier, and how doctors are working alongside the technology instead of against it.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#AIinHealthcare",
+        "#MedicalAI"
+      ],
+      "seoKeywords": [
+        "AI medical diagnosis",
+        "AI detecting disease",
+        "AI vs doctors accuracy"
+      ]
+    },
+    {
+      "id": "9401c39e-447d-4040-9cfc-65211cc09137",
+      "text": "Smart Glasses: The Next Big Tech Trend",
+      "used": false,
+      "usedAt": null,
+      "title": "Smart Glasses: The Next Big Tech Trend",
+      "subtitle": "Meta's smart glasses sold out faster than any wearable device since the Apple Watch.",
+      "description": "We look at why smart glasses are suddenly everywhere, what they can actually do today, and whether they'll replace smartphones.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#SmartGlasses",
+        "#Wearables"
+      ],
+      "seoKeywords": [
+        "best smart glasses 2026",
+        "smart glasses vs smartphones",
+        "AI smart glasses"
+      ]
+    },
+    {
+      "id": "556c305f-9eb2-496d-bbc7-9ad48181691b",
+      "text": "Why Apple Is Betting Big on AI",
+      "used": false,
+      "usedAt": null,
+      "title": "Why Apple Is Betting Big on AI",
+      "subtitle": "Apple was years behind in AI — so why is their bet suddenly starting to pay off?",
+      "description": "We look at Apple's quiet AI strategy, how it differs from Google and OpenAI, and what it means for your next iPhone.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#AppleAI",
+        "#AppleIntelligence"
+      ],
+      "seoKeywords": [
+        "Apple AI strategy",
+        "Apple Intelligence explained",
+        "Apple vs OpenAI"
+      ]
+    },
+    {
+      "id": "95c0c14b-71b4-4934-ac72-836ba754f9db",
+      "text": "The Rise of AI Generated Music Artists",
+      "used": false,
+      "usedAt": null,
+      "title": "The Rise of AI Generated Music Artists",
+      "subtitle": "A fully AI-generated artist just charted on Spotify — and most listeners had no idea.",
+      "description": "We look at how AI music tools work, the copyright battles they've triggered, and whether real musicians should be worried.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#AIMusic",
+        "#GeneratedArtists"
+      ],
+      "seoKeywords": [
+        "AI generated music",
+        "AI music artists Spotify",
+        "AI music copyright"
+      ]
+    },
+    {
+      "id": "8d1ae80b-c159-4bb3-bbfc-ce299a340f4d",
+      "text": "How Voice Cloning Technology Actually Works",
+      "used": false,
+      "usedAt": null,
+      "title": "How Voice Cloning Technology Actually Works",
+      "subtitle": "Just three seconds of your voice is enough for AI to clone it convincingly.",
+      "description": "We explain the technology behind voice cloning, real cases where it's been misused, and how companies are trying to stop the scams.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#VoiceCloning",
+        "#AIScams"
+      ],
+      "seoKeywords": [
+        "how voice cloning works",
+        "AI voice clone scam",
+        "voice cloning technology"
+      ]
+    },
+    {
+      "id": "fbdf59f6-ebd8-4dd9-a987-985f2acaa750",
+      "text": "Inside Tesla's Optimus Robot Project",
+      "used": false,
+      "usedAt": null,
+      "title": "Inside Tesla's Optimus Robot Project",
+      "subtitle": "Elon Musk claims Optimus could become bigger than Tesla's entire car business.",
+      "description": "We look at what the humanoid robot can actually do right now versus what's still just a demo, and the real production timeline.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#TeslaOptimus",
+        "#HumanoidRobot"
+      ],
+      "seoKeywords": [
+        "Tesla Optimus robot explained",
+        "Optimus robot capabilities",
+        "Tesla robot timeline"
+      ]
+    },
+    {
+      "id": "e2b0543a-cc72-4a7f-9faa-a128e83d3157",
+      "text": "The Ethics of Creating Artificial General Intelligence",
+      "used": false,
+      "usedAt": null,
+      "title": "The Ethics of Creating Artificial General Intelligence",
+      "subtitle": "The people building AGI can't agree on whether it will save humanity or end it.",
+      "description": "We break down what AGI actually means, why top researchers are split on the risk, and what safeguards are being proposed.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#AGI",
+        "#AIEthics"
+      ],
+      "seoKeywords": [
+        "what is AGI",
+        "AGI risks explained",
+        "artificial general intelligence ethics"
+      ]
+    },
+    {
+      "id": "a7caefa2-7dc1-4dc8-9521-37e854220051",
+      "text": "How Blockchain Technology Actually Works Explained",
+      "used": false,
+      "usedAt": null,
+      "title": "How Blockchain Technology Actually Works Explained",
+      "subtitle": "Blockchain isn't just for crypto — hospitals and shipping companies are quietly using it too.",
+      "description": "We strip blockchain down to its simplest idea: a ledger nobody can secretly edit, and show real uses beyond Bitcoin.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#Blockchain",
+        "#Web3"
+      ],
+      "seoKeywords": [
+        "how blockchain works",
+        "blockchain explained simply",
+        "blockchain use cases"
+      ]
+    },
+    {
+      "id": "616f3b5c-0b78-4abd-9468-35e3480bdbc7",
+      "text": "Why Chips Are the New Oil",
+      "used": false,
+      "usedAt": null,
+      "title": "Why Chips Are the New Oil",
+      "subtitle": "A single advanced chip factory costs more to build than a small country's entire GDP.",
+      "description": "We explain why semiconductors have become the most fought-over resource on Earth, and who controls the supply.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#Semiconductors",
+        "#ChipWar"
+      ],
+      "seoKeywords": [
+        "semiconductor industry explained",
+        "why chips matter globally",
+        "chip manufacturing power"
+      ]
+    },
+    {
+      "id": "3a78ac98-673d-4079-9be1-74f8b45bf6be",
+      "text": "The Story Behind OpenAI's Founding",
+      "used": false,
+      "usedAt": null,
+      "title": "The Story Behind OpenAI's Founding",
+      "subtitle": "OpenAI started as a nonprofit built to keep AI safe — then it built the very thing it feared.",
+      "description": "We trace OpenAI's journey from its founding mission to the internal conflicts that reshaped the company.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#OpenAI",
+        "#AIHistory"
+      ],
+      "seoKeywords": [
+        "OpenAI history explained",
+        "OpenAI founding story",
+        "how OpenAI started"
+      ]
+    },
+    {
+      "id": "45ece683-48f3-4cdd-8114-f81abd06ce15",
+      "text": "How AI Detects Cancer in Medical Scans",
+      "used": false,
+      "usedAt": null,
+      "title": "How AI Detects Cancer in Medical Scans",
+      "subtitle": "An AI system reviewed 100,000 scans and never got tired, never blinked, never missed a coffee break.",
+      "description": "We look at how AI models are trained on medical images, the accuracy compared to human radiologists, and where it still needs a human check.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#AIcancerDetection",
+        "#MedicalImaging"
+      ],
+      "seoKeywords": [
+        "AI cancer detection accuracy",
+        "AI medical scans",
+        "AI radiology technology"
+      ]
+    },
+    {
+      "id": "c31805b1-0507-4ae4-bc18-b4590e2de29b",
+      "text": "Brain Computer Interfaces: Science Fiction Becomes Real",
+      "used": false,
+      "usedAt": null,
+      "title": "Brain Computer Interfaces: Science Fiction Becomes Real",
+      "subtitle": "A paralyzed patient just typed an email using only their thoughts.",
+      "description": "We look beyond Neuralink at the wider world of brain-computer interfaces, and how close we really are to thought-controlled devices.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#BrainComputerInterface",
+        "#BCI"
+      ],
+      "seoKeywords": [
+        "brain computer interface explained",
+        "thought controlled technology",
+        "BCI real world uses"
+      ]
+    },
+    {
+      "id": "e9c81918-68d4-48da-8865-913b0942de2a",
+      "text": "The Rise of AI Powered Personal Assistants",
+      "used": false,
+      "usedAt": null,
+      "title": "The Rise of AI Powered Personal Assistants",
+      "subtitle": "The next Siri won't just set timers — it'll book your flights and negotiate your bills.",
+      "description": "We look at how AI assistants are evolving from simple commands to handling real tasks on your behalf.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#AIAssistants",
+        "#PersonalAI"
+      ],
+      "seoKeywords": [
+        "best AI personal assistant",
+        "AI assistant technology",
+        "future of AI assistants"
+      ]
+    },
+    {
+      "id": "c73ce1f4-1397-4296-b863-714cc041ddf8",
+      "text": "How Google's Search Algorithm Really Works",
+      "used": false,
+      "usedAt": null,
+      "title": "How Google's Search Algorithm Really Works",
+      "subtitle": "Google changes its search algorithm over 4,000 times a year — and almost never explains why.",
+      "description": "We pull back the curtain on how Google actually ranks websites, and why so much SEO advice online is outdated.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#GoogleAlgorithm",
+        "#SEO"
+      ],
+      "seoKeywords": [
+        "how Google search works",
+        "Google ranking algorithm",
+        "Google search explained"
+      ]
+    },
+    {
+      "id": "eacada4d-f90f-4126-9216-ae3a5849f3b4",
+      "text": "Why Data Privacy Matters More Than Ever",
+      "used": false,
+      "usedAt": null,
+      "title": "Why Data Privacy Matters More Than Ever",
+      "subtitle": "The average person's personal data is bought and sold dozens of times before they ever find out.",
+      "description": "We explain exactly what happens to your data online, who profits from it, and simple steps that actually protect you.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#DataPrivacy",
+        "#OnlineSecurity"
+      ],
+      "seoKeywords": [
+        "data privacy explained",
+        "how companies use your data",
+        "protect online privacy"
+      ]
+    },
+    {
+      "id": "e0435de4-7c76-4b2f-b963-918f29d5f49a",
+      "text": "The Future of Virtual Reality Headsets",
+      "used": false,
+      "usedAt": null,
+      "title": "The Future of Virtual Reality Headsets",
+      "subtitle": "Apple's Vision Pro costs more than most laptops — so why do people say VR's best days are still ahead?",
+      "description": "We look at where VR headsets are actually heading, from gaming to work, and whether the technology is finally ready for everyone.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#VirtualReality",
+        "#VisionPro"
+      ],
+      "seoKeywords": [
+        "future of VR headsets",
+        "virtual reality technology 2026",
+        "VR vs AR"
+      ]
+    },
+    {
+      "id": "75da278b-b82b-4059-9329-dc34b1bedeee",
+      "text": "How Machine Learning Predicts Stock Markets",
+      "used": false,
+      "usedAt": null,
+      "title": "How Machine Learning Predicts Stock Markets",
+      "subtitle": "Hedge funds now run algorithms that trade faster than any human could react.",
+      "description": "We explain how machine learning models analyze market data, where they succeed, and why they still can't predict everything.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#AlgorithmicTrading",
+        "#MachineLearning"
+      ],
+      "seoKeywords": [
+        "AI stock market prediction",
+        "machine learning trading",
+        "algorithmic trading explained"
+      ]
+    },
+    {
+      "id": "721f8e41-2f3b-4ffa-9e2e-511e8a50aeac",
+      "text": "Inside the World's Fastest Supercomputers",
+      "used": false,
+      "usedAt": null,
+      "title": "Inside the World's Fastest Supercomputers",
+      "subtitle": "The world's fastest supercomputer can do more calculations in one second than every human alive combined could do in a year.",
+      "description": "We take a look inside the machines pushing the limits of computing, and what they're actually being used to solve.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#Supercomputers",
+        "#HPC"
+      ],
+      "seoKeywords": [
+        "fastest supercomputer in the world",
+        "supercomputer explained",
+        "what are supercomputers used for"
+      ]
+    },
+    {
+      "id": "3e86fb09-95a0-45e6-8a7e-c708b86bf862",
+      "text": "The Rise of Open Source AI Models",
+      "used": false,
+      "usedAt": null,
+      "title": "The Rise of Open Source AI Models",
+      "subtitle": "A free AI model built by a small team is now beating billion-dollar competitors on some tasks.",
+      "description": "We look at why open-source AI is exploding in popularity, and what it means for who controls the technology's future.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#OpenSourceAI",
+        "#AIModels"
+      ],
+      "seoKeywords": [
+        "open source AI models",
+        "best open source AI",
+        "open source vs closed AI"
+      ]
+    },
+    {
+      "id": "fca2492c-ad2a-4aa5-93a3-9dcda3fb5249",
+      "text": "How Autonomous Drones Are Changing Warfare",
+      "used": false,
+      "usedAt": null,
+      "title": "How Autonomous Drones Are Changing Warfare",
+      "subtitle": "Modern battlefields are increasingly being fought by machines that never sleep and never hesitate.",
+      "description": "We look at how AI-powered drones are reshaping military strategy, and the ethical questions that come with removing humans from the decision.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#AutonomousDrones",
+        "#MilitaryTech"
+      ],
+      "seoKeywords": [
+        "AI drones warfare",
+        "autonomous military drones",
+        "drone warfare technology"
+      ]
+    },
+    {
+      "id": "dddc61f6-54ee-4ce8-987f-626a820d0d8d",
+      "text": "Why Silicon Valley Is Obsessed With AI",
+      "used": false,
+      "usedAt": null,
+      "title": "Why Silicon Valley Is Obsessed With AI",
+      "subtitle": "Every major tech company bet its entire future on AI within the span of two years.",
+      "description": "We look at what triggered the sudden all-in shift across Silicon Valley, and what happens to the companies that bet wrong.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#SiliconValley",
+        "#TechIndustry"
+      ],
+      "seoKeywords": [
+        "Silicon Valley AI obsession",
+        "why big tech invests in AI",
+        "AI industry trends"
+      ]
+    },
+    {
+      "id": "e8135011-aa41-4af6-a7a0-abcef118043d",
+      "text": "The Truth About 5G Health Concerns",
+      "used": false,
+      "usedAt": null,
+      "title": "The Truth About 5G Health Concerns",
+      "subtitle": "5G health rumors spread faster than the network itself — so what does the actual science say?",
+      "description": "We separate real research from viral misinformation about 5G radiation, using studies instead of social media claims.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#5GMyths",
+        "#TechFacts"
+      ],
+      "seoKeywords": [
+        "is 5G safe",
+        "5G health concerns explained",
+        "5G radiation facts"
+      ]
+    },
+    {
+      "id": "d79da0a5-ffd7-4bda-bd3e-1d7447417e8c",
+      "text": "How Smart Homes Are Becoming Reality",
+      "used": false,
+      "usedAt": null,
+      "title": "How Smart Homes Are Becoming Reality",
+      "subtitle": "Your house might soon know you're coming home before you've even left work.",
+      "description": "We look at how smart home technology has evolved from novelty gadgets to genuinely useful systems that save time and energy.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#SmartHome",
+        "#HomeAutomation"
+      ],
+      "seoKeywords": [
+        "smart home technology 2026",
+        "best smart home devices",
+        "home automation explained"
+      ]
+    },
+    {
+      "id": "0a4debb7-81dd-4ab4-b0c9-1c1f7082b79b",
+      "text": "The Race to Build Flying Cars",
+      "used": false,
+      "usedAt": null,
+      "title": "The Race to Build Flying Cars",
+      "subtitle": "Several companies have working flying car prototypes — the real obstacle isn't the technology, it's the sky itself.",
+      "description": "We look at who's actually closest to real flying cars, and the regulatory maze standing between prototypes and your driveway.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#FlyingCars",
+        "#eVTOL"
+      ],
+      "seoKeywords": [
+        "flying cars 2026",
+        "eVTOL aircraft explained",
+        "when will flying cars be available"
+      ]
+    },
+    {
+      "id": "569ef6fa-e954-433e-be36-295814324a98",
+      "text": "Why Cybersecurity Threats Are Increasing Rapidly",
+      "used": false,
+      "usedAt": null,
+      "title": "Why Cybersecurity Threats Are Increasing Rapidly",
+      "subtitle": "A ransomware attack now happens somewhere in the world roughly every 11 seconds.",
+      "description": "We explain why cyberattacks are accelerating, who the real targets are, and the basic habits that stop most attacks before they start.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#Cybersecurity",
+        "#Ransomware"
+      ],
+      "seoKeywords": [
+        "cybersecurity threats 2026",
+        "why cyberattacks are increasing",
+        "ransomware explained"
+      ]
+    },
+    {
+      "id": "6e440b6b-0a58-4b83-80a5-d6632a704ff0",
+      "text": "How AI Chatbots Are Trained From Scratch",
+      "used": false,
+      "usedAt": null,
+      "title": "How AI Chatbots Are Trained From Scratch",
+      "subtitle": "Before a chatbot can hold a conversation, it reads roughly the equivalent of every book ever written.",
+      "description": "We walk through the real training process behind chatbots, from raw text to the assistant you actually chat with.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#ChatbotTraining",
+        "#AIModels"
+      ],
+      "seoKeywords": [
+        "how AI chatbots are trained",
+        "chatbot training process",
+        "AI model training explained"
+      ]
+    },
+    {
+      "id": "7f7e7fef-de99-41b5-afa6-7499d36b4dbe",
+      "text": "The Rise of Biometric Payment Systems",
+      "used": false,
+      "usedAt": null,
+      "title": "The Rise of Biometric Payment Systems",
+      "subtitle": "Some stores now let you pay just by scanning your palm — no card, no phone.",
+      "description": "We look at how biometric payments actually work, the security trade-offs, and why adoption is accelerating worldwide.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#BiometricPayments",
+        "#Fintech"
+      ],
+      "seoKeywords": [
+        "biometric payment technology",
+        "palm scan payment",
+        "future of payments"
+      ]
+    },
+    {
+      "id": "5fbd5863-0cb8-4500-a7e3-377623872264",
+      "text": "Inside Amazon's Robot Powered Warehouses",
+      "used": false,
+      "usedAt": null,
+      "title": "Inside Amazon's Robot Powered Warehouses",
+      "subtitle": "Amazon now operates more robots than employees in some of its warehouses.",
+      "description": "We look inside the automated systems moving millions of packages a day, and how they work alongside human workers.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#AmazonRobots",
+        "#Warehouse"
+      ],
+      "seoKeywords": [
+        "Amazon warehouse robots",
+        "Amazon automation technology",
+        "robots in warehouses"
+      ]
+    },
+    {
+      "id": "5e36fa20-c848-4a3c-886d-f7a2f57f72df",
+      "text": "How Satellite Internet Is Reaching Remote Areas",
+      "used": false,
+      "usedAt": null,
+      "title": "How Satellite Internet Is Reaching Remote Areas",
+      "subtitle": "A fishing village with no internet for decades got online in a single afternoon — thanks to a satellite dish the size of a pizza box.",
+      "description": "We look at how satellite internet like Starlink is connecting places fiber cables never reached.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#SatelliteInternet",
+        "#Starlink"
+      ],
+      "seoKeywords": [
+        "satellite internet explained",
+        "Starlink technology",
+        "internet in remote areas"
+      ]
+    },
+    {
+      "id": "c7a1f290-8bdb-4297-814a-0b8d4fe7aba6",
+      "text": "The Future of Space Tourism Technology",
+      "used": false,
+      "usedAt": null,
+      "title": "The Future of Space Tourism Technology",
+      "subtitle": "A ticket to space now costs less than some luxury cars — and prices are still falling.",
+      "description": "We look at the companies racing to make space tourism affordable, and what a trip actually looks like today.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#SpaceTourism",
+        "#SpaceTech"
+      ],
+      "seoKeywords": [
+        "space tourism companies",
+        "cost of space tourism",
+        "future of space travel"
+      ]
+    },
+    {
+      "id": "75afda87-c2d8-4fff-aded-fb4246a968b9",
+      "text": "Why Tech Companies Are Investing in Fusion Energy",
+      "used": false,
+      "usedAt": null,
+      "title": "Why Tech Companies Are Investing in Fusion Energy",
+      "subtitle": "A single fusion reaction releases four times more energy than splitting an atom — and Big Tech wants it to power AI.",
+      "description": "We look at why tech giants are pouring billions into fusion energy research, and how close a working reactor really is.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#FusionEnergy",
+        "#CleanEnergy"
+      ],
+      "seoKeywords": [
+        "fusion energy explained",
+        "tech companies fusion investment",
+        "nuclear fusion power"
+      ]
+    },
+    {
+      "id": "75dc8050-ec5d-4cc5-8d89-42177ebc1010",
+      "text": "How Wearable Tech Monitors Your Health",
+      "used": false,
+      "usedAt": null,
+      "title": "How Wearable Tech Monitors Your Health",
+      "subtitle": "Your smartwatch might spot a heart problem months before your doctor does.",
+      "description": "We look at how wearable sensors track health data, how accurate they really are, and when to trust the alerts.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#WearableTech",
+        "#HealthTech"
+      ],
+      "seoKeywords": [
+        "wearable health technology",
+        "smartwatch health tracking",
+        "how fitness trackers work"
+      ]
+    },
+    {
+      "id": "e74e1018-cf57-4991-a1f4-6e817b10be90",
+      "text": "The Story of Bitcoin's Creation",
+      "used": false,
+      "usedAt": null,
+      "title": "The Story of Bitcoin's Creation",
+      "subtitle": "Bitcoin's creator vanished in 2011 and has never been publicly identified since.",
+      "description": "We trace the mysterious origin of Bitcoin, from a single whitepaper to a trillion-dollar global asset.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#Bitcoin",
+        "#CryptoHistory"
+      ],
+      "seoKeywords": [
+        "Bitcoin history explained",
+        "who created Bitcoin",
+        "Bitcoin origin story"
+      ]
+    },
+    {
+      "id": "7de3d12f-ebb0-4502-be2c-b15625645a26",
+      "text": "How 3D Printing Is Changing Manufacturing",
+      "used": false,
+      "usedAt": null,
+      "title": "How 3D Printing Is Changing Manufacturing",
+      "subtitle": "A 3D printer just built a functional house in under 24 hours.",
+      "description": "We look at how 3D printing has moved from hobbyist toys to full-scale manufacturing, including houses, organs, and rocket parts.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#3DPrinting",
+        "#Manufacturing"
+      ],
+      "seoKeywords": [
+        "3D printing technology 2026",
+        "3D printed houses",
+        "future of manufacturing"
+      ]
+    },
+    {
+      "id": "ae45c16c-e7a5-4176-a7ce-d3bf8e00559e",
+      "text": "The Rise of AI in Video Game Design",
+      "used": false,
+      "usedAt": null,
+      "title": "The Rise of AI in Video Game Design",
+      "subtitle": "Game studios are using AI to generate entire worlds that used to take hundreds of artists years to build.",
+      "description": "We look at how AI tools are changing game development, from art to dialogue, and what it means for game designers.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#AIGaming",
+        "#GameDev"
+      ],
+      "seoKeywords": [
+        "AI in game development",
+        "AI generated game worlds",
+        "future of video games"
+      ]
+    },
+    {
+      "id": "9ccd3982-3c58-45af-833d-3207a8dd6756",
+      "text": "Why Robots Struggle With Simple Human Tasks",
+      "used": false,
+      "usedAt": null,
+      "title": "Why Robots Struggle With Simple Human Tasks",
+      "subtitle": "A robot can beat a chess grandmaster but still struggles to fold a t-shirt.",
+      "description": "We explain the surprising gap between AI's mental abilities and physical dexterity, and why simple tasks are secretly the hardest.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#RoboticsChallenges",
+        "#AILimitations"
+      ],
+      "seoKeywords": [
+        "why robots struggle with simple tasks",
+        "robotics dexterity problem",
+        "AI physical limitations"
+      ]
+    },
+    {
+      "id": "c78c6dde-8d4a-4fbf-a1a6-dbff832e307b",
+      "text": "Inside the World of Ethical Hacking",
+      "used": false,
+      "usedAt": null,
+      "title": "Inside the World of Ethical Hacking",
+      "subtitle": "Companies pay hackers six-figure bounties to break into their own systems — legally.",
+      "description": "We look at how ethical hackers find security flaws before criminals do, and how you could get into the field yourself.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#EthicalHacking",
+        "#Cybersecurity"
+      ],
+      "seoKeywords": [
+        "what is ethical hacking",
+        "bug bounty programs",
+        "how to become an ethical hacker"
+      ]
+    },
+    {
+      "id": "3f729f7e-36ae-4ed2-9767-a91d71297991",
+      "text": "How Augmented Reality Is Transforming Shopping",
+      "used": false,
+      "usedAt": null,
+      "title": "How Augmented Reality Is Transforming Shopping",
+      "subtitle": "Some stores let you \"try on\" clothes without ever touching them, using nothing but your phone camera.",
+      "description": "We look at how AR is changing online and in-store shopping, cutting returns, and reshaping how brands sell products.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#AugmentedReality",
+        "#ARShopping"
+      ],
+      "seoKeywords": [
+        "AR shopping technology",
+        "augmented reality retail",
+        "AR try before you buy"
+      ]
+    },
+    {
+      "id": "0819f879-7b8e-4e35-b8e0-c053604f0eac",
+      "text": "The Truth About Big Tech Monopolies",
+      "used": false,
+      "usedAt": null,
+      "title": "The Truth About Big Tech Monopolies",
+      "subtitle": "Five companies control more of the internet than most people realize — and regulators are only now catching up.",
+      "description": "We break down the real antitrust cases against Big Tech, in plain language, and what could actually change.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#BigTech",
+        "#TechMonopoly"
+      ],
+      "seoKeywords": [
+        "big tech monopoly explained",
+        "antitrust big tech",
+        "tech company power"
+      ]
+    },
+    {
+      "id": "18625659-f868-4a3e-8d4d-aa3e27b65d03",
+      "text": "How AI Translates Languages in Real Time",
+      "used": false,
+      "usedAt": null,
+      "title": "How AI Translates Languages in Real Time",
+      "subtitle": "AI can now translate a live conversation with almost no delay — even catching tone and slang.",
+      "description": "We look at the technology behind real-time translation apps, and how close we are to a true universal translator.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#AITranslation",
+        "#RealTimeTranslation"
+      ],
+      "seoKeywords": [
+        "real time AI translation",
+        "how AI translation works",
+        "best AI translator apps"
+      ]
+    },
+    {
+      "id": "df8ef0ba-3d95-45fe-9371-e9a8251a9ad4",
+      "text": "The Rise of Digital Twins Technology",
+      "used": false,
+      "usedAt": null,
+      "title": "The Rise of Digital Twins Technology",
+      "subtitle": "Factories now build a complete virtual copy of themselves before laying a single brick.",
+      "description": "We explain what digital twins are, how companies use them to test ideas safely, and why they're spreading beyond factories.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#DigitalTwins",
+        "#IndustrialTech"
+      ],
+      "seoKeywords": [
+        "what is a digital twin",
+        "digital twin technology explained",
+        "digital twins in industry"
+      ]
+    },
+    {
+      "id": "a8e0c341-09e5-4bc5-a9c7-808f78c60fc3",
+      "text": "Why Semiconductor Shortages Keep Happening",
+      "used": false,
+      "usedAt": null,
+      "title": "Why Semiconductor Shortages Keep Happening",
+      "subtitle": "A single factory fire once caused a global shortage that lasted almost two years.",
+      "description": "We explain why chip supply chains are so fragile, and why shortages keep coming back despite billions spent to fix them.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#ChipShortage",
+        "#SupplyChain"
+      ],
+      "seoKeywords": [
+        "why chip shortages happen",
+        "semiconductor supply chain",
+        "global chip shortage explained"
+      ]
+    },
+    {
+      "id": "4a47cea1-4170-424a-a2e6-db7fa3d0a6c6",
+      "text": "How Cloud Computing Actually Stores Your Data",
+      "used": false,
+      "usedAt": null,
+      "title": "How Cloud Computing Actually Stores Your Data",
+      "subtitle": "Your \"cloud\" photos are actually sitting in a physical warehouse somewhere, on a hard drive you'll never see.",
+      "description": "We break down what cloud storage really is, how it stays secure, and what happens if a data center goes down.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#CloudComputing",
+        "#DataStorage"
+      ],
+      "seoKeywords": [
+        "how cloud storage works",
+        "cloud computing explained simply",
+        "where is cloud data stored"
+      ]
+    },
+    {
+      "id": "dd1032f5-889a-4d3b-af0d-5bb4add0ede7",
+      "text": "Inside the Development of Foldable Phones",
+      "used": false,
+      "usedAt": null,
+      "title": "Inside the Development of Foldable Phones",
+      "subtitle": "The screens on foldable phones are engineered to bend up to 200,000 times without cracking.",
+      "description": "We look at the engineering challenges behind foldable phones, and whether they're finally durable enough to trust.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#FoldablePhones",
+        "#SmartphoneTech"
+      ],
+      "seoKeywords": [
+        "foldable phone technology",
+        "best foldable phones 2026",
+        "are foldable phones durable"
+      ]
+    },
+    {
+      "id": "d881dbeb-b3fd-487d-a99b-026e6b3f840a",
+      "text": "The Future of Brain Uploading Technology",
+      "used": false,
+      "usedAt": null,
+      "title": "The Future of Brain Uploading Technology",
+      "subtitle": "Some scientists believe your memories could theoretically be copied to a computer within this century.",
+      "description": "We look at the real (and very early) science behind brain uploading, separating genuine research from science fiction claims.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#BrainUploading",
+        "#Futurism"
+      ],
+      "seoKeywords": [
+        "is brain uploading possible",
+        "mind uploading technology",
+        "future of human consciousness"
+      ]
+    },
+    {
+      "id": "7f60ab77-47ee-4128-88ed-180a3b42b8b2",
+      "text": "How AI Is Used in Weather Prediction",
+      "used": false,
+      "usedAt": null,
+      "title": "How AI Is Used in Weather Prediction",
+      "subtitle": "A new AI model predicted a hurricane's path more accurately than traditional supercomputers — in a fraction of the time.",
+      "description": "We look at how AI weather models work, and why they're starting to outperform decades-old forecasting methods.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#AIWeather",
+        "#ClimateTech"
+      ],
+      "seoKeywords": [
+        "AI weather prediction",
+        "AI hurricane forecasting",
+        "how AI improves weather forecasts"
+      ]
+    },
+    {
+      "id": "e6d50f14-976a-4c1e-b1e7-f02e54d3cbfb",
+      "text": "Why Robots Are Learning to Feel Emotions",
+      "used": false,
+      "usedAt": null,
+      "title": "Why Robots Are Learning to Feel Emotions",
+      "subtitle": "Some robots are being trained to recognize your frustration before you even say a word.",
+      "description": "We look at emotional AI, how machines are trained to read human expressions, and the debate over whether that's a good idea.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#EmotionalAI",
+        "#AffectiveComputing"
+      ],
+      "seoKeywords": [
+        "can robots feel emotions",
+        "emotional AI technology",
+        "affective computing explained"
+      ]
+    },
+    {
+      "id": "985fa3a6-8446-4a09-b4ea-a20f3d06dde3",
+      "text": "The Rise of No Code App Development",
+      "used": false,
+      "usedAt": null,
+      "title": "The Rise of No Code App Development",
+      "subtitle": "People with zero coding experience are building working apps in a single afternoon.",
+      "description": "We look at how no-code platforms are letting anyone build software, and where they still can't replace real developers.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#NoCode",
+        "#AppDevelopment"
+      ],
+      "seoKeywords": [
+        "no code app builders",
+        "best no code platforms",
+        "no code vs coding"
+      ]
+    },
+    {
+      "id": "7842eb80-5a6b-43d1-9225-6f2ce322e51d",
+      "text": "How Cryptocurrency Mining Actually Works",
+      "used": false,
+      "usedAt": null,
+      "title": "How Cryptocurrency Mining Actually Works",
+      "subtitle": "Bitcoin mining uses more electricity per year than some entire countries.",
+      "description": "We explain what mining actually does, why it uses so much power, and how the process secures the entire network.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#CryptoMining",
+        "#Bitcoin"
+      ],
+      "seoKeywords": [
+        "how crypto mining works",
+        "Bitcoin mining explained",
+        "crypto mining energy use"
+      ]
+    },
+    {
+      "id": "78c84b5d-bb4b-4479-b1a1-c8f00dd64448",
+      "text": "Inside the Race for Nuclear Fusion Power",
+      "used": false,
+      "usedAt": null,
+      "title": "Inside the Race for Nuclear Fusion Power",
+      "subtitle": "A fusion reactor briefly produced more energy than it consumed for the first time in history.",
+      "description": "We look at the breakthrough experiments bringing fusion power closer to reality, and what's still standing in the way.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#NuclearFusion",
+        "#EnergyTech"
+      ],
+      "seoKeywords": [
+        "nuclear fusion breakthrough",
+        "fusion power explained",
+        "when will fusion energy be ready"
+      ]
+    },
+    {
+      "id": "20e63612-5fab-4de8-b52f-23557a12b49a",
+      "text": "The Truth About AI Bias in Hiring",
+      "used": false,
+      "usedAt": null,
+      "title": "The Truth About AI Bias in Hiring",
+      "subtitle": "An AI hiring tool was quietly rejecting qualified candidates for years before anyone noticed the pattern.",
+      "description": "We look at real cases of AI bias in hiring systems, how it happens, and what companies are doing to fix it.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#AIBias",
+        "#HiringTech"
+      ],
+      "seoKeywords": [
+        "AI bias in hiring",
+        "AI recruitment bias explained",
+        "algorithmic discrimination hiring"
+      ]
+    },
+    {
+      "id": "0d2f06dd-1d60-4bc9-82df-9bd35fbdd39d",
+      "text": "How Smart Contracts Work on Blockchain",
+      "used": false,
+      "usedAt": null,
+      "title": "How Smart Contracts Work on Blockchain",
+      "subtitle": "A smart contract can automatically pay you the moment your flight is delayed — no claims form needed.",
+      "description": "We break down what smart contracts actually are, using simple real-world examples instead of technical jargon.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#SmartContracts",
+        "#Blockchain"
+      ],
+      "seoKeywords": [
+        "what are smart contracts",
+        "smart contracts explained simply",
+        "blockchain smart contracts use cases"
+      ]
+    },
+    {
+      "id": "9ab87e49-6b72-4800-a24c-121f5da80a97",
+      "text": "The Future of Personalized Medicine Through AI",
+      "used": false,
+      "usedAt": null,
+      "title": "The Future of Personalized Medicine Through AI",
+      "subtitle": "Your future prescription might be created specifically for your DNA — not just your symptoms.",
+      "description": "We look at how AI is helping doctors design treatments tailored to individual patients, and how far away that future really is.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#PersonalizedMedicine",
+        "#AIHealthcare"
+      ],
+      "seoKeywords": [
+        "AI personalized medicine",
+        "future of precision medicine",
+        "AI drug development"
+      ]
+    },
+    {
+      "id": "be571a20-fefb-40ed-9570-721554c48b80",
+      "text": "Why Big Tech Wants to Colonize Mars",
+      "used": false,
+      "usedAt": null,
+      "title": "Why Big Tech Wants to Colonize Mars",
+      "subtitle": "Colonizing Mars isn't just about exploration — it's becoming a serious business strategy for the world's richest companies.",
+      "description": "We look at the real motivations behind Mars colonization plans, from resources to backup-plan thinking for humanity.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#MarsColonization",
+        "#SpaceX"
+      ],
+      "seoKeywords": [
+        "why colonize Mars",
+        "SpaceX Mars plans",
+        "Mars colonization technology"
+      ]
+    },
+    {
+      "id": "c93d4fea-9521-47ba-8dbf-fdc6b5f0056d",
+      "text": "How Facial Recognition Is Used in China",
+      "used": false,
+      "usedAt": null,
+      "title": "How Facial Recognition Is Used in China",
+      "subtitle": "In parts of China, facial recognition can identify a jaywalker and issue a fine before they've finished crossing the street.",
+      "description": "We look at how widespread facial recognition has become in China, and the surveillance debate surrounding it.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#FacialRecognitionChina",
+        "#Surveillance"
+      ],
+      "seoKeywords": [
+        "facial recognition China",
+        "China surveillance technology",
+        "social credit system explained"
+      ]
+    },
+    {
+      "id": "6fb36dc7-4049-4e61-9152-bc6d1515a6fb",
+      "text": "The Rise of AI Powered Search Engines",
+      "used": false,
+      "usedAt": null,
+      "title": "The Rise of AI Powered Search Engines",
+      "subtitle": "A new wave of search engines is skipping the list of links entirely and just giving you the answer.",
+      "description": "We look at how AI search tools are challenging Google's dominance, and whether direct answers are actually more reliable.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#AISearch",
+        "#SearchEngines"
+      ],
+      "seoKeywords": [
+        "AI search engines explained",
+        "AI vs Google search",
+        "best AI search tools"
+      ]
+    },
+    {
+      "id": "53067760-f50f-47b6-9b97-827e2e795738",
+      "text": "Inside the World of Competitive Esports Technology",
+      "used": false,
+      "usedAt": null,
+      "title": "Inside the World of Competitive Esports Technology",
+      "subtitle": "Pro esports players react faster than most fighter pilots — and the tech behind their setups is why.",
+      "description": "We look at the specialized hardware and training tech that gives professional esports players their edge.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#Esports",
+        "#GamingTech"
+      ],
+      "seoKeywords": [
+        "esports technology explained",
+        "pro gamer setup tech",
+        "esports training technology"
+      ]
+    },
+    {
+      "id": "c680118c-35fe-4d61-b65a-f13f25168f1f",
+      "text": "How Satellites Are Mapping Climate Change",
+      "used": false,
+      "usedAt": null,
+      "title": "How Satellites Are Mapping Climate Change",
+      "subtitle": "A single satellite can now track methane leaks from space accurately enough to pinpoint the exact facility responsible.",
+      "description": "We look at how satellite technology is being used to monitor climate change in real time, and who's using that data.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#ClimateTech",
+        "#SatelliteMonitoring"
+      ],
+      "seoKeywords": [
+        "satellites tracking climate change",
+        "climate monitoring technology",
+        "satellite data environment"
+      ]
+    },
+    {
+      "id": "80860056-00c0-4b47-bb54-348e78c7d9fa",
+      "text": "The Story of the First Computer Virus",
+      "used": false,
+      "usedAt": null,
+      "title": "The Story of the First Computer Virus",
+      "subtitle": "The first computer virus was created as a joke — and it accidentally proved how vulnerable every system was.",
+      "description": "We trace the origin of computer viruses, from a harmless prank to the billion-dollar cybersecurity industry it created.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#ComputerVirusHistory",
+        "#CyberHistory"
+      ],
+      "seoKeywords": [
+        "first computer virus history",
+        "history of malware",
+        "computer virus origin story"
+      ]
+    },
+    {
+      "id": "195beec0-1807-41cc-b98d-0f992c89469b",
+      "text": "Why Tech Giants Are Building Their Own Chips",
+      "used": false,
+      "usedAt": null,
+      "title": "Why Tech Giants Are Building Their Own Chips",
+      "subtitle": "Apple, Google, and Amazon all quietly started designing their own chips instead of buying them.",
+      "description": "We look at why major tech companies are moving away from chip suppliers, and what it means for the industry.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#CustomChips",
+        "#TechIndependence"
+      ],
+      "seoKeywords": [
+        "why tech companies make own chips",
+        "custom silicon chips",
+        "big tech chip design"
+      ]
+    },
+    {
+      "id": "f674f4ab-d8cb-4620-ba2f-4ec0f09a1f18",
+      "text": "How Robots Are Assisting in Surgery Rooms",
+      "used": false,
+      "usedAt": null,
+      "title": "How Robots Are Assisting in Surgery Rooms",
+      "subtitle": "A surgeon operated on a patient thousands of miles away using a robotic arm with sub-millimeter precision.",
+      "description": "We look at how surgical robots are being used today, the real benefits for patients, and where a human surgeon is still essential.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#SurgicalRobots",
+        "#MedTech"
+      ],
+      "seoKeywords": [
+        "robotic surgery explained",
+        "surgical robots technology",
+        "AI assisted surgery"
+      ]
+    },
+    {
+      "id": "7b2cbe52-2779-4d59-954b-621c7e3a0e47",
+      "text": "The Rise of Passwordless Login Technology",
+      "used": false,
+      "usedAt": null,
+      "title": "The Rise of Passwordless Login Technology",
+      "subtitle": "Some of the biggest apps in the world are quietly getting rid of passwords altogether.",
+      "description": "We look at how passkeys and biometric logins work, and why they're actually more secure than the password you've been reusing for years.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#Passkeys",
+        "#CyberSecurity"
+      ],
+      "seoKeywords": [
+        "passwordless login explained",
+        "what are passkeys",
+        "passwordless authentication technology"
+      ]
+    },
+    {
+      "id": "8b5f531d-525f-4209-8e7a-30f22679fffb",
+      "text": "Inside the Making of Self Healing Materials",
+      "used": false,
+      "usedAt": null,
+      "title": "Inside the Making of Self Healing Materials",
+      "subtitle": "Scientists created a material that can repair its own cracks — no glue, no tools, just time.",
+      "description": "We look at the science behind self-healing materials, and the real products already using this technology today.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#SelfHealingMaterials",
+        "#MaterialsScience"
+      ],
+      "seoKeywords": [
+        "self healing materials explained",
+        "self repairing technology",
+        "smart materials science"
+      ]
+    },
+    {
+      "id": "34a45993-9b31-4afc-b0d3-12c1b2c0c0b5",
+      "text": "How AI Generates Realistic Human Faces",
+      "used": false,
+      "usedAt": null,
+      "title": "How AI Generates Realistic Human Faces",
+      "subtitle": "Every face in some AI-generated photo galleries belongs to a person who has never existed.",
+      "description": "We look at how AI creates convincingly real human faces from scratch, and the concerns around misuse.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#AIGeneratedFaces",
+        "#GenerativeAI"
+      ],
+      "seoKeywords": [
+        "AI generated faces explained",
+        "how AI creates fake faces",
+        "generative AI images"
+      ]
+    },
+    {
+      "id": "da231b81-9fbd-435a-939c-4a1672d416a4",
+      "text": "The Future of Underwater Data Cables",
+      "used": false,
+      "usedAt": null,
+      "title": "The Future of Underwater Data Cables",
+      "subtitle": "Almost all international internet traffic travels through cables lying on the ocean floor — not satellites.",
+      "description": "We look at the massive underwater cable network powering the global internet, and the risks of something going wrong.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#UnderseaCables",
+        "#InternetInfrastructure"
+      ],
+      "seoKeywords": [
+        "underwater internet cables explained",
+        "how the internet actually works",
+        "undersea cable network"
+      ]
+    },
+    {
+      "id": "ccb4dc4a-10a2-49f5-8a2c-d25d827ed821",
+      "text": "Why Solar Technology Keeps Getting Cheaper",
+      "used": false,
+      "usedAt": null,
+      "title": "Why Solar Technology Keeps Getting Cheaper",
+      "subtitle": "Solar panel prices have dropped by more than 90 percent in just over a decade.",
+      "description": "We look at what's driving the falling cost of solar technology, and why it's now cheaper than most fossil fuels in many countries.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#SolarEnergy",
+        "#RenewableTech"
+      ],
+      "seoKeywords": [
+        "why solar panels are cheaper",
+        "solar technology cost trends",
+        "solar energy 2026"
+      ]
+    },
+    {
+      "id": "c80aa973-01b1-486e-8aff-c8483a5a9788",
+      "text": "How Recommendation Algorithms Control What You Watch",
+      "used": false,
+      "usedAt": null,
+      "title": "How Recommendation Algorithms Control What You Watch",
+      "subtitle": "The video you're about to watch next was chosen by an algorithm that knows your habits better than you do.",
+      "description": "We break down how recommendation systems on YouTube and streaming platforms actually decide what to show you next.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#RecommendationAlgorithm",
+        "#AlgorithmExplained"
+      ],
+      "seoKeywords": [
+        "how YouTube algorithm works",
+        "recommendation algorithm explained",
+        "streaming algorithm technology"
+      ]
+    },
+    {
+      "id": "e05c1d58-1973-48e5-bf4f-7a687eab47a6",
+      "text": "The Rise of Digital Currency by Governments",
+      "used": false,
+      "usedAt": null,
+      "title": "The Rise of Digital Currency by Governments",
+      "subtitle": "Over 100 countries are now testing their own government-backed digital currencies.",
+      "description": "We look at what central bank digital currencies actually are, how they differ from crypto, and what they mean for cash.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#DigitalCurrency",
+        "#CBDC"
+      ],
+      "seoKeywords": [
+        "central bank digital currency explained",
+        "government digital currency",
+        "CBDC vs cryptocurrency"
+      ]
+    },
+    {
+      "id": "1f7da633-d1d0-4bbd-9b80-9dbd5c35fa15",
+      "text": "Inside the World's Largest Data Breach Cases",
+      "used": false,
+      "usedAt": null,
+      "title": "Inside the World's Largest Data Breach Cases",
+      "subtitle": "One single data breach exposed the personal information of more people than live in most countries.",
+      "description": "We look at some of the biggest data breaches in history, how they happened, and what changed afterward.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#DataBreach",
+        "#CyberSecurity"
+      ],
+      "seoKeywords": [
+        "biggest data breaches in history",
+        "largest cyber attacks",
+        "data breach case studies"
+      ]
+    },
+    {
+      "id": "1504b7e0-6d29-450c-aac4-493d74997e71",
+      "text": "How Robots Learn to Walk Like Humans",
+      "used": false,
+      "usedAt": null,
+      "title": "How Robots Learn to Walk Like Humans",
+      "subtitle": "Teaching a robot to walk is harder than teaching it to play chess — balance turns out to be the real challenge.",
+      "description": "We look at how engineers train robots to walk naturally, using techniques borrowed from how humans actually learn.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#RoboticsWalking",
+        "#RobotEngineering"
+      ],
+      "seoKeywords": [
+        "how robots learn to walk",
+        "bipedal robot technology",
+        "robot balance engineering"
+      ]
+    },
+    {
+      "id": "d45393c1-6817-4c1f-985e-f5255f0bda04",
+      "text": "The Truth About Screen Time and Your Brain",
+      "used": false,
+      "usedAt": null,
+      "title": "The Truth About Screen Time and Your Brain",
+      "subtitle": "Some studies link heavy screen use to real changes in attention span — but the full picture is more complicated than headlines suggest.",
+      "description": "We look at what the actual research says about screen time and the brain, cutting through both the panic and the denial.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#ScreenTime",
+        "#DigitalWellbeing"
+      ],
+      "seoKeywords": [
+        "screen time effects on brain",
+        "screen time research explained",
+        "digital wellbeing science"
+      ]
+    },
+    {
+      "id": "a2fbb0da-162c-4dc1-a754-a9fcf7a7d20c",
+      "text": "How AI Is Used to Fight Wildfires",
+      "used": false,
+      "usedAt": null,
+      "title": "How AI Is Used to Fight Wildfires",
+      "subtitle": "An AI system can now spot a wildfire from satellite images before a single 911 call comes in.",
+      "description": "We look at how AI is being used to detect and predict wildfires earlier, potentially saving lives and property.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#AIWildfire",
+        "#ClimateTech"
+      ],
+      "seoKeywords": [
+        "AI wildfire detection",
+        "AI predicting wildfires",
+        "technology fighting wildfires"
+      ]
+    },
+    {
+      "id": "899bdaa0-a2c8-4515-ae39-6384588a21d4",
+      "text": "The Rise of Personal AI Avatars Online",
+      "used": false,
+      "usedAt": null,
+      "title": "The Rise of Personal AI Avatars Online",
+      "subtitle": "Some influencers now let an AI version of themselves respond to fans 24 hours a day.",
+      "description": "We look at how personal AI avatars work, why creators are adopting them, and the ethical questions they raise.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#AIAvatars",
+        "#DigitalIdentity"
+      ],
+      "seoKeywords": [
+        "AI avatar technology",
+        "personal AI clone explained",
+        "AI influencer avatars"
+      ]
+    },
+    {
+      "id": "28cfc6ce-8c8b-4e7b-8660-4afc2c9c705c",
+      "text": "Inside the Technology Behind Instant Translation Earbuds",
+      "used": false,
+      "usedAt": null,
+      "title": "Inside the Technology Behind Instant Translation Earbuds",
+      "subtitle": "Translation earbuds can now turn a foreign conversation into your own language almost as fast as someone can speak.",
+      "description": "We look at how real-time translation earbuds work, and how close they are to a true universal translator experience.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#TranslationEarbuds",
+        "#AITranslation"
+      ],
+      "seoKeywords": [
+        "translation earbuds technology",
+        "real time translation earbuds",
+        "best translation earbuds 2026"
+      ]
+    },
+    {
+      "id": "674da92e-a1a3-4a4f-85c3-d707c123ab2a",
+      "text": "How Encryption Keeps Your Messages Private",
+      "used": false,
+      "usedAt": null,
+      "title": "How Encryption Keeps Your Messages Private",
+      "subtitle": "Even the company that built your messaging app often can't read what you send — that's by design.",
+      "description": "We explain end-to-end encryption in plain language, and why it matters far more than most people realize.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#Encryption",
+        "#DigitalPrivacy"
+      ],
+      "seoKeywords": [
+        "how encryption works",
+        "end to end encryption explained",
+        "why encryption matters"
+      ]
+    },
+    {
+      "id": "01e6154b-4763-4e91-a704-baa4a33982b1",
+      "text": "The Future of Lab Grown Computer Chips",
+      "used": false,
+      "usedAt": null,
+      "title": "The Future of Lab Grown Computer Chips",
+      "subtitle": "Scientists are experimenting with growing computer chips using biological processes instead of factories.",
+      "description": "We look at early research into lab-grown and biologically-inspired chips, and what it could mean for future computing.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#LabGrownChips",
+        "#FutureComputing"
+      ],
+      "seoKeywords": [
+        "lab grown computer chips",
+        "future of chip manufacturing",
+        "biological computing research"
+      ]
+    },
+    {
+      "id": "1e192623-92e1-466d-b4c5-e4ba7b9092dc",
+      "text": "Why Tech Layoffs Keep Happening Despite Profits",
+      "used": false,
+      "usedAt": null,
+      "title": "Why Tech Layoffs Keep Happening Despite Profits",
+      "subtitle": "Some of the most profitable tech companies in history have also had the biggest layoffs in the same year.",
+      "description": "We break down the real reasons behind ongoing tech layoffs, beyond the simple explanation of \"the economy.\"",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#TechLayoffs",
+        "#TechIndustry"
+      ],
+      "seoKeywords": [
+        "why tech companies keep laying off",
+        "tech layoffs explained",
+        "tech industry job cuts"
+      ]
+    },
+    {
+      "id": "eb77f3f4-1096-4a2d-a46e-3a89961c51a4",
+      "text": "How GPS Actually Knows Your Location",
+      "used": false,
+      "usedAt": null,
+      "title": "How GPS Actually Knows Your Location",
+      "subtitle": "Your phone finds your exact location using signals from satellites flying 12,000 miles above your head.",
+      "description": "We explain how GPS actually works, the math behind it, and why it sometimes gets your location wrong.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#GPS",
+        "#SatelliteTech"
+      ],
+      "seoKeywords": [
+        "how GPS works explained",
+        "GPS technology basics",
+        "how satellites track location"
+      ]
+    },
+    {
+      "id": "cb7f52a5-21f7-42a7-9727-09f6ba7e9bdd",
+      "text": "The Rise of AI Companions for the Elderly",
+      "used": false,
+      "usedAt": null,
+      "title": "The Rise of AI Companions for the Elderly",
+      "subtitle": "Nursing homes are testing AI companions that check in on residents when family and staff can't be there.",
+      "description": "We look at how AI companion technology is being used to support elderly people, and the debate over technology replacing human care.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#AIforElderly",
+        "#ElderCareTech"
+      ],
+      "seoKeywords": [
+        "AI companions elderly care",
+        "AI elder care technology",
+        "robot companions seniors"
+      ]
+    },
+    {
+      "id": "eb6ebf8d-8950-4cb9-b15f-c38de008325b",
+      "text": "Inside the Battle for Search Engine Dominance",
+      "used": false,
+      "usedAt": null,
+      "title": "Inside the Battle for Search Engine Dominance",
+      "subtitle": "Google has controlled the search market for over two decades — until AI search tools started chipping away at it.",
+      "description": "We look at the emerging competition threatening Google's dominance, and how the search landscape is shifting.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#SearchEngineWar",
+        "#TechCompetition"
+      ],
+      "seoKeywords": [
+        "Google search competition",
+        "AI search engines vs Google",
+        "search engine market share"
+      ]
+    },
+    {
+      "id": "10df5eb6-8dcc-4033-ac36-4c43e06d02e8",
+      "text": "How Robots Are Used in Space Exploration",
+      "used": false,
+      "usedAt": null,
+      "title": "How Robots Are Used in Space Exploration",
+      "subtitle": "A robot has been driving itself across Mars for years, making its own decisions when Earth is too far to help in real time.",
+      "description": "We look at how robots and rovers explore space on our behalf, and how much autonomy they actually have.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#SpaceRobots",
+        "#MarsRover"
+      ],
+      "seoKeywords": [
+        "robots in space exploration",
+        "Mars rover technology",
+        "autonomous space robots"
+      ]
+    },
+    {
+      "id": "03dbd120-2027-46d1-926d-0e0ae3f9ba90",
+      "text": "The Truth About Tech Addiction in Teenagers",
+      "used": false,
+      "usedAt": null,
+      "title": "The Truth About Tech Addiction in Teenagers",
+      "subtitle": "Some apps are engineered using the same psychological tricks as slot machines — and teenagers are the biggest target.",
+      "description": "We look at the real science behind tech and social media addiction in teens, and what actually helps.",
+      "hashtags": [
+        "#AI",
+        "#Technology",
+        "#FutureTech",
+        "#TechAddiction",
+        "#TeenTechUse"
+      ],
+      "seoKeywords": [
+        "tech addiction teenagers",
+        "social media addiction science",
+        "screen addiction teens"
+      ]
+    }
+  ]
+}
