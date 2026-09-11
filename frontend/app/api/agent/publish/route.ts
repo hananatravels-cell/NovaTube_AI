@@ -14,31 +14,50 @@ export async function POST(req: NextRequest) {
     }
 
     const useDirectPath = !!videoPath;
+    const hasThumbBase64 = !!thumbnailBase64;
 
-    const res = await fetch(`${YOUTUBE_SERVICE_URL}/${useDirectPath ? 'upload-from-path' : 'upload'}`, {
+    let endpoint: string;
+    let body: any;
+
+    if (useDirectPath && hasThumbBase64) {
+      endpoint = 'upload-from-path-with-thumb-b64';
+      body = {
+        video_path: videoPath,
+        thumbnail_base64: thumbnailBase64,
+        title,
+        description: description || '',
+        tags: tags || [],
+        account: account || 'default',
+        publish_at: publishAt || null,
+      };
+    } else if (useDirectPath) {
+      endpoint = 'upload-from-path';
+      body = {
+        video_path: videoPath,
+        thumbnail_path: thumbnailPath || null,
+        title,
+        description: description || '',
+        tags: tags || [],
+        account: account || 'default',
+        publish_at: publishAt || null,
+      };
+    } else {
+      endpoint = 'upload';
+      body = {
+        video_base64: videoBase64,
+        thumbnail_base64: thumbnailBase64 || null,
+        title,
+        description: description || '',
+        tags: tags || [],
+        account: account || 'default',
+        publish_at: publishAt || null,
+      };
+    }
+
+    const res = await fetch(`${YOUTUBE_SERVICE_URL}/${endpoint}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(
-        useDirectPath
-          ? {
-              video_path: videoPath,
-              thumbnail_path: thumbnailPath || null,
-              title,
-              description: description || '',
-              tags: tags || [],
-              account: account || 'default',
-              publish_at: publishAt || null,
-            }
-          : {
-              video_base64: videoBase64,
-              thumbnail_base64: thumbnailBase64 || null,
-              title,
-              description: description || '',
-              tags: tags || [],
-              account: account || 'default',
-              publish_at: publishAt || null,
-            }
-      ),
+      body: JSON.stringify(body),
     });
 
     if (!res.ok) {
