@@ -1034,7 +1034,25 @@ export default function AIContentAgentPage() {
       updateStage('video', 'completed');
       updateStage('music', videoData.musicUsed ? 'completed' : 'failed');
       setResultVideo(videoData.videoUrl);
-
+      // 7. THUMBNAIL - video render hote hi
+      let thumbnailBase64Local: string | undefined = undefined;
+      updateStage('thumbnail', 'working');
+      try {
+        const thumbRes = await fetch(`/api/agent/thumbnail/${jobId}?text=${encodeURIComponent(topicValue || niche)}`);
+        if (!thumbRes.ok) throw new Error('Thumbnail generation failed');
+        const thumbBlob = await thumbRes.blob();
+        thumbnailBase64Local = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result as string);
+          reader.onerror = reject;
+          reader.readAsDataURL(thumbBlob);
+        });
+        setResultThumbnail(thumbnailBase64Local);
+        updateStage('thumbnail', 'completed');
+      } catch (thumbErr) {
+        console.error('Thumbnail generation failed:', thumbErr);
+        updateStage('thumbnail', 'failed');
+      }
       // 6. PUBLISHING - Video ready hote hi!
       if (autoPublish) {
         try {
@@ -1062,14 +1080,13 @@ export default function AIContentAgentPage() {
           await publishToYouTube({
             videoPath: mainVideoPath || undefined,
             videoBase64: mainVideoPath ? undefined : await videoUrlToBase64(videoData.videoUrl),
-            thumbnailBase64: undefined,
+            thumbnailBase64: thumbnailBase64Local,
             title: seoDataLocal?.title || topicValue || niche,
             description: seoDataLocal?.description || '',
             tags: seoDataLocal?.tags || [],
             account: selectedYoutubeAccount,
             publishAt: mainPublishAt,
           });
-
           // Shorts generation
           try {
             setShortsStatus('Generating Shorts…');
