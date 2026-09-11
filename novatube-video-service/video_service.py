@@ -8,6 +8,7 @@ narration, and assembles everything into a finished video.
 
 Run with: uvicorn video_service:app --host 0.0.0.0 --port 8002 --reload
 """
+import subprocess
 from dotenv import load_dotenv
 load_dotenv()
 import base64
@@ -24,7 +25,7 @@ import uuid
 import proglog
 
 import requests
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import FileResponse
 from starlette.background import BackgroundTask
 from fastapi.middleware.cors import CORSMiddleware
@@ -399,7 +400,7 @@ def create_intro_text_image(text: str, width: int, height: int):
         line_w = bbox[2] - bbox[0]
         x = (width - line_w) / 2
         y = start_y + i * line_height
-        draw.text((x, y), line, font=font, fill=(255, 255, 255, 255))
+        draw.text((x, y), line, font=font, fill=(255, 214, 0, 255))
 
     return img
 
@@ -1224,3 +1225,178 @@ async def get_video_path(job_id: str):
     if not video_path or not os.path.exists(video_path):
         raise HTTPException(status_code=404, detail="Video file not available")
     return {"video_path": video_path}
+
+
+@app.get("/thumbnail/{job_id}")
+async def get_thumbnail(job_id: str, text: str = ""):
+    job = JOBS.get(job_id)
+    if not job:
+        raise HTTPException(status_code=404, detail="Unknown job_id")
+    if job.get("status") != "done":
+        raise HTTPException(status_code=409, detail="Video not ready yet")
+    video_path = job.get("video_path")
+    if not video_path or not os.path.exists(video_path):
+        raise HTTPException(status_code=404, detail="Video file not available")
+
+    work_dir = tempfile.mkdtemp(prefix="novatube_thumb_")
+    try:
+        duration_result = subprocess.run(
+            ["ffprobe", "-v", "error", "-show_entries", "format=duration",
+             "-of", "default=noprint_wrappers=1:nokey=1", video_path],
+            capture_output=True, text=True, timeout=15
+        )
+        try:
+            duration = float(duration_result.stdout.strip())
+        except (ValueError, TypeError):
+            duration = 10.0
+
+        candidate_fractions = [0.15, 0.35, 0.55, 0.75]
+        best_frame_path = None
+        best_score = -1.0
+
+        for i, frac in enumerate(candidate_fractions):
+            ts = max(0.1, min(duration * frac, max(duration - 0.1, 0.1)))
+            candidate_path = os.path.join(work_dir, f"candidate_{i}.jpg")
+            extract_result = subprocess.run(
+                ["ffmpeg", "-ss", str(ts), "-i", video_path,
+                 "-frames:v", "1", "-q:v", "2", "-y", candidate_path],
+                capture_output=True, timeout=20
+            )
+            if extract_result.returncode != 0 or not os.path.exists(candidate_path):
+                continue
+
+            try:
+                import numpy as np
+                img = Image.open(candidate_path).convert("RGB")
+                arr = np.asarray(img).astype("float32")
+                r, g, b = arr[:, :, 0], arr[:, :, 1], arr[:, :, 2]
+                lum = 0.299 * r + 0.587 * g + 0.114 * b
+                maxc = np.maximum(np.maximum(r, g), b)
+                minc = np.minimum(np.minimum(r, g), b)
+                sat = np.where(maxc == 0, 0, (maxc - minc) / np.maximum(maxc, 1))
+                variance = float(lum.var())
+                mean_sat = float(sat.mean())
+                score = variance * 0.7 + mean_sat * 10000 * 0.3
+            except Exception as e:
+                logger.warning(f"Frame scoring failed for candidate {i}: {e}")
+                score = 0.0
+
+            if score > best_score:
+                best_score = score
+                best_frame_path = candidate_path
+
+        if not best_frame_path:
+            raise HTTPException(status_code=500, detail="Could not extract any candidate frames")
+
+        overlay_text = (text or job.get("topic") or job.get("title") or "").upper()
+        final_path = os.path.join(work_dir, "thumbnail.jpg")
+
+        if overlay_text:
+            img = Image.open(best_frame_path).convert("RGB")
+            draw = ImageDraw.Draw(img, "RGBA")
+            w, h = img.size
+
+            overlay_height = int(h * 0.45)
+            for y in range(int(h * 0.55), h):
+                alpha = int(200 * (y - h * 0.55) / overlay_height) if overlay_height > 0 else 0
+                draw.line([(0, y), (w, y)], fill=(0, 0, 0, min(max(alpha, 0), 200)))
+
+            font_size = int(w * (0.055 if len(overlay_text) > 20 else 0.075))
+            try:
+                font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", font_size)
+            except Exception:
+                font = ImageFont.load_default()
+
+            max_width = w * 0.9
+            words = overlay_text.split(" ")
+            lines, current_line = [], ""
+            for word in words:
+                test_line = f"{current_line} {word}".strip()
+                bbox = draw.textbbox((0, 0), test_line, font=font)
+                if (bbox[2] - bbox[0]) > max_width and current_line:
+                    lines.append(current_line)
+                    current_line = word
+                else:
+                    current_line = test_line
+            if current_line:
+                lines.append(current_line)
+
+            line_height = font_size * 1.2
+            total_text_height = line_height * len(lines)
+            start_y = h - total_text_height - (h * 0.05)
+
+            for idx, line in enumerate(lines):
+                bbox = draw.textbbox((0, 0), line, font=font)
+                text_w = bbox[2] - bbox[0]
+                x = (w - text_w) / 2
+                y = start_y + idx * line_height
+                for dx in [-2, -1, 0, 1, 2]:
+                    for dy in [-2, -1, 0, 1, 2]:
+                        if dx != 0 or dy != 0:
+                            draw.text((x + dx, y + dy), line, font=font, fill=(0, 0, 0, 255))
+                draw.text((x, y), line, font=font, fill=(255, 214, 0, 255))
+
+            img.save(final_path, "JPEG", quality=92)
+        else:
+            shutil.copy(best_frame_path, final_path)
+
+        return FileResponse(final_path, media_type="image/jpeg",
+                             background=BackgroundTask(shutil.rmtree, work_dir, ignore_errors=True))
+    except HTTPException:
+        shutil.rmtree(work_dir, ignore_errors=True)
+        raise
+    except Exception as e:
+        shutil.rmtree(work_dir, ignore_errors=True)
+        logger.error(f"Thumbnail generation failed for job {job_id}: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+CHANNELS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "channels_data.json")
+
+
+def _read_channels():
+    try:
+        with open(CHANNELS_FILE, "r") as f:
+            data = json.load(f)
+            return data.get("channels", [])
+    except Exception:
+        return []
+
+
+def _write_channels(channels):
+    with open(CHANNELS_FILE, "w") as f:
+        json.dump({"channels": channels}, f, indent=2)
+
+
+@app.get("/channels")
+async def get_channels():
+    return {"channels": _read_channels()}
+
+
+@app.post("/channels")
+async def create_channel(request: Request):
+    body = await request.json()
+    name = (body.get("name") or "").strip()
+    niche = (body.get("niche") or "").strip()
+    if not name or not niche:
+        raise HTTPException(status_code=400, detail="Channel name and niche are required")
+
+    channels = _read_channels()
+    new_channel = {
+        "id": str(uuid.uuid4()),
+        "name": name,
+        "niche": niche,
+        "category": body.get("category") or "storytelling",
+        "youtubeAccount": (body.get("youtubeAccount") or "default").strip(),
+        "createdAt": datetime.utcnow().isoformat(),
+    }
+    channels.append(new_channel)
+    _write_channels(channels)
+    return {"channel": new_channel}
+
+
+@app.delete("/channels/{channel_id}")
+async def delete_channel(channel_id: str):
+    channels = _read_channels()
+    channels = [c for c in channels if c["id"] != channel_id]
+    _write_channels(channels)
+    return {"deleted": True}
