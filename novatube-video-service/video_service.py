@@ -23,10 +23,11 @@ import threading
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import time as _time
 import uuid
+from datetime import datetime
 import proglog
 
 import requests
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import FileResponse
 from starlette.background import BackgroundTask
 from fastapi.middleware.cors import CORSMiddleware
@@ -522,7 +523,63 @@ async def video_file(job_id: str):
         media_type="video/mp4",
         filename="novatube-video.mp4",
     )
+    return FileResponse(
+        video_path,
+        media_type="video/mp4",
+        filename="novatube-video.mp4",
+    )
 
+
+CHANNELS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "channels_data.json")
+
+
+def _read_channels():
+    try:
+        with open(CHANNELS_FILE, "r") as f:
+            data = json.load(f)
+            return data.get("channels", [])
+    except Exception:
+        return []
+
+
+def _write_channels(channels):
+    with open(CHANNELS_FILE, "w") as f:
+        json.dump({"channels": channels}, f, indent=2)
+
+
+@app.get("/channels")
+async def get_channels():
+    return {"channels": _read_channels()}
+
+
+@app.post("/channels")
+async def create_channel(request: Request):
+    body = await request.json()
+    name = (body.get("name") or "").strip()
+    niche = (body.get("niche") or "").strip()
+    if not name or not niche:
+        raise HTTPException(status_code=400, detail="Channel name and niche are required")
+
+    channels = _read_channels()
+    new_channel = {
+        "id": str(uuid.uuid4()),
+        "name": name,
+        "niche": niche,
+        "category": body.get("category") or "storytelling",
+        "youtubeAccount": (body.get("youtubeAccount") or "default").strip(),
+        "createdAt": datetime.utcnow().isoformat(),
+    }
+    channels.append(new_channel)
+    _write_channels(channels)
+    return {"channel": new_channel}
+
+
+@app.delete("/channels/{channel_id}")
+async def delete_channel(channel_id: str):
+    channels = _read_channels()
+    channels = [c for c in channels if c["id"] != channel_id]
+    _write_channels(channels)
+    return {"deleted": True}
 
 def _run_generate_video(job_id: str, req: VideoRequest):
     work_dir = tempfile.mkdtemp(prefix="novatube_")

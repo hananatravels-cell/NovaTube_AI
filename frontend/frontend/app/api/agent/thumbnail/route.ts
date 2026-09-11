@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const VIDEO_SERVICE_URL = process.env.VIDEO_SERVICE_URL || "http://localhost:8002";
+const VIDEO_SERVICE_URL = process.env.VIDEO_SERVICE_URL || "http://141.145.148.233:8002";
 
 export async function GET(
   req: NextRequest,
@@ -10,14 +10,21 @@ export async function GET(
   const text = req.nextUrl.searchParams.get("text") || "";
   try {
     const res = await fetch(
-      `${VIDEO_SERVICE_URL}/thumbnail/${jobId}?text=${encodeURIComponent(text)}`
+      `${VIDEO_SERVICE_URL}/thumbnail/${jobId}?text=${encodeURIComponent(text)}`,
+      { cache: "no-store" }
     );
     if (!res.ok) {
-      const errText = await res.text();
+      const errText = await res.text().catch(() => "Unknown error");
       return NextResponse.json({ error: errText }, { status: res.status });
     }
-    const data = await res.json();
-    return NextResponse.json(data);
+    const imageBuffer = await res.arrayBuffer();
+    return new NextResponse(imageBuffer, {
+      status: 200,
+      headers: {
+        "Content-Type": "image/jpeg",
+        "Cache-Control": "no-store",
+      },
+    });
   } catch (err: any) {
     return NextResponse.json({ error: err?.message || "Failed to generate thumbnail" }, { status: 500 });
   }
