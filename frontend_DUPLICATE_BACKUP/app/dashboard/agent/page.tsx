@@ -343,10 +343,10 @@ async function pollVideoJob(
 function generateThumbnailFromVideo(videoUrl: string, overlayText: string): Promise<string> {
   return new Promise((resolve, reject) => {
     const video = document.createElement('video');
-    // video.crossOrigin = 'anonymous'; // Hata diya gaya taake Tainted Canvas error na aaye
     video.muted = true;
     video.playsInline = true;
     video.src = videoUrl;
+    video.load();
 
     const cleanup = () => {
       video.pause();
@@ -496,14 +496,14 @@ function generateThumbnailFromVideo(videoUrl: string, overlayText: string): Prom
       }
     };
 
-    video.onerror = () => {
+    video.onerror = (e) => {
       clearTimeout(timeoutId);
       cleanup();
-      reject(new Error('Failed to load video for thumbnail extraction'));
+      console.error('Video load error:', e, 'URL:', videoUrl);
+      reject(new Error('Failed to load video for thumbnail extraction. Check console for details.'));
     };
   });
 }
-
 function waitForVideoReady(
   getVideo: () => HTMLVideoElement | null,
   timeoutMs: number
@@ -1034,6 +1034,18 @@ export default function AIContentAgentPage() {
       updateStage('video', 'completed');
       updateStage('music', videoData.musicUsed ? 'completed' : 'failed');
       setResultVideo(videoData.videoUrl);
+      
+            // THUMBNAIL - right after video is ready, before publish/shorts/SEO
+      updateStage('thumbnail', 'working');
+      try {
+        const thumbRes = await fetch(`/api/agent/thumbnail/${jobId}?text=${encodeURIComponent(topicValue)}`);
+        const thumbData = await thumbRes.json();
+        if (!thumbRes.ok) throw new Error(thumbData.error || 'Thumbnail generation failed');
+        updateStage('thumbnail', 'completed');
+      } catch (thumbErr) {
+        console.error('Thumbnail generation failed:', thumbErr);
+        updateStage('thumbnail', 'failed');
+      }
 
       // 6. PUBLISHING - Video ready hote hi!
       if (autoPublish) {
@@ -1116,30 +1128,26 @@ export default function AIContentAgentPage() {
           updateStage('publish', 'failed');
         }
       }
-
-<<<<<<< HEAD
-      // 7. THUMBNAIL - Fixed Logic
+            // 7. THUMBNAIL - Fixed Client-side Generation
       updateStage('thumbnail', 'working');
-      let thumbDataUrlLocal = '';
       try {
         if (!resultVideo) throw new Error('Video URL is missing');
         
-        // 1 second delay taake browser video file ko memory mein load kar sake
-        await sleep(1000); 
+        // 1 second delay taake video browser memory mein properly load ho jaye
+        await sleep(1000);
         
-        // DOM element (videoElRef) ke bajaye direct URL se thumbnail bana rahe hain
-        thumbDataUrlLocal = await generateThumbnailFromVideo(resultVideo, thumbnailText);
+        // Humara fixed function use karein jo upar define hai
+        const thumbDataUrlLocal = await generateThumbnailFromVideo(resultVideo, thumbnailText);
         
         setResultThumbnail(thumbDataUrlLocal);
         updateStage('thumbnail', 'completed');
+        
+        // Auto download
         downloadDataUrl(thumbDataUrlLocal, `novatube-thumb-${slugify(topicValue)}-${Date.now()}.jpg`);
       } catch (thumbErr) {
         console.error('Thumbnail generation failed:', thumbErr);
         updateStage('thumbnail', 'failed');
       }
-=======
->>>>>>> bee11ef977c2db2c7f18ada28eaae97033322277
-
       // 8. SEO - Agar autoPublish nahi tha
       if (!autoPublish) {
         updateStage('seo', 'working');
@@ -1764,21 +1772,10 @@ export default function AIContentAgentPage() {
                       </button>
                     </div>
                   </div>
-<<<<<<< HEAD
-                  <div className="max-w-[320px] mx-auto">
-                    <video
-                      ref={videoElRef}
-                      src={resultVideo}
-                      controls
-                      className="w-full max-h-[70vh] rounded-xl border border-white/[0.07] bg-black object-contain"
-                    />
-                  </div>
-=======
                   <div className="max-w-[320px] mx-auto py-8 text-center">
-  <p className="text-white/60 text-sm">✅ Video ready — check your Downloads folder.</p>
-  <video ref={videoElRef} src={resultVideo} crossOrigin="anonymous" className="hidden" />
-</div>
->>>>>>> bee11ef977c2db2c7f18ada28eaae97033322277
+                    <p className="text-white/60 text-sm">✅ Video ready — check your Downloads folder.</p>
+                    <video ref={videoElRef} src={resultVideo} crossOrigin="anonymous" className="hidden" />
+                  </div>
                 </div>
               )}
 
