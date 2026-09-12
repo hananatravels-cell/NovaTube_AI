@@ -953,9 +953,9 @@ export default function AIContentAgentPage() {
       });
       const scriptData = await scriptRes.json();
       if (!scriptRes.ok) throw new Error(scriptData.error || 'Script step failed');
-      scriptValue = scriptData.script;
+            scriptValue = scriptData.script;
+      sceneList = scriptValue.split(/\n+/).map(s => s.trim()).filter(s => s.length > 0);
       updateStage('script', 'completed');
-
       // 3. Voice
       updateStage('voice', 'working');
       const voiceRes = await fetch('/api/generate-voice', {
@@ -1034,6 +1034,37 @@ export default function AIContentAgentPage() {
       updateStage('video', 'completed');
       updateStage('music', videoData.musicUsed ? 'completed' : 'failed');
       setResultVideo(videoData.videoUrl);
+
+      // Shorts generation turant shuru — publish ka wait nahi karega
+      const safeNumShorts = videoData.duration < 60 ? Math.min(numShorts, 1) : numShorts;
+      let shortsPromise: Promise<{ video: string }[]> | null = null;
+      if (autoPublish && safeNumShorts > 0) {
+        setShortsStatus('Generating Shorts…');
+        shortsPromise = (async () => {
+          try {
+            const mainVideoBase64ForShorts = await videoUrlToBase64(videoData.videoUrl);
+            const shortsRes = await fetch('/api/agent/auto-short', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                video_base64: mainVideoBase64ForShorts,
+                category: detectedCategory,
+                num_shorts: safeNumShorts,
+                aspect_ratio: '9:16',
+              }),
+            });
+            const shortsData = await shortsRes.json();
+            const shorts: { video: string }[] = shortsRes.ok && Array.isArray(shortsData.shorts) ? shortsData.shorts : [];
+            setShortsStatus(shorts.length > 0 ? `${shorts.length} Short(s) ready` : 'No shorts generated');
+            return shorts;
+          } catch (shortsErr) {
+            console.error('Auto-short generation failed:', shortsErr);
+            setShortsStatus('Shorts generation failed');
+            return [];
+          }
+        })();
+      }
+
       // 7. THUMBNAIL - video render hote hi
       let thumbnailBase64Local: string | undefined = undefined;
       updateStage('thumbnail', 'working');
