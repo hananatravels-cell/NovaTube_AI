@@ -41,6 +41,7 @@ const INITIAL_STAGES: Stage[] = [
   { id: 'music', label: 'Adding Music', emoji: '🎵', status: 'waiting', available: true },
   { id: 'video', label: 'Creating Visuals & Rendering', emoji: '🎬', status: 'waiting', available: true },
   { id: 'publish', label: 'Publishing', emoji: '🚀', status: 'waiting', available: true },
+  { id: 'shorts', label: 'Creating Shorts', emoji: '📱', status: 'waiting', available: true },
   { id: 'thumbnail', label: 'Creating Thumbnail', emoji: '🖼️', status: 'waiting', available: true },
   { id: 'seo', label: 'Optimizing SEO', emoji: '🔍', status: 'waiting', available: true },
   { id: 'schedule', label: 'Scheduling', emoji: '📅', status: 'waiting', available: true },
@@ -1040,6 +1041,7 @@ export default function AIContentAgentPage() {
       let shortsPromise: Promise<{ video: string }[]> | null = null;
       if (autoPublish && safeNumShorts > 0) {
         setShortsStatus('Generating Shorts…');
+        updateStage('shorts', 'working');
         shortsPromise = (async () => {
           try {
             const mainVideoBase64ForShorts = await videoUrlToBase64(videoData.videoUrl);
@@ -1060,6 +1062,7 @@ export default function AIContentAgentPage() {
           } catch (shortsErr) {
             console.error('Auto-short generation failed:', shortsErr);
             setShortsStatus('Shorts generation failed');
+                        updateStage('shorts', 'failed');
             return [];
           }
         })();
@@ -1155,6 +1158,7 @@ export default function AIContentAgentPage() {
               });
             }
             setShortsStatus(shorts.length > 0 ? `${shorts.length} Shorts scheduled` : '');
+                        updateStage('shorts', 'completed');
           } catch (shortsErr) {
             console.error('Auto-short generation failed:', shortsErr);
             setShortsStatus('Shorts generation failed');
