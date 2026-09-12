@@ -22,6 +22,7 @@ import threading
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import time as _time
 import uuid
+from datetime import datetime
 import proglog
 
 import requests
@@ -840,12 +841,18 @@ async def make_short(req: ShortRequest):
     work_dir = tempfile.mkdtemp(prefix="novatube_short_")
     open_clips = []
     try:
-        full_path = os.path.join(work_dir, "full.mp4")
-        vdata = req.video_base64
-        if vdata.startswith("data:"):
-            vdata = vdata.split(",", 1)[1]
-        with open(full_path, "wb") as f:
-            f.write(base64.b64decode(vdata))
+        if req.video_path and os.path.exists(req.video_path):
+            full_path = req.video_path
+            logger.info(f"[AUTO-SHORT] Using existing server file: {full_path}")
+        else:
+            if not req.video_base64:
+                raise HTTPException(status_code=400, detail="Either video_path or video_base64 is required")
+            full_path = os.path.join(work_dir, "full.mp4")
+            vdata = req.video_base64
+            if vdata.startswith("data:"):
+                vdata = vdata.split(",", 1)[1]
+            with open(full_path, "wb") as f:
+                f.write(base64.b64decode(vdata))
 
         short_path = os.path.join(work_dir, "short.mp4")
         subprocess.run(
@@ -1081,12 +1088,18 @@ async def auto_short(req: AutoShortRequest):
     work_dir = tempfile.mkdtemp(prefix="novatube_autoshort_")
     open_clips = []
     try:
-        full_path = os.path.join(work_dir, "full.mp4")
-        vdata = req.video_base64
-        if vdata.startswith("data:"):
-            vdata = vdata.split(",", 1)[1]
-        with open(full_path, "wb") as f:
-            f.write(base64.b64decode(vdata))
+        if req.video_path and os.path.exists(req.video_path):
+            full_path = req.video_path
+            logger.info(f"[AUTO-SHORT] Using existing server file: {full_path}")
+        else:
+            if not req.video_base64:
+                raise HTTPException(status_code=400, detail="Either video_path or video_base64 is required")
+            full_path = os.path.join(work_dir, "full.mp4")
+            vdata = req.video_base64
+            if vdata.startswith("data:"):
+                vdata = vdata.split(",", 1)[1]
+            with open(full_path, "wb") as f:
+                f.write(base64.b64decode(vdata))
 
         source_video = VideoFileClip(full_path)
         total_duration = source_video.duration
@@ -1387,6 +1400,8 @@ async def create_channel(request: Request):
         "niche": niche,
         "category": body.get("category") or "storytelling",
         "youtubeAccount": (body.get("youtubeAccount") or "default").strip(),
+        "voice": body.get("voice") or "noah",
+        "language": body.get("language") or "english",
         "createdAt": datetime.utcnow().isoformat(),
     }
     channels.append(new_channel)
