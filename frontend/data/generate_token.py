@@ -1,8 +1,9 @@
 from google_auth_oauthlib.flow import InstalledAppFlow
 import json
+import sys
 
 CLIENT_ID = "126832539191-ntger6n9e6tlff5tdmb5upq3ieket1p7.apps.googleusercontent.com"
-CLIENT_SECRET = "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"
+CLIENT_SECRET = "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"
 
 client_config = {
     "installed": {
@@ -16,8 +17,11 @@ client_config = {
 
 SCOPES = ["https://www.googleapis.com/auth/youtube.upload"]
 
+channel_name = sys.argv[1] if len(sys.argv) > 1 else "default"
+output_filename = f"youtube_token_{channel_name}.json"
+
 flow = InstalledAppFlow.from_client_config(client_config, SCOPES)
-creds = flow.run_local_server(port=0)
+creds = flow.run_local_server(port=8080, open_browser=False)
 
 output = {
     "token": creds.token,
@@ -31,8 +35,8 @@ output = {
     "expiry": creds.expiry.strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + "Z"
 }
 
-with open("youtube_token_hanana.json", "w") as f:
+with open(output_filename, "w") as f:
     json.dump(output, f)
 
-print("DONE! File saved as youtube_token_hanana.json")
+print(f"DONE! File saved as {output_filename}")
 print(json.dumps(output, indent=2))
