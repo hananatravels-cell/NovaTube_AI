@@ -1,0 +1,44 @@
+{
+  "channels": [
+    {
+      "id": "43ed8577-8684-4bf1-b572-4dfbc782c64e",
+      "name": "Test",
+      "niche": "History",
+      "category": "history",
+      "youtubeAccount": "hanana",
+      "createdAt": "2026-09-11T09:18:24.536731"
+    },
+    {
+      "id": "d80b846c-ed63-412f-8926-f140fa2d4066",
+      "name": "Historical Stories",
+      "niche": "History",
+      "category": "history",
+      "youtubeAccount": "hanana",
+      "createdAt": "2026-09-11T09:21:53.170931"
+    },
+    {
+      "id": "519c63dd-3549-4b04-8902-ae737db72415",
+      "name": "truecrime nova",
+      "niche": "True Crime",
+      "category": "horror",
+      "youtubeAccount": "truecrime",
+      "createdAt": "2026-09-11T10:03:01.450702"
+    },
+    {
+      "id": "d805fb00-eb1e-4c3a-8ab3-d84101be9723",
+      "name": "wealthnova",
+      "niche": "Personal Finance",
+      "category": "finance",
+      "youtubeAccount": "wealth nova",
+      "createdAt": "2026-09-11T11:10:22.277522"
+    },
+    {
+      "id": "b99c577a-c379-45a6-aeb2-d180300aacc3",
+      "name": "Hidayat ka Safar",
+      "niche": "Islamic Stories & History",
+      "category": "islamic",
+      "youtubeAccount": "hidayat",
+      "createdAt": "2026-09-12T05:10:34.010334"
+    }
+  ]
+}
