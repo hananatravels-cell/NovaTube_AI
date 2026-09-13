@@ -1516,8 +1516,8 @@ export default function AIContentAgentPage() {
           </div>
 
           <div className="grid lg:grid-cols-[450px_550px] gap-8 items-start ml-auto">
-            <div className="bg-[#0F0F15] border border-white/[0.07] rounded-2xl p-8">
-              <h3 className="text-lg font-semibold mb-6">Start AI Content</h3>
+            <div className="bg-[#0F0F15] border border-white/[0.07] rounded-2xl p-8 min-h-[700px]">
+    <h3 className="text-lg font-semibold mb-6">Live AI Workflow</h3>
 
               <div className="space-y-5">
                 <div ref={nicheBoxRef} className="relative">
