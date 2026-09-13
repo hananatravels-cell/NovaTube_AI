@@ -683,6 +683,7 @@ export default function AIContentAgentPage() {
   const [showNicheDropdown, setShowNicheDropdown] = useState(false);
   const nicheBoxRef = useRef<HTMLDivElement>(null);
   const isStartingRef = useRef(false);
+  const wakeLockRef = useRef<any>(null);
   const videoElRef = useRef<HTMLVideoElement>(null);
   const [channels, setChannels] = useState<Channel[]>([]);
   const [selectedChannelId, setSelectedChannelId] = useState<string | null>(null);
@@ -725,6 +726,7 @@ export default function AIContentAgentPage() {
   const [autoPublish, setAutoPublish] = useState(true);
   const [shortsStatus, setShortsStatus] = useState('');
   const [numShorts, setNumShorts] = useState(DEFAULT_NUM_SHORTS);
+  const [shortGapHours, setShortGapHours] = useState(DEFAULT_SHORT_GAP_HOURS);
     const [preferredPublishTime, setPreferredPublishTime] = useState(() => {
     if (typeof window !== 'undefined') {
       return localStorage.getItem('preferredPublishTime') || '21:00';
@@ -937,7 +939,13 @@ export default function AIContentAgentPage() {
     if (autoPublish && !selectedChannelId) return;
     if (isStartingRef.current) return;
     isStartingRef.current = true;
-
+    try {
+      if ('wakeLock' in navigator) {
+        wakeLockRef.current = await (navigator as any).wakeLock.request('screen');
+      }
+    } catch (e) {
+      console.error('Wake lock failed:', e);
+    }
     setIsRunning(true);
     setErrorMsg('');
     setResultTopic('');
@@ -1129,14 +1137,14 @@ export default function AIContentAgentPage() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                  video_url: videoData.videoUrl,
-                  job_id: jobId,
+                  video_path: videoData.videoUrl, // <--- FIX: Backend 'video_path' expect karta hai
                   category: detectedCategory,
                   num_shorts: numShorts,
+                  min_duration: 20,
+                  max_duration: 59,
                   aspect_ratio: '9:16',
                 }),
               });
-
               const shortsData = await shortsRes.json();
               
               if (!shortsRes.ok) {
@@ -1232,6 +1240,10 @@ export default function AIContentAgentPage() {
     } finally {
       setIsRunning(false);
       isStartingRef.current = false;
+      if (wakeLockRef.current) {
+        wakeLockRef.current.release().catch(() => {});
+        wakeLockRef.current = null;
+      }
     }
   }
 
