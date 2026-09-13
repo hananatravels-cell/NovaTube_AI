@@ -946,17 +946,38 @@ def select_top_moments_with_groq(segments, min_duration: int, max_duration: int,
 async def auto_short(req: AutoShortRequest):
     work_dir = tempfile.mkdtemp(prefix="novatube_autoshort_")
     open_clips = []
+    full_path = ""
     try:
+        # 1. Agar local file path hai aur exist karta hai
         if getattr(req, 'video_path', None) and os.path.exists(req.video_path):
             full_path = req.video_path
             logger.info(f"[AUTO-SHORT] Using existing server file: {full_path}")
-        else:
-            if not req.video_base64:
-                raise HTTPException(status_code=400, detail="Either video_path or video_base64 is required")
+        
+        # 2. (NEW FIX) Agar Next.js ne URL bheja hai to usko download karo
+        elif getattr(req, 'video_path', None) and str(req.video_path).startswith("http"):
+            logger.info(f"[AUTO-SHORT] Downloading video from URL: {req.video_path}")
+            full_path = os.path.join(work_dir, "downloaded_video.mp4")
+            response = requests.get(req.video_path)
+            response.raise_for_status()
+            with open(full_path, "wb") as f:
+                f.write(response.content)
+                
+        # 3. Fallback: Agar purana base64 aaya hai
+        elif getattr(req, 'video_base64', None):
+            logger.info("[AUTO-SHORT] Decoding base64 video...")
             full_path = os.path.join(work_dir, "full.mp4")
             vdata = req.video_base64
-            if vdata.startswith("data:"): vdata = vdata.split(",", 1)[1]
-            with open(full_path, "wb") as f: f.write(base64.b64decode(vdata))
+            if vdata.startswith("data:"): 
+                vdata = vdata.split(",", 1)[1]
+            with open(full_path, "wb") as f: 
+                f.write(base64.b64decode(vdata))
+        else:
+            raise HTTPException(status_code=400, detail="Valid video source required")
+
+        # ==========================================================
+        # ✅ YAHAN SE AAPKA PURANA CLIP BANANE WALA CODE SHURU HOGA
+        # (Neeche jo bhi code pehle se likha hai, use bilkul waisa hi rehne dein)
+        # ==========================================================
 
         source_video = VideoFileClip(full_path)
         total_duration = source_video.duration
