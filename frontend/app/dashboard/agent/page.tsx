@@ -1515,7 +1515,7 @@ export default function AIContentAgentPage() {
             )}
           </div>
 
-          <div className="grid lg:grid-cols-[450px_700px] gap-8 items-start justify-center">
+          <div className="grid lg:grid-cols-[450px_700px] gap-8 items-start justify-end">
             <div className="bg-[#0F0F15] border border-white/[0.07] rounded-2xl p-8">
               <h3 className="text-lg font-semibold mb-6">Start AI Content</h3>
 
