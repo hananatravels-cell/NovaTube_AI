@@ -725,8 +725,19 @@ export default function AIContentAgentPage() {
   const [autoPublish, setAutoPublish] = useState(true);
   const [shortsStatus, setShortsStatus] = useState('');
   const [numShorts, setNumShorts] = useState(DEFAULT_NUM_SHORTS);
-  const [shortGapHours, setShortGapHours] = useState(DEFAULT_SHORT_GAP_HOURS);
-  const [preferredPublishTime, setPreferredPublishTime] = useState('21:00');
+    const [preferredPublishTime, setPreferredPublishTime] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('preferredPublishTime') || '21:00';
+    }
+    return '21:00';
+  });
+
+  const savePreferredPublishTime = (value: string) => {
+    setPreferredPublishTime(value);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('preferredPublishTime', value);
+    }
+  };
 
   const sidebarItems = [
     { name: 'Overview', icon: <LayoutDashboard className="w-5 h-5" />, id: 'overview', href: '/dashboard' },
@@ -1720,7 +1731,7 @@ export default function AIContentAgentPage() {
                       <input
                         type="time"
                         value={preferredPublishTime}
-                        onChange={(e) => setPreferredPublishTime(e.target.value || '21:00')}
+                        onChange={(e) => savePreferredPublishTime(e.target.value || '21:00')}
                         disabled={isRunning}
                         className="w-full rounded-lg px-3 py-2 text-sm bg-white/[0.04] border border-white/[0.08] text-white focus:outline-none focus:ring-2 focus:ring-violet-400/25 disabled:opacity-40 disabled:cursor-not-allowed"
                       />
