@@ -854,7 +854,6 @@ def _run_generate_video(job_id: str, req: VideoRequest):
             except Exception:
                 pass
 
-
 INTROS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "shorts_intros")
 ASPECT_RATIOS = {
     "9:16": (1080, 1920),
@@ -863,22 +862,14 @@ ASPECT_RATIOS = {
     "16:9": (1920, 1080),
 }
 
-
 def reformat_video(input_path: str, output_path: str, target_w: int, target_h: int):
-    """Resize + center-crop a video to an exact target aspect ratio."""
     clip = VideoFileClip(input_path)
     try:
         clip = clip.resize(height=target_h) if clip.h / clip.w < target_h / target_w else clip.resize(width=target_w)
-        clip = clip.crop(
-            x_center=clip.w / 2, y_center=clip.h / 2, width=target_w, height=target_h
-        )
-        clip.write_videofile(
-            output_path, fps=24, codec="libx264", audio_codec="aac",
-            preset="ultrafast", threads=2, logger=None,
-        )
+        clip = clip.crop(x_center=clip.w / 2, y_center=clip.h / 2, width=target_w, height=target_h)
+        clip.write_videofile(output_path, fps=24, codec="libx264", audio_codec="aac", preset="ultrafast", threads=2, logger=None)
     finally:
         safe_close(clip)
-
 
 class ShortRequest(BaseModel):
     video_base64: str
@@ -888,97 +879,10 @@ class ShortRequest(BaseModel):
     language: str = "Urdu"
     aspect_ratio: str = "9:16"
 
-
-LANG_CODE = {"Urdu": "ur", "English": "en", "Arabic": "ar"}
-
-
-@app.post("/make-short")
-async def make_short(req: ShortRequest):
-    import subprocess
-    work_dir = tempfile.mkdtemp(prefix="novatube_short_")
-    open_clips = []
-    try:
-        full_path = os.path.join(work_dir, "full.mp4")
-        vdata = req.video_base64
-        if vdata.startswith("data:"):
-            vdata = vdata.split(",", 1)[1]
-        with open(full_path, "wb") as f:
-            f.write(base64.b64decode(vdata))
-
-        short_path = os.path.join(work_dir, "short.mp4")
-        subprocess.run(
-            [
-                "ffmpeg", "-y",
-                "-ss", str(req.start_seconds),
-                "-i", full_path,
-                "-t", str(req.max_duration),
-                "-c", "copy",
-                short_path,
-            ],
-            check=True, capture_output=True,
-        )
-
-        if req.aspect_ratio in ASPECT_RATIOS:
-            target_w, target_h = ASPECT_RATIOS[req.aspect_ratio]
-            reformatted_path = os.path.join(work_dir, "reformatted.mp4")
-            reformat_video(short_path, reformatted_path, target_w, target_h)
-            short_path = reformatted_path
-
-        final_path = short_path
-
-        if req.category:
-            code = LANG_CODE.get(req.language, "ur")
-            intro_path = os.path.join(INTROS_DIR, req.category, f"intro_{code}.mp4")
-            if os.path.isfile(intro_path):
-                intro_clip = VideoFileClip(intro_path)
-                short_clip = VideoFileClip(short_path)
-                open_clips.extend([intro_clip, short_clip])
-                combined = concatenate_videoclips([intro_clip, short_clip], method="compose")
-                open_clips.append(combined)
-                final_path = os.path.join(work_dir, "final_short.mp4")
-                combined.write_videofile(
-                    final_path, fps=24, codec="libx264",
-                    audio_codec="aac", preset="ultrafast",
-                    threads=2, logger=None,
-                )
-            else:
-                logger.warning(f"No intro found for category='{req.category}', language='{req.language}' — skipping intro")
-
-        with open(final_path, "rb") as f:
-            short_b64 = base64.b64encode(f.read()).decode("utf-8")
-        return {"video": f"data:video/mp4;base64,{short_b64}"}
-
-    except subprocess.CalledProcessError as e:
-        logger.error(f"ffmpeg trim failed: {e.stderr}")
-        raise HTTPException(status_code=500, detail="Could not create short")
-    finally:
-        safe_close(*open_clips)
-        shutil.rmtree(work_dir, ignore_errors=True)
-
-
-@app.get("/health")
-async def health():
-    cached_music = []
-    if os.path.isdir(MUSIC_DIR):
-        cached_music = [
-            f[:-4] for f in os.listdir(MUSIC_DIR) if f.lower().endswith(".mp3")
-        ]
-    return {
-        "status": "ok",
-        "service": "NovaTube AI Video",
-        "pexels_configured": bool(PEXELS_API_KEY),
-        "pixabay_configured": bool(PIXABAY_API_KEY),
-        "jamendo_configured": bool(JAMENDO_CLIENT_ID),
-        "categories": list(CATEGORY_KEYWORDS.keys()),
-        "cached_music": cached_music,
-    }
-
-
-import re as _re_json
-
-
+# ✅ FIX: AutoShortRequest ko yahan upar define kiya gaya hai taake NameError na aaye
 class AutoShortRequest(BaseModel):
-    video_base64: str
+    video_base64: str | None = None
+    video_path: str | None = None
     script: list[str] | None = None
     category: str | None = None
     min_duration: int = 20
@@ -986,165 +890,73 @@ class AutoShortRequest(BaseModel):
     num_shorts: int = 1
     aspect_ratio: str = "9:16"
 
-
+LANG_CODE = {"Urdu": "ur", "English": "en", "Arabic": "ar"}
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
-
 def extract_audio(video_path: str, audio_out: str) -> bool:
-    import subprocess
     try:
-        subprocess.run(
-            ["ffmpeg", "-y", "-i", video_path, "-vn", "-acodec", "libmp3lame", audio_out],
-            check=True, capture_output=True,
-        )
+        subprocess.run(["ffmpeg", "-y", "-i", video_path, "-vn", "-acodec", "libmp3lame", audio_out], check=True, capture_output=True)
         return True
     except Exception as e:
         logger.warning(f"Audio extraction failed: {e}")
         return False
 
-
 def transcribe_with_groq(audio_path: str):
-    if not GROQ_API_KEY:
-        return None, None, None
+    if not GROQ_API_KEY: return None, None, None
     try:
         with open(audio_path, "rb") as f:
-            resp = requests.post(
-                "https://api.groq.com/openai/v1/audio/transcriptions",
-                headers={"Authorization": f"Bearer {GROQ_API_KEY}"},
-                files={"file": (os.path.basename(audio_path), f, "audio/mpeg")},
-                data={"model": "whisper-large-v3", "response_format": "verbose_json"},
-                timeout=120,
-            )
-        if resp.status_code != 200:
-            logger.warning(f"Groq transcription failed ({resp.status_code}): {resp.text[:200]}")
-            return None, None, None
+            resp = requests.post("https://api.groq.com/openai/v1/audio/transcriptions", headers={"Authorization": f"Bearer {GROQ_API_KEY}"}, files={"file": (os.path.basename(audio_path), f, "audio/mpeg")}, data={"model": "whisper-large-v3", "response_format": "verbose_json"}, timeout=120)
+        if resp.status_code != 200: return None, None, None
         data = resp.json()
-        segments = data.get("segments", [])
-        text = data.get("text", "")
-        language = data.get("language", "english")
-        return text, segments, language
+        return data.get("text", ""), data.get("segments", []), data.get("language", "english")
     except Exception as e:
         logger.warning(f"Transcription error: {e}")
         return None, None, None
 
-
 def select_best_moment_with_groq(segments, min_duration: int, max_duration: int):
-    if not GROQ_API_KEY or not segments:
-        return None
+    if not GROQ_API_KEY or not segments: return None
     try:
-        transcript_block = "\n".join(
-            f"{s['start']:.1f} -> {s['end']:.1f}: {s['text'].strip()}" for s in segments
-        )
-        prompt = f"""You are selecting the best short-form video clip from a transcript with timestamps.
-
-Transcript:
-{transcript_block}
-
-Pick the single best natural segment for a short video (YouTube Shorts/Reels style).
-Rules:
-- Prefer a strong hook, a complete thought, and high engagement potential.
-- Never cut a sentence in the middle.
-- Duration should be the SHORTEST natural length that contains the full engaging moment.
-- Acceptable range: {min_duration} to {max_duration} seconds. Do not pad to reach {max_duration} unless the content needs it.
-
-Respond with ONLY valid JSON, no extra text, in this exact format:
-{{"start_time": <number>, "end_time": <number>, "duration": <number>, "reason": "<short explanation>", "score": <0-100 integer>}}"""
-
-        resp = requests.post(
-            "https://api.groq.com/openai/v1/chat/completions",
-            headers={"Authorization": f"Bearer {GROQ_API_KEY}", "Content-Type": "application/json"},
-            json={
-                "model": "llama-3.3-70b-versatile",
-                "messages": [{"role": "user", "content": prompt}],
-                "temperature": 0.3,
-            },
-            timeout=60,
-        )
-        if resp.status_code != 200:
-            logger.warning(f"Groq selection failed ({resp.status_code}): {resp.text[:200]}")
-            return None
-
-        content = resp.json()["choices"][0]["message"]["content"]
-        match = _re_json.search(r"\{.*\}", content, _re_json.DOTALL)
-        if not match:
-            return None
+        transcript_block = "\n".join(f"{s['start']:.1f} -> {s['end']:.1f}: {s['text'].strip()}" for s in segments)
+        prompt = f"""Pick the single best natural segment for a short video. Rules: Strong hook, complete thought, no mid-sentence cuts. Duration: {min_duration} to {max_duration} seconds. Respond with ONLY valid JSON: {{"start_time": <number>, "end_time": <number>, "duration": <number>, "reason": "<short explanation>", "score": <0-100 integer>}}\n\nTranscript:\n{transcript_block}"""
+        resp = requests.post("https://api.groq.com/openai/v1/chat/completions", headers={"Authorization": f"Bearer {GROQ_API_KEY}", "Content-Type": "application/json"}, json={"model": "llama-3.3-70b-versatile", "messages": [{"role": "user", "content": prompt}], "temperature": 0.3}, timeout=60)
+        if resp.status_code != 200: return None
+        import re as _re_json
+        match = _re_json.search(r"\{.*\}", resp.json()["choices"][0]["message"]["content"], _re_json.DOTALL)
+        if not match: return None
         result = json.loads(match.group(0))
-
-        required = {"start_time", "end_time", "duration", "reason", "score"}
-        if not required.issubset(result.keys()):
-            return None
-        return result
-    except Exception as e:
-        logger.warning(f"Best-moment selection error: {e}")
-        return None
-
+        return result if {"start_time", "end_time", "duration", "reason", "score"}.issubset(result.keys()) else None
+    except Exception: return None
 
 def select_top_moments_with_groq(segments, min_duration: int, max_duration: int, count: int):
-    if not GROQ_API_KEY or not segments:
-        return []
+    if not GROQ_API_KEY or not segments: return []
     try:
-        transcript_block = "\n".join(
-            f"{s['start']:.1f} -> {s['end']:.1f}: {s['text'].strip()}" for s in segments
-        )
-        prompt = f"""You are selecting the best short-form video clips from a transcript with timestamps.
-
-Transcript:
-{transcript_block}
-
-Pick the top {count} best NON-OVERLAPPING segments for short videos (YouTube Shorts/Reels style), ranked from strongest to weakest.
-Rules:
-- Prefer a strong hook, a complete thought, and high engagement potential in each one.
-- Never cut a sentence in the middle.
-- Duration should be the SHORTEST natural length that contains the full engaging moment.
-- Acceptable range per clip: {min_duration} to {max_duration} seconds.
-- Segments must not overlap each other in time.
-- If fewer than {count} genuinely strong moments exist, return fewer — do not pad with weak ones.
-
-Respond with ONLY valid JSON, no extra text, in this exact format:
-{{"moments": [{{"start_time": <number>, "end_time": <number>, "duration": <number>, "reason": "<short explanation>", "score": <0-100 integer>}}]}}"""
-
-        resp = requests.post(
-            "https://api.groq.com/openai/v1/chat/completions",
-            headers={"Authorization": f"Bearer {GROQ_API_KEY}", "Content-Type": "application/json"},
-            json={
-                "model": "llama-3.3-70b-versatile",
-                "messages": [{"role": "user", "content": prompt}],
-                "temperature": 0.3,
-            },
-            timeout=60,
-        )
-        if resp.status_code != 200:
-            logger.warning(f"Groq multi-selection failed ({resp.status_code}): {resp.text[:200]}")
-            return []
-
-        content = resp.json()["choices"][0]["message"]["content"]
-        match = _re_json.search(r"\{.*\}", content, _re_json.DOTALL)
-        if not match:
-            return []
+        transcript_block = "\n".join(f"{s['start']:.1f} -> {s['end']:.1f}: {s['text'].strip()}" for s in segments)
+        prompt = f"""Pick the top {count} best NON-OVERLAPPING segments for short videos. Rules: Strong hook, complete thought, no mid-sentence cuts, duration {min_duration}-{max_duration}s, no overlaps. Respond with ONLY valid JSON: {{"moments": [{{"start_time": <number>, "end_time": <number>, "duration": <number>, "reason": "<short explanation>", "score": <0-100 integer>}}]}}\n\nTranscript:\n{transcript_block}"""
+        resp = requests.post("https://api.groq.com/openai/v1/chat/completions", headers={"Authorization": f"Bearer {GROQ_API_KEY}", "Content-Type": "application/json"}, json={"model": "llama-3.3-70b-versatile", "messages": [{"role": "user", "content": prompt}], "temperature": 0.3}, timeout=60)
+        if resp.status_code != 200: return []
+        import re as _re_json
+        match = _re_json.search(r"\{.*\}", resp.json()["choices"][0]["message"]["content"], _re_json.DOTALL)
+        if not match: return []
         result = json.loads(match.group(0))
-        moments = result.get("moments", [])
+        return [m for m in result.get("moments", []) if {"start_time", "end_time", "duration", "reason", "score"}.issubset(m.keys())][:count]
+    except Exception: return []
 
-        valid = []
-        for m in moments:
-            if {"start_time", "end_time", "duration", "reason", "score"}.issubset(m.keys()):
-                valid.append(m)
-        return valid[:count]
-    except Exception as e:
-        logger.warning(f"Top-moments selection error: {e}")
-        return []
-
-
+# ✅ FIX: Sirf EK auto_short function hai, aur ye sahi jagah par hai
 @app.post("/auto-short")
 async def auto_short(req: AutoShortRequest):
     work_dir = tempfile.mkdtemp(prefix="novatube_autoshort_")
     open_clips = []
     try:
-        full_path = os.path.join(work_dir, "full.mp4")
-        vdata = req.video_base64
-        if vdata.startswith("data:"):
-            vdata = vdata.split(",", 1)[1]
-        with open(full_path, "wb") as f:
-            f.write(base64.b64decode(vdata))
+        if getattr(req, 'video_path', None) and os.path.exists(req.video_path):
+            full_path = req.video_path
+            logger.info(f"[AUTO-SHORT] Using existing server file: {full_path}")
+        else:
+            if not req.video_base64:
+                raise HTTPException(status_code=400, detail="Either video_path or video_base64 is required")
+            full_path = os.path.join(work_dir, "full.mp4")
+            vdata = req.video_base64
+            if vdata.startswith("data:"): vdata = vdata.split(",", 1)[1]
+            with open(full_path, "wb") as f: f.write(base64.b64decode(vdata))
 
         source_video = VideoFileClip(full_path)
         total_duration = source_video.duration
@@ -1152,13 +964,9 @@ async def auto_short(req: AutoShortRequest):
 
         detected_language = "English"
         segments = None
-
         if req.script:
             per_scene = total_duration / max(len(req.script), 1)
-            segments = [
-                {"start": i * per_scene, "end": (i + 1) * per_scene, "text": s}
-                for i, s in enumerate(req.script)
-            ]
+            segments = [{"start": i * per_scene, "end": (i + 1) * per_scene, "text": s} for i, s in enumerate(req.script)]
         else:
             audio_path = os.path.join(work_dir, "audio.mp3")
             if extract_audio(full_path, audio_path):
@@ -1169,46 +977,24 @@ async def auto_short(req: AutoShortRequest):
                     detected_language = lang_map.get(lang, lang.title() if lang else "English")
 
         num_shorts = max(1, min(req.num_shorts, 5))
-
         moments = []
         if segments:
-            if num_shorts > 1:
-                moments = select_top_moments_with_groq(segments, req.min_duration, req.max_duration, num_shorts)
+            if num_shorts > 1: moments = select_top_moments_with_groq(segments, req.min_duration, req.max_duration, num_shorts)
             else:
                 single = select_best_moment_with_groq(segments, req.min_duration, req.max_duration)
-                if single:
-                    moments = [single]
+                if single: moments = [single]
 
         if not moments:
-            fallback_duration = min(45, total_duration)
-            moments = [{
-                "start_time": 0,
-                "end_time": fallback_duration,
-                "duration": fallback_duration,
-                "reason": "Automatic detection unavailable — used a safe default segment.",
-                "score": 0,
-            }]
+            moments = [{"start_time": 0, "end_time": min(45, total_duration), "duration": min(45, total_duration), "reason": "Fallback", "score": 0}]
 
         results = []
         for idx, best in enumerate(moments):
             start_time = max(0, float(best["start_time"]))
             end_time = min(total_duration, float(best["end_time"]))
-            if end_time <= start_time:
-                end_time = min(total_duration, start_time + 30)
+            if end_time <= start_time: end_time = min(total_duration, start_time + 30)
 
             short_path = os.path.join(work_dir, f"short_{idx}.mp4")
-            import subprocess
-            subprocess.run(
-                [
-                    "ffmpeg", "-y",
-                    "-ss", str(start_time),
-                    "-i", full_path,
-                    "-t", str(end_time - start_time),
-                    "-c", "copy",
-                    short_path,
-                ],
-                check=True, capture_output=True,
-            )
+            subprocess.run(["ffmpeg", "-y", "-ss", str(start_time), "-i", full_path, "-t", str(end_time - start_time), "-c", "copy", short_path], check=True, capture_output=True)
 
             if req.aspect_ratio in ASPECT_RATIOS:
                 target_w, target_h = ASPECT_RATIOS[req.aspect_ratio]
@@ -1227,41 +1013,26 @@ async def auto_short(req: AutoShortRequest):
                     combined = concatenate_videoclips([intro_clip, short_clip], method="compose")
                     open_clips.append(combined)
                     final_path = os.path.join(work_dir, f"final_short_{idx}.mp4")
-                    combined.write_videofile(
-                        final_path, fps=24, codec="libx264",
-                        audio_codec="aac", preset="ultrafast",
-                        threads=2, logger=None,
-                    )
+                    combined.write_videofile(final_path, fps=24, codec="libx264", audio_codec="aac", preset="ultrafast", threads=2, logger=None)
 
-        persist_dir = "/home/ubuntu/NovaTube_AI/novatube-video-service/published_outputs"
-        os.makedirs(persist_dir, exist_ok=True)
-        persisted_video_path = os.path.join(persist_dir, f"short_{uuid.uuid4().hex}.mp4")
-        shutil.move(final_path, persisted_video_path)
-        thumb_path = os.path.join(persist_dir, f"thumb_{uuid.uuid4().hex}.jpg")
-        try:
-            subprocess.run(
-                ["ffmpeg", "-y", "-i", persisted_video_path, "-ss", "00:00:01.000", "-vframes", "1", thumb_path],
-                check=True, capture_output=True,
-            )
-        except subprocess.CalledProcessError as e:
-            logger.warning(f"Thumbnail generation failed: {e.stderr}")
-            thumb_path = None
+            persist_dir = "/home/ubuntu/NovaTube_AI/novatube-video-service/published_outputs"
+            os.makedirs(persist_dir, exist_ok=True)
+            persisted_video_path = os.path.join(persist_dir, f"short_{uuid.uuid4().hex}.mp4")
+            shutil.move(final_path, persisted_video_path)
+            
+            thumb_path = os.path.join(persist_dir, f"thumb_{uuid.uuid4().hex}.jpg")
+            try: subprocess.run(["ffmpeg", "-y", "-i", persisted_video_path, "-ss", "00:00:01.000", "-vframes", "1", thumb_path], check=True, capture_output=True)
+            except: thumb_path = None
 
-        results.append({
-            "video_path": persisted_video_path,
-            "thumbnail_path": thumb_path,
-                "start_time": start_time,
-                "end_time": end_time,
-                "duration": end_time - start_time,
-                "reason": best.get("reason", ""),
-                "score": best.get("score", 0),
+            results.append({
+                "video": f"data:video/mp4;base64,{base64.b64encode(open(persisted_video_path, 'rb').read()).decode('utf-8')}",
+                "video_path": persisted_video_path,
+                "thumbnail_path": thumb_path,
+                "start_time": start_time, "end_time": end_time,
+                "duration": end_time - start_time, "reason": best.get("reason", ""), "score": best.get("score", 0),
             })
 
-        return {
-            "shorts": results,
-            "language": detected_language,
-        }
-
+        return {"shorts": results, "language": detected_language}
     except Exception as e:
         logger.error(f"Auto-short failed: {e}")
         raise HTTPException(status_code=500, detail=f"Auto Short generation failed: {e}")
@@ -1269,135 +1040,102 @@ async def auto_short(req: AutoShortRequest):
         safe_close(*open_clips)
         shutil.rmtree(work_dir, ignore_errors=True)
 
+@app.get("/health")
+async def health():
+    cached_music = [f[:-4] for f in os.listdir(MUSIC_DIR) if f.lower().endswith(".mp3")] if os.path.isdir(MUSIC_DIR) else []
+    return {"status": "ok", "service": "NovaTube AI Video", "pexels_configured": bool(PEXELS_API_KEY), "pixabay_configured": bool(PIXABAY_API_KEY), "jamendo_configured": bool(JAMENDO_CLIENT_ID), "categories": list(CATEGORY_KEYWORDS.keys()), "cached_music": cached_music}
+
 @app.get("/video-path/{job_id}")
 async def get_video_path(job_id: str):
-    """Internal-only: returns the server-side file path of a completed
-    job, so youtube_service (same machine) can read it directly from
-    disk instead of over the network as base64."""
     job = JOBS.get(job_id)
-    if not job:
-        raise HTTPException(status_code=404, detail="Unknown job_id")
-    if job.get("status") != "done":
-        raise HTTPException(status_code=409, detail="Video not ready yet")
+    if not job or job.get("status") != "done": raise HTTPException(status_code=404, detail="Video not ready")
     video_path = job.get("video_path")
-    if not video_path or not os.path.exists(video_path):
-        raise HTTPException(status_code=404, detail="Video file not available")
+    if not video_path or not os.path.exists(video_path): raise HTTPException(status_code=404, detail="Video file not available")
     return {"video_path": video_path}
+
 THUMBNAIL_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "thumbnails")
 os.makedirs(THUMBNAIL_DIR, exist_ok=True)
 
-
 def _extract_candidate_frame(video_path: str, timestamp: float, out_path: str) -> bool:
-    """Uses ffmpeg to grab a single frame at `timestamp` seconds."""
     try:
-        result = subprocess.run(
-            [
-                "ffmpeg", "-y", "-ss", str(timestamp), "-i", video_path,
-                "-frames:v", "1", "-q:v", "2", out_path,
-            ],
-            capture_output=True, timeout=20,
-        )
+        result = subprocess.run(["ffmpeg", "-y", "-ss", str(timestamp), "-i", video_path, "-frames:v", "1", "-q:v", "2", out_path], capture_output=True, timeout=20)
         return result.returncode == 0 and os.path.exists(out_path)
-    except Exception:
-        return False
-
+    except Exception: return False
 
 def _score_frame(image_path: str) -> float:
-    """Higher score = more visually interesting frame (avoids black/blank)."""
     try:
-        img = Image.open(image_path).convert("RGB")
-        img_small = img.resize((80, 80))
-        pixels = list(img_small.getdata())
-        lum_vals = []
-        sat_vals = []
+        img = Image.open(image_path).convert("RGB").resize((80, 80))
+        pixels = list(img.getdata())
+        lum_vals, sat_vals = [], []
         for r, g, b in pixels:
             lum = 0.299 * r + 0.587 * g + 0.114 * b
             mx, mn = max(r, g, b), min(r, g, b)
             sat = 0 if mx == 0 else (mx - mn) / mx
-            lum_vals.append(lum)
-            sat_vals.append(sat)
+            lum_vals.append(lum); sat_vals.append(sat)
         mean_lum = sum(lum_vals) / len(lum_vals)
         variance = sum((l - mean_lum) ** 2 for l in lum_vals) / len(lum_vals)
-        mean_sat = sum(sat_vals) / len(sat_vals)
-        return variance * 0.7 + mean_sat * 10000 * 0.3
-    except Exception:
-        return 0.0
-
+        return variance * 0.7 + (sum(sat_vals) / len(sat_vals)) * 10000 * 0.3
+    except Exception: return 0.0
 
 def _get_video_duration(video_path: str) -> float:
     try:
-        result = subprocess.run(
-            ["ffprobe", "-v", "error", "-show_entries", "format=duration",
-             "-of", "default=noprint_wrapper=1:nokey=1", video_path],
-            capture_output=True, text=True, timeout=10,
-        )
+        result = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "default=noprint_wrapper=1:nokey=1", video_path], capture_output=True, text=True, timeout=10)
         return float(result.stdout.strip())
-    except Exception:
-        return 10.0
-
+    except Exception: return 10.0
 
 def _add_text_overlay(image_path: str, text: str, out_path: str):
     img = Image.open(image_path).convert("RGB")
     w, h = img.size
     draw = ImageDraw.Draw(img, "RGBA")
-
     band_top = int(h * 0.55)
     for y in range(band_top, h):
-        alpha = int(255 * (y - band_top) / (h - band_top))
-        draw.line([(0, y), (w, y)], fill=(0, 0, 0, alpha))
-
+        draw.line([(0, y), (w, y)], fill=(0, 0, 0, int(255 * (y - band_top) / (h - band_top))))
     font_size = max(24, int(w * (0.055 if len(text) > 20 else 0.075)))
-    try:
-        font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", font_size)
-    except Exception:
-        font = ImageFont.load_default()
-
+    try: font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", font_size)
+    except: font = ImageFont.load_default()
     text = text.upper()
     words = text.split(" ")
     max_width = w * 0.9
     lines, current = [], ""
     for word in words:
         test = (current + " " + word).strip()
-        if draw.textlength(test, font=font) <= max_width:
-            current = test
+        if draw.textlength(test, font=font) <= max_width: current = test
         else:
-            if current:
-                lines.append(current)
+            if current: lines.append(current)
             current = word
-    if current:
-        lines.append(current)
-
+    if current: lines.append(current)
     total_h = len(lines) * (font_size + 8)
     y = h - total_h - int(h * 0.05)
     for line in lines:
         tw = draw.textlength(line, font=font)
         x = (w - tw) / 2
-        for dx, dy in [(-2, 0), (2, 0), (0, -2), (0, 2)]:
-            draw.text((x + dx, y + dy), line, font=font, fill=(0, 0, 0, 230))
+        for dx, dy in [(-2, 0), (2, 0), (0, -2), (0, 2)]: draw.text((x + dx, y + dy), line, font=font, fill=(0, 0, 0, 230))
         draw.text((x, y), line, font=font, fill=(255, 255, 255, 255))
         y += font_size + 8
-
     img.save(out_path, "JPEG", quality=90)
-
 
 @app.get("/thumbnail/{job_id}")
 async def get_thumbnail(job_id: str, text: str = ""):
-    """Generates (or returns cached) thumbnail for a completed job via
-    ffmpeg frame extraction + PIL text overlay. Server-side, no browser
-    canvas/CORS involved."""
     job = JOBS.get(job_id)
-    if not job:
-        raise HTTPException(status_code=404, detail="Unknown job_id")
-    if job.get("status") != "done":
-        raise HTTPException(status_code=409, detail="Video not ready yet")
+    if not job or job.get("status") != "done": raise HTTPException(status_code=404, detail="Video not ready")
     video_path = job.get("video_path")
-    if not video_path or not os.path.exists(video_path):
-        raise HTTPException(status_code=404, detail="Video file not available")
-
+    if not video_path or not os.path.exists(video_path): raise HTTPException(status_code=404, detail="Video file not available")
     final_path = os.path.join(THUMBNAIL_DIR, f"{job_id}.jpg")
-    if os.path.exists(final_path):
-        return {"thumbnail_path": final_path, "status": "done"}
-
+    if os.path.exists(final_path): return {"thumbnail_path": final_path, "status": "done"}
+    duration = _get_video_duration(video_path)
+    fractions = [0.15, 0.35, 0.55, 0.75]
+    best_score, best_frame = -1.0, None
+    with tempfile.TemporaryDirectory() as tmpdir:
+        for frac in fractions:
+            ts = max(0.1, min(duration * frac, duration - 0.1))
+            candidate_path = os.path.join(tmpdir, f"cand_{frac}.jpg")
+            if _extract_candidate_frame(video_path, ts, candidate_path):
+                score = _score_frame(candidate_path)
+                if score > best_score: best_score, best_frame = score, candidate_path
+        if best_frame is None: raise HTTPException(status_code=500, detail="Could not extract any candidate frames")
+        overlay_text = text or job.get("topic") or job.get("title") or ""
+        _add_text_overlay(best_frame, overlay_text, final_path)
+    return {"thumbnail_path": final_path, "status": "done"}
     duration = _get_video_duration(video_path)
     fractions = [0.15, 0.35, 0.55, 0.75]
     best_score, best_frame = -1.0, None

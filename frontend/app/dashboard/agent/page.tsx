@@ -31,6 +31,8 @@ interface Channel {
   niche: string;
   category: string;
   youtubeAccount: string;
+  voice: string;
+  language: string;
   createdAt: string;
 }
 
@@ -41,6 +43,7 @@ const INITIAL_STAGES: Stage[] = [
   { id: 'music', label: 'Adding Music', emoji: '🎵', status: 'waiting', available: true },
   { id: 'video', label: 'Creating Visuals & Rendering', emoji: '🎬', status: 'waiting', available: true },
   { id: 'publish', label: 'Publishing', emoji: '🚀', status: 'waiting', available: true },
+  { id: 'shorts', label: 'Creating Shorts', emoji: '📱', status: 'waiting', available: true },
   { id: 'thumbnail', label: 'Creating Thumbnail', emoji: '🖼️', status: 'waiting', available: true },
   { id: 'seo', label: 'Optimizing SEO', emoji: '🔍', status: 'waiting', available: true },
   { id: 'schedule', label: 'Scheduling', emoji: '📅', status: 'waiting', available: true },
@@ -681,13 +684,14 @@ export default function AIContentAgentPage() {
   const nicheBoxRef = useRef<HTMLDivElement>(null);
   const isStartingRef = useRef(false);
   const videoElRef = useRef<HTMLVideoElement>(null);
-
   const [channels, setChannels] = useState<Channel[]>([]);
   const [selectedChannelId, setSelectedChannelId] = useState<string | null>(null);
   const [showAddChannel, setShowAddChannel] = useState(false);
   const [newChannelName, setNewChannelName] = useState('');
   const [newChannelNicheIdx, setNewChannelNicheIdx] = useState(0);
   const [newChannelYoutubeAccount, setNewChannelYoutubeAccount] = useState('default');
+  const [newChannelVoice, setNewChannelVoice] = useState('noah');
+  const [newChannelLanguage, setNewChannelLanguage] = useState('english');
   const [channelsLoading, setChannelsLoading] = useState(true);
   const [selectedYoutubeAccount, setSelectedYoutubeAccount] = useState('default');
 
@@ -785,15 +789,15 @@ export default function AIContentAgentPage() {
     setNicheCategoryOverride(null);
     setSelectedChannelId(null);
   }
-
   function selectChannel(channel: Channel) {
     setSelectedChannelId(channel.id);
     setNiche(channel.niche);
     setNicheCategoryOverride(channel.category);
     setSelectedYoutubeAccount(channel.youtubeAccount || 'default');
     setDurationMinutes(getDefaultDurationForNiche(channel.niche));
+    setVoice(channel.voice || 'noah');
+    setLanguage(channel.language || 'english');
   }
-
   async function addChannel() {
     if (!newChannelName.trim()) return;
     const preset = NICHE_PRESETS[newChannelNicheIdx];
@@ -805,18 +809,23 @@ export default function AIContentAgentPage() {
           name: newChannelName.trim(),
           niche: preset.label,
           category: preset.category,
-          youtubeAccount: newChannelYoutubeAccount.trim() || 'default',
+                   youtubeAccount: newChannelYoutubeAccount.trim() || 'default',
+          voice: newChannelVoice,
+          language: newChannelLanguage,
         }),
       });
       const data = await res.json();
-      if (res.ok && data.channel) {
+            if (res.ok && data.channel) {
         setChannels((prev) => [...prev, data.channel]);
         setNewChannelName('');
         setNewChannelNicheIdx(0);
         setNewChannelYoutubeAccount('default');
+        setNewChannelVoice('noah');
+        setNewChannelLanguage('english');
         setShowAddChannel(false);
         selectChannel(data.channel);
       }
+        
     } catch (e) {
       console.error('Failed to add channel:', e);
     }
@@ -934,7 +943,6 @@ export default function AIContentAgentPage() {
     let topicValue = '';
     let scriptValue = '';
     let sceneList: string[] = [];
-    let thumbnailText = 'WATCH NOW';
     const detectedCategory = nicheCategoryOverride || detectCategory(niche);
 
     try {
@@ -953,9 +961,10 @@ export default function AIContentAgentPage() {
       });
       const scriptData = await scriptRes.json();
       if (!scriptRes.ok) throw new Error(scriptData.error || 'Script step failed');
-      scriptValue = scriptData.script;
+            scriptValue = scriptData.script;
+      sceneList = scriptValue.split(/\n+/).map(s => s.trim()).filter(s => s.length > 0);
       updateStage('script', 'completed');
-
+      
       // 3. Voice
       updateStage('voice', 'working');
       const voiceRes = await fetch('/api/generate-voice', {
@@ -1034,7 +1043,8 @@ export default function AIContentAgentPage() {
       updateStage('video', 'completed');
       updateStage('music', videoData.musicUsed ? 'completed' : 'failed');
       setResultVideo(videoData.videoUrl);
-      // 7. THUMBNAIL - video render hote hi
+
+      // 7. THUMBNAIL
       let thumbnailBase64Local: string | undefined = undefined;
       updateStage('thumbnail', 'working');
       try {
@@ -1053,7 +1063,8 @@ export default function AIContentAgentPage() {
         console.error('Thumbnail generation failed:', thumbErr);
         updateStage('thumbnail', 'failed');
       }
-      // 6. PUBLISHING - Video ready hote hi!
+
+      // 6. PUBLISHING
       if (autoPublish) {
         try {
           const mainPublishAt = computeNextPublishTime(preferredPublishTime);
@@ -1087,53 +1098,97 @@ export default function AIContentAgentPage() {
             account: selectedYoutubeAccount,
             publishAt: mainPublishAt,
           });
-          // Shorts generation
-          try {
-            setShortsStatus('Generating Shorts…');
-            const mainVideoBase64ForShorts = await videoUrlToBase64(videoData.videoUrl);
-            const shortsRes = await fetch('/api/agent/auto-short', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                video_base64: mainVideoBase64ForShorts,
-                category: detectedCategory,
-                num_shorts: numShorts,
-                aspect_ratio: '9:16',
-              }),
-            });
-            const shortsData = await shortsRes.json();
-            const shorts: { video: string }[] = shortsRes.ok && Array.isArray(shortsData.shorts) ? shortsData.shorts : [];
 
-            for (let i = 0; i < shorts.length; i++) {
-              setShortsStatus(`Scheduling Short ${i + 1}/${shorts.length}…`);
-              const publishAt = new Date(mainPublishAtMs + (i + 1) * shortGapHours * 60 * 60 * 1000).toISOString();
-              const baseTitle = seoDataLocal?.title || topicValue || niche;
+          // ==========================================
+          // SHORTS GENERATION (FIXED VERSION)
+          // ==========================================
+          if (numShorts > 0) {
+            try {
+              setShortsStatus('Preparing Shorts generation...');
+              updateStage('shorts', 'working');
+              
+              if (!videoData.videoUrl) {
+                throw new Error('Video URL not available for shorts');
+              }
 
-              await fetch('/api/agent/publish', {
+              setShortsStatus('Generating Shorts from video...');
+              
+              // FIX: Backend ko sirf URL aur Job ID bhejein, Base64 nahi!
+              const shortsRes = await fetch('/api/agent/auto-short', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                  videoBase64: shorts[i].video,
-                  thumbnailBase64: undefined,
-                  title: `${baseTitle} #Shorts`,
-                  description: seoDataLocal?.description || '',
-                  tags: seoDataLocal?.tags || [],
-                  account: selectedYoutubeAccount,
-                  publishAt,
+                  video_url: videoData.videoUrl,
+                  job_id: jobId,
+                  category: detectedCategory,
+                  num_shorts: numShorts,
+                  aspect_ratio: '9:16',
                 }),
               });
+
+              const shortsData = await shortsRes.json();
+              
+              if (!shortsRes.ok) {
+                throw new Error(shortsData.error || `API Error: ${shortsRes.status}`);
+              }
+
+              const shorts = shortsData.shorts || [];
+              
+              if (!Array.isArray(shorts) || shorts.length === 0) {
+                throw new Error('No shorts generated by backend');
+              }
+
+              setShortsStatus(`${shorts.length} Shorts generated. Publishing...`);
+
+              for (let i = 0; i < shorts.length; i++) {
+                setShortsStatus(`Publishing Short ${i + 1}/${shorts.length}...`);
+                
+                const publishAt = new Date(mainPublishAtMs + (i + 1) * shortGapHours * 60 * 60 * 1000).toISOString();
+                const baseTitle = seoDataLocal?.title || topicValue || niche;
+
+                const publishRes = await fetch('/api/agent/publish', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    videoBase64: shorts[i].video,
+                    thumbnailBase64: undefined,
+                    // FIX: YouTube ko force signal dene ke liye #Shorts add kiya
+                    title: `${baseTitle} #Shorts`,
+                    description: `${seoDataLocal?.description || ''}\n\n#Shorts #YouTubeShorts`,
+                    tags: [...(seoDataLocal?.tags || []), 'Shorts', 'YouTubeShorts'],
+                    account: selectedYoutubeAccount,
+                    publishAt: publishAt,
+                  }),
+                });
+
+                if (!publishRes.ok) {
+                  const err = await publishRes.json();
+                  throw new Error(`Short ${i + 1} publish failed: ${err.error}`);
+                }
+                
+                await sleep(1000); // Thoda delay between publishes to avoid rate limits
+              }
+
+              setShortsStatus(`✅ ${shorts.length} Shorts scheduled successfully!`);
+              updateStage('shorts', 'completed');
+              
+            } catch (shortsErr: any) {
+              console.error('Auto-short generation failed:', shortsErr);
+              setShortsStatus(`❌ Failed: ${shortsErr.message}`);
+              // FIX: Yeh line missing thi, isliye spinner atak jata tha!
+              updateStage('shorts', 'failed'); 
             }
-            setShortsStatus(shorts.length > 0 ? `${shorts.length} Shorts scheduled` : '');
-          } catch (shortsErr) {
-            console.error('Auto-short generation failed:', shortsErr);
-            setShortsStatus('Shorts generation failed');
+          } else {
+            updateStage('shorts', 'completed');
           }
-        } catch (publishErr) {
+          // ==========================================
+
+        } catch (publishErr: any) {
           console.error('Publishing failed:', publishErr);
+          setPublishError(publishErr.message || 'Publishing failed');
           updateStage('publish', 'failed');
         }
       }
-
 
       // 8. SEO - Agar autoPublish nahi tha
       if (!autoPublish) {
@@ -1156,7 +1211,7 @@ export default function AIContentAgentPage() {
         updateStage('seo', 'completed');
       }
 
-      // 9. SCHEDULING - Last
+      // 9. SCHEDULING
       updateStage('schedule', 'completed');
 
     } catch (err: any) {
@@ -1373,6 +1428,33 @@ export default function AIContentAgentPage() {
                     className="w-full rounded-lg px-3 py-2.5 text-sm bg-white/[0.04] border border-white/[0.08] text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-violet-400/25"
                   />
                 </div>
+                                <div className="flex-1">
+                  <label className="block text-xs font-semibold text-white/60 mb-1.5">Voice Gender</label>
+                  <select
+                    value={newChannelVoice}
+                    onChange={(e) => setNewChannelVoice(e.target.value)}
+                    className="w-full rounded-lg px-3 py-2.5 text-sm bg-white/[0.04] border border-white/[0.08] text-white focus:outline-none focus:ring-2 focus:ring-violet-400/25"
+                  >
+                    <option value="noah" className="bg-[#0F0F15]">Male (Noah)</option>
+                    <option value="zayn" className="bg-[#0F0F15]">Male (Zayn)</option>
+                    <option value="aria" className="bg-[#0F0F15]">Female (Aria)</option>
+                    <option value="maya" className="bg-[#0F0F15]">Female (Maya)</option>
+                  </select>
+                </div>
+                <div className="flex-1">
+                  <label className="block text-xs font-semibold text-white/60 mb-1.5">Language</label>
+                  <select
+                    value={newChannelLanguage}
+                    onChange={(e) => setNewChannelLanguage(e.target.value)}
+                    className="w-full rounded-lg px-3 py-2.5 text-sm bg-white/[0.04] border border-white/[0.08] text-white focus:outline-none focus:ring-2 focus:ring-violet-400/25"
+                  >
+                    <option value="english" className="bg-[#0F0F15]">English</option>
+                    <option value="urdu" className="bg-[#0F0F15]">Urdu</option>
+                    <option value="roman_urdu" className="bg-[#0F0F15]">Roman Urdu</option>
+                    <option value="arabic" className="bg-[#0F0F15]">Arabic</option>
+                  </select>
+                </div>
+
                 <div className="flex gap-2">
                   <button
                     type="button"
@@ -1760,9 +1842,9 @@ export default function AIContentAgentPage() {
                     </div>
                   </div>
                   <div className="max-w-[320px] mx-auto py-8 text-center">
-  <p className="text-white/60 text-sm">✅ Video ready — check your Downloads folder.</p>
-  <video ref={videoElRef} src={resultVideo} crossOrigin="anonymous" className="hidden" />
-</div>
+                    <p className="text-white/60 text-sm">✅ Video ready — check your Downloads folder.</p>
+                    <video ref={videoElRef} src={resultVideo} crossOrigin="anonymous" className="hidden" />
+                  </div>
                 </div>
               )}
 
