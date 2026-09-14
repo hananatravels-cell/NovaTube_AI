@@ -957,10 +957,13 @@ async def auto_short(req: AutoShortRequest):
         elif getattr(req, 'video_path', None) and str(req.video_path).startswith("http"):
             logger.info(f"[AUTO-SHORT] Downloading video from URL: {req.video_path}")
             full_path = os.path.join(work_dir, "downloaded_video.mp4")
-            response = requests.get(req.video_path)
-            response.raise_for_status()
-            with open(full_path, "wb") as f:
-                f.write(response.content)
+            # Stream=True RAM bachata hai
+            with requests.get(req.video_path, stream=True, timeout=120) as response:
+                response.raise_for_status()
+                with open(full_path, "wb") as f:
+                    for chunk in response.iter_content(chunk_size=8192):
+                        if chunk:
+                            f.write(chunk)
                 
         # 3. Fallback: Agar purana base64 aaya hai
         elif getattr(req, 'video_base64', None):
@@ -1036,7 +1039,8 @@ async def auto_short(req: AutoShortRequest):
                     final_path = os.path.join(work_dir, f"final_short_{idx}.mp4")
                     combined.write_videofile(final_path, fps=24, codec="libx264", audio_codec="aac", preset="ultrafast", threads=2, logger=None)
 
-            persist_dir = "/home/ubuntu/NovaTube_AI/novatube-video-service/published_outputs"
+            # Current file ke folder ke andar 'published_outputs' folder banayega (Render safe)
+            persist_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "published_outputs")
             os.makedirs(persist_dir, exist_ok=True)
             persisted_video_path = os.path.join(persist_dir, f"short_{uuid.uuid4().hex}.mp4")
             shutil.move(final_path, persisted_video_path)
@@ -1157,23 +1161,4 @@ async def get_thumbnail(job_id: str, text: str = ""):
         overlay_text = text or job.get("topic") or job.get("title") or ""
         _add_text_overlay(best_frame, overlay_text, final_path)
     return {"thumbnail_path": final_path, "status": "done"}
-    duration = _get_video_duration(video_path)
-    fractions = [0.15, 0.35, 0.55, 0.75]
-    best_score, best_frame = -1.0, None
-
-    with tempfile.TemporaryDirectory() as tmpdir:
-        for frac in fractions:
-            ts = max(0.1, min(duration * frac, duration - 0.1))
-            candidate_path = os.path.join(tmpdir, f"cand_{frac}.jpg")
-            if _extract_candidate_frame(video_path, ts, candidate_path):
-                score = _score_frame(candidate_path)
-                if score > best_score:
-                    best_score, best_frame = score, candidate_path
-
-        if best_frame is None:
-            raise HTTPException(status_code=500, detail="Could not extract any candidate frames")
-
-        overlay_text = text or job.get("topic") or job.get("title") or ""
-        _add_text_overlay(best_frame, overlay_text, final_path)
-
-    return {"thumbnail_path": final_path, "status": "done"}
+    
