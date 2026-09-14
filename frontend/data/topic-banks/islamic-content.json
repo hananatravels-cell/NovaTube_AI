@@ -1,0 +1,289 @@
+{
+  "niche": "islamic content",
+  "createdAt": "2026-08-23T10:34:53.220Z",
+  "updatedAt": "2026-08-23T10:34:55.459Z",
+  "topics": [
+    {
+      "id": "afd1fea6-ad1b-48b5-83e4-cbccd443fde3",
+      "text": "The Five Pillars Explained with Real-Life Examples",
+      "used": true,
+      "usedAt": "2026-08-23T10:34:55.459Z"
+    },
+    {
+      "id": "f75441e4-0ed4-43c3-ac8d-a8157ea34d79",
+      "text": "How Ramadan Fasting Impacts Physical and Spiritual Health",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "9db1162e-9c19-45bf-beaf-c39f783833d8",
+      "text": "Women’s Rights in Early Islamic History: Key Figures",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "0d0efeaa-8bd1-4288-aed7-1f3b393ed5f1",
+      "text": "Top Ten Misconceptions About Islam Debunked",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "3dc00e57-39bc-481d-85ef-1ece807bdca3",
+      "text": "The Story of Prophet Yusuf and Modern Lessons",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "d0429170-7ee9-4df1-8053-762747d488be",
+      "text": "Understanding Zakat: Calculation, Distribution, and Community Benefits",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "98260d66-d908-4cb6-a536-d9722c09526b",
+      "text": "Islamic Architecture: Symbolism Behind Famous Mosque Designs",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "1e288c17-73db-4076-9e16-6e286b7db8d6",
+      "text": "How to Perform Wudu Correctly: Step-by-Step Guide",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "3688f067-7e5a-4cf8-bc5b-f4eaa7c16220",
+      "text": "The Role of Poetry in Classical Arabic Islamic Culture",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "6fd99520-aec9-4cf8-a5f9-579a04de8ed6",
+      "text": "Islamic Finance Principles Compared to Conventional Banking",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "7ea357b7-7843-4e5b-a10b-c5a5f9cb4a75",
+      "text": "Exploring the Concept of Jihad: Spiritual vs. Political Interpretations",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "2a155f6c-8b68-46fe-879f-caf6483cc734",
+      "text": "Prophet Muhammad’s Leadership Styles in Modern Management",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "c0c9b17b-881d-46f2-b955-a1a763bd51af",
+      "text": "The Science of Quranic Miracles: Historical Evidence Overview",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "57873111-dfed-40a9-b191-a504717eb3f5",
+      "text": "How to Teach Children Salah in Engaging Ways",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "e8e6a024-dcab-4af7-b0d0-b2dc47ec0b26",
+      "text": "The Impact of Islamic Art on Global Visual Culture",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "4f69933b-5ae6-41a9-af4d-c3b567abb0d3",
+      "text": "Personal Stories: Converting to Islam and Finding Identity",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "c4af5021-d648-43b1-84f7-d7b76cdf2e66",
+      "text": "Islamic Etiquette (Adab) in Digital Communication Today",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "9544c383-40b3-433b-81a6-59f3a22332fe",
+      "text": "The History of the Hijra: Lessons for Modern Migration",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "43143527-48c7-4428-b5e4-816bd04870a0",
+      "text": "Understanding the Concept of Tawhid in Everyday Life",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "9eac354e-b604-4a78-a390-7f9ce20a987b",
+      "text": "Islamic Environmental Ethics: Caring for Creation Responsibly",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "f2a20c1e-62ab-4223-9025-05246e219f78",
+      "text": "The Role of Sufism in Spiritual Healing Practices",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "33740a8e-bddc-4e21-8392-df32baa87b19",
+      "text": "Analyzing Quranic Verses on Social Justice and Equality",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "26b0eb3d-15fc-48ff-8c2e-c20ba5a70a30",
+      "text": "The Evolution of Islamic Calligraphy Styles Through Centuries",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "3b846ce3-515c-4b7f-b986-452126bfcc11",
+      "text": "Comparing Early Islamic Legal Schools: Hanafi vs. Shafi'i",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "dbd7f60e-5ce7-41f2-988e-9b8949fb9e56",
+      "text": "How Muslim Entrepreneurs Navigate Halal Business Certification",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "3d15a16f-d9a5-43ae-9dfc-7c2145d09804",
+      "text": "The Influence of Islamic Astronomy on Medieval Navigation",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "4d0a20a8-5a78-4e33-a6da-e36774f5c958",
+      "text": "Exploring the Role of Women Scholars in Classical Islam",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "04bfd6a3-539b-44e2-b3f9-c467edad58e6",
+      "text": "Understanding the Concept of Ihsan in Daily Interactions",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "2f3d6f41-4aca-43bb-b744-f3d6426e7312",
+      "text": "The History and Significance of the Islamic Golden Age",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "17a7e2e2-c513-41e2-86cc-a9b0c999db06",
+      "text": "Practical Tips for Maintaining Consistent Daily Dhikr",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "c044e100-5900-4376-8c05-5554c56b5c0e",
+      "text": "Analyzing the Impact of Islamic Ethics on Modern Healthcare",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "85e749ca-a8ba-4e2a-84e0-af0f772d56a7",
+      "text": "The Story of the Battle of Badr and Strategic Lessons",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "d5a1826b-df1c-463b-86ba-74730a99bfd0",
+      "text": "How to Choose an Authentic Islamic Bookstore Online",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "75cf8c8b-ea9c-44f5-987d-5923649346ce",
+      "text": "The Role of Qiyam al-Layl in Spiritual Growth",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "fddb419b-d0ec-4321-abb5-82aafa26e69a",
+      "text": "Understanding Islamic Calendar Calculations and Leap Year Adjustments",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "80c38e27-43d3-448d-84ff-8c802df39e93",
+      "text": "The Significance of the Kaaba’s Black Stone in Pilgrimage",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "87ded603-4f94-45f8-9d0b-60cb0c32850f",
+      "text": "Exploring Islamic Contributions to Early Medical Knowledge",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "41f16d89-d9da-4ff8-bdaf-1ab7beda678c",
+      "text": "How to Organize a Community Iftar During Summer Heat",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "0797c961-7ce5-4cb1-a313-3fa203c1b0ed",
+      "text": "The Ethics of Halal Investment in Emerging Technology Sectors",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "32510ca4-dea5-444b-aaf2-80d820c7168b",
+      "text": "Stories of Early Muslim Explorers and Their Navigational Tools",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "6cde4c81-cb1e-47fb-bd29-60c56e81308c",
+      "text": "Understanding the Role of Mufti in Contemporary Islamic Jurisprudence",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "c9651ad7-6070-400d-8983-65a3320d2575",
+      "text": "Practical Guide to Setting Up a Home Masjid Space",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "a679c512-6312-4957-ba03-884062f7edb9",
+      "text": "The Influence of Sufi Poetry on Modern Musical Genres",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "370e9cfb-c8f7-4458-afe1-ae53feaea909",
+      "text": "Analyzing Quranic Environmental Guidance for Urban Planning",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "d30d8743-bb2d-475a-89c4-723613e3aff4",
+      "text": "The History Behind Islamic Calendar’s Month Names and Meanings",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "35bb3a1d-8f02-4831-a161-243cd1c270b6",
+      "text": "How Muslim Youth Can Balance Faith and Academic Pressures",
+      "used": false,
+      "usedAt": null
+    },
+    {
+      "id": "8997e214-875a-430e-9ae2-5bf4516a5d41",
+      "text": "The Role of Charity in Preventing Poverty: Case Studies",
+      "used": false,
+      "usedAt": null
+    }
+  ]
+}
