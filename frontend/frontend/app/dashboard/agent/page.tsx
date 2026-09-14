@@ -1137,13 +1137,13 @@ export default function AIContentAgentPage() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                  video_path: videoData.videoUrl, // <--- FIX: Backend 'video_path' expect karta hai
-                  category: detectedCategory,
-                  num_shorts: numShorts,
-                  min_duration: 20,
-                  max_duration: 59,
-                  aspect_ratio: '9:16',
-                }),
+  video_path: `${window.location.origin}${videoData.videoUrl}`,
+  category: detectedCategory,
+  num_shorts: numShorts,
+  min_duration: 20,
+  max_duration: 59,
+  aspect_ratio: '9:16',
+}),
               });
               const shortsData = await shortsRes.json();
               
