@@ -1,0 +1,42 @@
+[33mcommit 4182dddeba912beb48120460dcd045be3ad319c1[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: toptenselections5-tech <toptenselections5@gmail.com>
+Date:   Tue Sep 15 11:27:14 2026 +0500
+
+    Fix: send video_path in auto-short request body
+
+[1mdiff --git a/frontend/frontend/app/dashboard/agent/page.tsx b/frontend/frontend/app/dashboard/agent/page.tsx[m
+[1mindex 9d193552..582f7835 100644[m
+[1m--- a/frontend/frontend/app/dashboard/agent/page.tsx[m
+[1m+++ b/frontend/frontend/app/dashboard/agent/page.tsx[m
+[36m@@ -1132,19 +1132,18 @@[m [mexport default function AIContentAgentPage() {[m
+ [m
+               setShortsStatus('Generating Shorts from video...');[m
+               [m
+[31m-              // FIX: Backend ko sirf URL aur Job ID bhejein, Base64 nahi![m
+[31m-              const shortsRes = await fetch('/api/agent/auto-short', {[m
+[31m-                method: 'POST',[m
+[31m-                headers: { 'Content-Type': 'application/json' },[m
+[31m-                body: JSON.stringify({[m
+[31m-  video_path: `${window.location.origin}${videoData.videoUrl}`,[m
+[31m-  category: detectedCategory,[m
+[31m-  num_shorts: numShorts,[m
+[31m-  min_duration: 20,[m
+[31m-  max_duration: 59,[m
+[31m-  aspect_ratio: '9:16',[m
+[31m-}),[m
+[31m-              });[m
+[32m+[m[32m                    // FIX: Backend ko sirf URL aur Job ID bhejein, Base64 nahi![m
+[32m+[m[32m      const mainVideoPathForShorts = await getVideoPathForJob(jobId);[m
+[32m+[m[32m      const shortsRes = await fetch('/api/agent/auto-short', {[m
+[32m+[m[32m        method: 'POST',[m
+[32m+[m[32m        headers: { 'Content-Type': 'application/json' },[m
+[32m+[m[32m        body: JSON.stringify({[m
+[32m+[m[32m          video_path: mainVideoPathForShorts,[m
+[32m+[m[32m          category: detectedCategory,[m
+[32m+[m[32m          num_shorts: numShorts,[m
+[32m+[m[32m          aspect_ratio: '9:16',[m
+[32m+[m[32m        }),[m
+[32m+[m[32m      });[m
+               const shortsData = await shortsRes.json();[m
+               [m
+               if (!shortsRes.ok) {[m
