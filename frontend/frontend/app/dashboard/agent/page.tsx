@@ -1132,19 +1132,18 @@ export default function AIContentAgentPage() {
 
               setShortsStatus('Generating Shorts from video...');
               
-              // FIX: Backend ko sirf URL aur Job ID bhejein, Base64 nahi!
-              const shortsRes = await fetch('/api/agent/auto-short', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-  video_path: `${window.location.origin}${videoData.videoUrl}`,
-  category: detectedCategory,
-  num_shorts: numShorts,
-  min_duration: 20,
-  max_duration: 59,
-  aspect_ratio: '9:16',
-}),
-              });
+                    // FIX: Backend ko sirf URL aur Job ID bhejein, Base64 nahi!
+      const mainVideoPathForShorts = await getVideoPathForJob(jobId);
+      const shortsRes = await fetch('/api/agent/auto-short', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          video_path: mainVideoPathForShorts,
+          category: detectedCategory,
+          num_shorts: numShorts,
+          aspect_ratio: '9:16',
+        }),
+      });
               const shortsData = await shortsRes.json();
               
               if (!shortsRes.ok) {
