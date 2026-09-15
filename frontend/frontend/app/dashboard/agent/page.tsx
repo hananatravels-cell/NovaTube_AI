@@ -892,7 +892,36 @@ export default function AIContentAgentPage() {
     return nextData.topic.text;
   }
 
-  async function publishToYouTube(params: {
+  async function publishShortToYouTube(params: {
+  videoPath: string;
+  title: string;
+  description: string;
+  tags: string[];
+  account: string;
+  publishAt?: string;
+}): Promise<{ ok: boolean; videoId?: string; error?: string }> {
+  try {
+    const res = await fetch('/api/agent/publish', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        videoPath: params.videoPath || undefined,
+        title: params.title,
+        description: params.description,
+        tags: params.tags,
+        account: params.account,
+        publishAt: params.publishAt || undefined,
+      }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Short publish failed');
+    return { ok: true, videoId: data.videoId };
+  } catch (err: any) {
+    return { ok: false, error: err.message || 'Short publish failed' };
+  }
+}
+
+async function publishToYouTube(params: {
     videoPath?: string;
     videoBase64?: string;
     thumbnailBase64?: string;
@@ -1159,7 +1188,26 @@ export default function AIContentAgentPage() {
               // ✅ FIX: Publishing loop disabled, shorts saved on server
               setShortsStatus(`✅ ${shorts.length} Shorts generated and saved successfully on server!`);
               updateStage('shorts', 'completed');
-              
+
+              const shortsBaseTime = mainPublishAt ? new Date(mainPublishAt) : new Date();
+              for (let i = 0; i < shorts.length; i++) {
+                const shortItem = shorts[i];
+                const shortPublishTime = new Date(shortsBaseTime.getTime() + (i + 1) * shortGapHours * 60 * 60 * 1000);
+                setShortsStatus(`Scheduling Short ${i + 1}/${shorts.length} for YouTube...`);
+                const shortResult = await publishShortToYouTube({
+                  videoPath: shortItem.video_path,
+                  title: `${seoDataLocal?.title || topicValue || niche} - Short ${i + 1}`,
+                  description: seoDataLocal?.description || '',
+                  tags: seoDataLocal?.tags || [],
+                  account: selectedYoutubeAccount,
+                  publishAt: shortPublishTime.toISOString(),
+                });
+                if (!shortResult.ok) {
+                  console.error(`Short ${i + 1} publish failed:`, shortResult.error);
+                }
+              }
+              setShortsStatus(`✅ ${shorts.length} Shorts generated and scheduled on YouTube!`);
+
             } catch (shortsErr: any) {
               console.error('Auto-short generation failed:', shortsErr);
               setShortsStatus(`❌ Failed: ${shortsErr.message}`);
