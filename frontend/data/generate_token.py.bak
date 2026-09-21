@@ -3,7 +3,7 @@ import json
 import sys
 
 CLIENT_ID = "126832539191-ntger6n9e6tlff5tdmb5upq3ieket1p7.apps.googleusercontent.com"
-CLIENT_SECRET = "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"
+CLIENT_SECRET = "PLACEHOLDER_SECRET_REMOVED"
 
 client_config = {
     "installed": {
