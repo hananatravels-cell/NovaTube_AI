@@ -4,13 +4,16 @@ import { getTikTokAccessToken } from "../../../../lib/tiktokTokens";
 export const runtime = "nodejs";
 
 const API = "https://open.tiktokapis.com/v2";
+const VIDEO_SERVICE_URL = process.env.VIDEO_SERVICE_URL || "http://127.0.0.1:8002";
 
 export async function POST(req: NextRequest) {
-  const { videoUrl } = await req.json();
+  const { jobId } = await req.json();
+  if (!jobId) return NextResponse.json({ error: "jobId is required" }, { status: 400 });
+
   const token = await getTikTokAccessToken();
   if (!token) return NextResponse.json({ error: "TikTok not connected" }, { status: 401 });
 
-  const vRes = await fetch(videoUrl);
+  const vRes = await fetch(`${VIDEO_SERVICE_URL}/video-file/${encodeURIComponent(jobId)}`);
   if (!vRes.ok) return NextResponse.json({ error: "Video fetch failed" }, { status: 502 });
   const buf = Buffer.from(await vRes.arrayBuffer());
   const size = buf.length;
