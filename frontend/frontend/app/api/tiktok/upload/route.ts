@@ -18,9 +18,13 @@ export async function POST(req: NextRequest) {
   const buf = Buffer.from(await vRes.arrayBuffer());
   const size = buf.length;
 
+  if (size === 0) {
+    return NextResponse.json({ error: "Video file is empty" }, { status: 502 });
+  }
+
   const CHUNK = 10 * 1024 * 1024;
   const chunkSize = size < CHUNK ? size : CHUNK;
-  const total = Math.floor(size / chunkSize);
+  const total = Math.ceil(size / chunkSize);
 
   const initRes = await fetch(`${API}/post/publish/inbox/video/init/`, {
     method: "POST",
@@ -37,27 +41,41 @@ export async function POST(req: NextRequest) {
       },
     }),
   });
-  const init = await initRes.json();
+
+  let init: any;
+  try {
+    init = await initRes.json();
+  } catch {
+    return NextResponse.json({ error: "TikTok init returned invalid response" }, { status: 502 });
+  }
   if (init.error?.code && init.error.code !== "ok") {
     return NextResponse.json({ error: init.error }, { status: 400 });
   }
-  const { publish_id, upload_url } = init.data;
+  const { publish_id, upload_url } = init.data || {};
+  if (!upload_url) {
+    return NextResponse.json({ error: "No upload_url returned by TikTok" }, { status: 502 });
+  }
 
   for (let i = 0; i < total; i++) {
     const start = i * chunkSize;
-    const end = i === total - 1 ? size - 1 : start + chunkSize - 1;
+    const end = Math.min(start + chunkSize, size) - 1;
     const part = buf.subarray(start, end + 1);
+
     const up = await fetch(upload_url, {
       method: "PUT",
       headers: {
         "Content-Type": "video/mp4",
-        "Content-Length": String(part.length),
         "Content-Range": `bytes ${start}-${end}/${size}`,
       },
       body: new Uint8Array(part),
     });
+
     if (!up.ok && up.status !== 206) {
-      return NextResponse.json({ error: `Chunk ${i} failed`, status: up.status }, { status: 502 });
+      const text = await up.text().catch(() => "");
+      return NextResponse.json(
+        { error: `Chunk ${i} failed`, status: up.status, detail: text.slice(0, 300) },
+        { status: 502 }
+      );
     }
   }
 
