@@ -17,3 +17,4 @@ Thumbs.db
 *.swp
 novatube_music_cache/
 *.mp4
+frontend/data/manual_token.py
