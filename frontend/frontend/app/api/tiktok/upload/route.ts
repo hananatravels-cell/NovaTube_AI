@@ -21,10 +21,16 @@ export async function POST(req: NextRequest) {
   if (size === 0) {
     return NextResponse.json({ error: "Video file is empty" }, { status: 502 });
   }
-
-  const CHUNK = 10 * 1024 * 1024;
-  const chunkSize = size < CHUNK ? size : CHUNK;
-  const total = Math.ceil(size / chunkSize);
+  const MAX_SINGLE_CHUNK = 64 * 1024 * 1024;
+  let chunkSize: number;
+  let total: number;
+  if (size <= MAX_SINGLE_CHUNK) {
+    chunkSize = size;
+    total = 1;
+  } else {
+    chunkSize = 10 * 1024 * 1024;
+    total = Math.ceil(size / chunkSize);
+  }
 
   const initRes = await fetch(`${API}/post/publish/inbox/video/init/`, {
     method: "POST",
