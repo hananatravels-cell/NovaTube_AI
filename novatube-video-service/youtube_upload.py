@@ -102,10 +102,24 @@ def get_authenticated_service(account: str = "default"):
 
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
-            creds.refresh(Request())
+            try:
+                creds.refresh(Request())
+            except Exception as e:
+                raise RuntimeError(
+                    f"Token refresh failed for account '{account}': {e}. "
+                    f"This account needs to be re-authorized manually (via SSH "
+                    f"port-forwarding + generate_token.py.bak on your own machine) "
+                    f"- refusing to fall back to an interactive browser login on "
+                    f"a headless server, since that would hang the whole service."
+                )
         else:
-            flow = InstalledAppFlow.from_client_config(CLIENT_CONFIG, SCOPES)
-            creds = flow.run_local_server(port=0)
+            raise RuntimeError(
+                f"No valid token found for account '{account}' and no refresh_token "
+                f"available. Authorize this account manually first (via SSH "
+                f"port-forwarding + generate_token.py.bak) - refusing to launch an "
+                f"interactive browser flow on a headless server, since that would "
+                f"hang indefinitely and block every other account's uploads too."
+            )
 
         with open(token_path, "w") as f:
             f.write(creds.to_json())

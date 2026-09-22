@@ -9,36 +9,44 @@
       "createdAt": "2026-09-11T09:18:24.536731"
     },
     {
-      "id": "d80b846c-ed63-412f-8926-f140fa2d4066",
+      "id": "56ffa4e3-201b-42b6-832a-f5584e00d8da",
+      "name": "True Crime nova",
+      "niche": "True Crime",
+      "category": "horror",
+      "youtubeAccount": "truecrime",
+      "voice": "noah",
+      "language": "english",
+      "createdAt": "2026-09-16T09:44:39.160895"
+    },
+    {
+      "id": "12e7e7dc-77c2-44f3-97f8-dcce76fd40cf",
+      "name": "wealth nova",
+      "niche": "Personal Finance",
+      "category": "finance",
+      "youtubeAccount": "wealthnova",
+      "voice": "noah",
+      "language": "english",
+      "createdAt": "2026-09-20T09:02:04.896174"
+    },
+    {
+      "id": "673a342c-39bc-43c2-b307-96f62e1188f8",
       "name": "Historical Stories",
       "niche": "History",
       "category": "history",
       "youtubeAccount": "hanana",
-      "createdAt": "2026-09-11T09:21:53.170931"
+      "voice": "noah",
+      "language": "english",
+      "createdAt": "2026-09-20T09:12:42.534783"
     },
     {
-      "id": "519c63dd-3549-4b04-8902-ae737db72415",
-      "name": "truecrime nova",
-      "niche": "True Crime",
-      "category": "horror",
-      "youtubeAccount": "truecrime",
-      "createdAt": "2026-09-11T10:03:01.450702"
-    },
-    {
-      "id": "d805fb00-eb1e-4c3a-8ab3-d84101be9723",
-      "name": "wealthnova",
-      "niche": "Personal Finance",
-      "category": "finance",
-      "youtubeAccount": "wealth nova",
-      "createdAt": "2026-09-11T11:10:22.277522"
-    },
-    {
-      "id": "b99c577a-c379-45a6-aeb2-d180300aacc3",
-      "name": "Hidayat ka Safar",
+      "id": "28bee1a0-2346-4e80-b39e-e9b1400a7219",
+      "name": "hidayat ka safar",
       "niche": "Islamic Stories & History",
       "category": "islamic",
       "youtubeAccount": "hidayat",
-      "createdAt": "2026-09-12T05:10:34.010334"
+      "voice": "noah",
+      "language": "english",
+      "createdAt": "2026-09-20T09:17:24.180748"
     }
   ]
 }

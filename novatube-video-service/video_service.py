@@ -1,3 +1,4 @@
+
 """
 NovaTube AI - Video Generation Service
 Takes a script (broken into scenes) + a category + narration audio,
@@ -824,7 +825,9 @@ def reformat_video(input_path: str, output_path: str, target_w: int, target_h: i
 
 
 class ShortRequest(BaseModel):
-    video_base64: str
+    video_base64: str | None = None
+    video_path: str | None = None
+    video_path: str | None = None
     start_seconds: float = 0
     max_duration: int = 59
     category: str | None = None
@@ -927,7 +930,8 @@ import re as _re_json
 
 
 class AutoShortRequest(BaseModel):
-    video_base64: str
+    video_base64: str | None = None
+    video_path: str | None = None
     script: list[str] | None = None
     category: str | None = None
     min_duration: int = 20
@@ -1003,7 +1007,7 @@ Respond with ONLY valid JSON, no extra text, in this exact format:
             "https://api.groq.com/openai/v1/chat/completions",
             headers={"Authorization": f"Bearer {GROQ_API_KEY}", "Content-Type": "application/json"},
             json={
-                "model": "llama-3.3-70b-versatile",
+                "model": "llama-3.1-70b-versatile",
                 "messages": [{"role": "user", "content": prompt}],
                 "temperature": 0.3,
             },
@@ -1056,7 +1060,7 @@ Respond with ONLY valid JSON, no extra text, in this exact format:
             "https://api.groq.com/openai/v1/chat/completions",
             headers={"Authorization": f"Bearer {GROQ_API_KEY}", "Content-Type": "application/json"},
             json={
-                "model": "llama-3.3-70b-versatile",
+                "model": "llama-3.1-70b-versatile",
                 "messages": [{"role": "user", "content": prompt}],
                 "temperature": 0.3,
             },
