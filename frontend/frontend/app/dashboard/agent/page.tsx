@@ -710,6 +710,8 @@ export default function AIContentAgentPage() {
   const [resultSeo, setResultSeo] = useState<SeoResult | null>(null);
   const [errorMsg, setErrorMsg] = useState('');
   const [autoDownloaded, setAutoDownloaded] = useState(false);
+  const [isSendingTikTok, setIsSendingTikTok] = useState(false);
+  const [tiktokMsg, setTiktokMsg] = useState('');
   const [copiedField, setCopiedField] = useState('');
   const alreadyDownloadedFor = useRef<string>('');
   const [isPublishing, setIsPublishing] = useState(false);
@@ -1261,7 +1263,35 @@ async function publishToYouTube(params: {
       }
     }
   }
-
+  async function handleSendTikTok() {
+    if (!currentJobId) {
+      setTiktokMsg('Video job not found. Generate a video first.');
+      return;
+    }
+    setIsSendingTikTok(true);
+    setTiktokMsg('');
+    try {
+      const res = await fetch('/api/tiktok/upload', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ jobId: currentJobId }),
+      });
+      const data = await res.json();
+      if (res.status === 401) {
+        setTiktokMsg('TikTok is not connected yet. Connect TikTok first.');
+        return;
+      }
+      if (!res.ok) {
+        const msg = typeof data.error === 'string' ? data.error : JSON.stringify(data.error);
+        throw new Error(msg || 'Upload failed');
+      }
+      setTiktokMsg('Sent to TikTok. Open the TikTok app and tap the inbox notification to finish posting.');
+    } catch (err: any) {
+      setTiktokMsg(err.message || 'TikTok upload failed');
+    } finally {
+      setIsSendingTikTok(false);
+    }
+  }
   async function handlePublish() {
     if (!resultVideo) return;
     const videoPath = currentJobId ? await getVideoPathForJob(currentJobId) : null;
@@ -1398,13 +1428,14 @@ async function publishToYouTube(params: {
           <Link href="/login" className="w-full flex items-center gap-3.5 pl-5 pr-4 py-3.5 text-white/35 hover:text-rose-300 hover:bg-rose-500/[0.06] rounded-xl transition text-[15px] font-medium border border-transparent hover:border-rose-400/15">
             <LogOut className="w-5 h-5" />
             <span>Log out</span>
-          </Link>
+               </Link>
         </div>
       </aside>
 
       <main className="flex-1 flex flex-col min-w-0">
         <header className="h-20 bg-[#08080C]/90 backdrop-blur-xl border-b border-white/[0.06] flex items-center justify-between px-10 sticky top-0 z-10">
           <div>
+            {/* Yahan header ka content aayega */}
             <h1 className="text-xl font-semibold tracking-tight flex items-center gap-2">
               <Sparkles className="w-5 h-5 text-violet-300" /> AI Content Agent
             </h1>
@@ -1920,92 +1951,85 @@ async function publishToYouTube(params: {
                 </div>
               )}
 
-              {resultSeo && (
-                <div className="mb-6 space-y-3">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-white/35">SEO Metadata</p>
+{resultVideo && (
+  <div className="mb-6">
+    <button
+      type="button"
+      onClick={handlePublish}
+      disabled={isPublishing}
+      className="w-full flex items-center justify-center gap-2.5 bg-emerald-500/[0.14] border border-emerald-400/25 text-emerald-100 text-base font-semibold py-4 rounded-xl hover:bg-emerald-500/[0.2] transition disabled:opacity-40 disabled:cursor-not-allowed"
+    >
+      {isPublishing ? (
+        <>
+          <Loader2 className="w-5 h-5 animate-spin" /> Publishing to YouTube…
+        </>
+      ) : (
+        <>
+          <Globe className="w-5 h-5" /> Publish Now (YouTube) — {selectedYoutubeAccount}
+        </>
+      )}
+    </button>
 
-                  <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl px-4 py-3">
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-[10px] font-semibold uppercase text-white/30">Title</span>
-                      <CopyButton text={resultSeo.title} field="title" />
-                    </div>
-                    <p className="text-sm text-white/85">{resultSeo.title}</p>
-                  </div>
+    {shortsStatus && (
+      <p className="text-xs text-white/40 mt-2 text-center">{shortsStatus}</p>
+    )}
 
-                  <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl px-4 py-3">
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-[10px] font-semibold uppercase text-white/30">Description</span>
-                      <CopyButton text={resultSeo.description} field="description" />
-                    </div>
-                    <p className="text-sm text-white/70">{resultSeo.description}</p>
-                  </div>
+    <button
+      type="button"
+      onClick={handleSendTikTok}
+      disabled={isSendingTikTok || !currentJobId}
+      className="w-full mt-3 flex items-center justify-center gap-2.5 bg-white/[0.04] border border-white/[0.1] text-white/80 text-sm font-semibold py-3 rounded-xl hover:bg-white/[0.08] transition disabled:opacity-40 disabled:cursor-not-allowed"
+    >
+      {isSendingTikTok ? (
+        <>
+          <Loader2 className="w-4 h-4 animate-spin" /> Sending to TikTok…
+        </>
+      ) : (
+        <>
+          <Music2 className="w-4 h-4" /> Send to TikTok (Draft)
+        </>
+      )}
+    </button>
 
-                  <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl px-4 py-3">
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-[10px] font-semibold uppercase text-white/30">Tags</span>
-                      <CopyButton text={resultSeo.tags.join(', ')} field="tags" />
-                    </div>
-                    <p className="text-sm text-white/70">{resultSeo.tags.join(', ')}</p>
-                  </div>
+    {tiktokMsg && (
+      <p className="text-xs text-white/60 mt-2 text-center">{tiktokMsg}</p>
+    )}        
 
-                  <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl px-4 py-3">
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-[10px] font-semibold uppercase text-white/30">Hashtags</span>
-                      <CopyButton text={resultSeo.hashtags.join(' ')} field="hashtags" />
-                    </div>
-                    <p className="text-sm text-violet-300">{resultSeo.hashtags.join(' ')}</p>
-                  </div>
-                </div>
-              )}
+    {/* ✅ Yahan <a> tag fix kiya gaya hai (Opening aur closing tags add kiye) */}
+    <a
+      href="/api/auth/tiktok/login"
+      className="block mt-2 text-xs text-white/40 underline text-center"
+    >
+      Connect / reconnect TikTok
+    </a>
 
-              {resultVideo && (
-                <div className="mb-6">
-                  <button
-                    type="button"
-                    onClick={handlePublish}
-                    disabled={isPublishing}
-                    className="w-full flex items-center justify-center gap-2.5 bg-emerald-500/[0.14] border border-emerald-400/25 text-emerald-100 text-base font-semibold py-4 rounded-xl hover:bg-emerald-500/[0.2] transition disabled:opacity-40 disabled:cursor-not-allowed"
-                  >
-                    {isPublishing ? (
-                      <>
-                        <Loader2 className="w-5 h-5 animate-spin" /> Publishing to YouTube…
-                      </>
-                    ) : (
-                      <>
-                        <Globe className="w-5 h-5" /> Publish Now (YouTube) — {selectedYoutubeAccount}
-                      </>
-                    )}
-                  </button>
-                  {shortsStatus && (
-                    <p className="text-xs text-white/40 mt-2 text-center">{shortsStatus}</p>
-                  )}
-                  <button
-                    type="button"
-                    onClick={() => setShowScheduleForm((v) => !v)}
-                    className="w-full mt-3 flex items-center justify-center gap-2.5 bg-white/[0.04] border border-white/[0.1] text-white/70 text-sm font-semibold py-3 rounded-xl hover:bg-white/[0.08] transition"
-                  >
-                     Schedule for Later
-                  </button>
-                  {showScheduleForm && (
-                    <div className="mt-3 p-4 bg-white/[0.02] border border-white/[0.06] rounded-xl">
-                      <label className="block text-xs text-white/50 mb-2">Date & Time</label>
-                      <input
-                        type="datetime-local"
-                        value={scheduleDate}
-                        onChange={(e) => setScheduleDate(e.target.value)}
-                        className="w-full rounded-lg px-3 py-2 text-sm bg-white/[0.04] border border-white/[0.08] text-white mb-3"
-                      />
-                      <button
-                        type="button"
-                        onClick={handleSchedule}
-                        disabled={!scheduleDate || isScheduling}
-                        className="w-full bg-violet-500/[0.14] border border-violet-400/25 text-violet-100 text-sm font-semibold py-2.5 rounded-lg hover:bg-violet-500/[0.2] transition disabled:opacity-40"
-                      >
-                        {isScheduling ? 'Scheduling...' : 'Confirm Schedule'}
-                      </button>
-                    </div>
-                  )}
-                  {scheduleSuccess && (
+    <button
+      type="button"
+      onClick={() => setShowScheduleForm((v) => !v)}
+      className="w-full mt-3 flex items-center justify-center gap-2.5 bg-white/[0.04] border border-white/[0.1] text-white/70 text-sm font-semibold py-3 rounded-xl hover:bg-white/[0.08] transition"
+    >
+      Schedule for Later
+    </button>
+
+    {showScheduleForm && (
+      <div className="mt-3 p-4 bg-white/[0.02] border border-white/[0.06] rounded-xl">
+        <label className="block text-xs text-white/50 mb-2">Date & Time</label>
+        <input
+          type="datetime-local"
+          value={scheduleDate}
+          onChange={(e) => setScheduleDate(e.target.value)}
+          className="w-full rounded-lg px-3 py-2 text-sm bg-white/[0.04] border border-white/[0.08] text-white mb-3"
+        />
+        <button
+          type="button"
+          onClick={handleSchedule}
+          disabled={!scheduleDate || isScheduling}
+          className="w-full bg-violet-500/[0.14] border border-violet-400/25 text-violet-100 text-sm font-semibold py-2.5 rounded-lg hover:bg-violet-500/[0.2] transition disabled:opacity-40"
+        >
+          {isScheduling ? 'Scheduling...' : 'Confirm Schedule'}
+        </button>
+      </div>
+    )}                  {scheduleSuccess && (
                     <p className="text-xs text-emerald-400 mt-2">✅ {scheduleSuccess}</p>
                   )}
                   {publishedUrl && (
@@ -2024,9 +2048,7 @@ async function publishToYouTube(params: {
                     </div>
                   )}
                 </div>
-              )}
-
-              {!resultVideo && !isRunning && (
+              )}              {!resultVideo && !isRunning && (
                 <div className="text-center py-10 text-white/30 text-sm">
                   Enter a niche and click "Start AI Content" to see the agent work.
                 </div>
