@@ -1305,7 +1305,8 @@ async def get_thumbnail(job_id: str, text: str = ""):
         if not best_frame_path:
             raise HTTPException(status_code=500, detail="Could not extract any candidate frames")
 
-        overlay_text = (text or job.get("topic") or job.get("title") or "").upper()
+        raw_text = (text or job.get("topic") or job.get("title") or "").upper()
+        overlay_text = " ".join(raw_text.split()[:4])
         final_path = os.path.join(work_dir, "thumbnail.jpg")
 
         if overlay_text:
