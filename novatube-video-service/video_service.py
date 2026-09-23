@@ -731,7 +731,7 @@ def _run_generate_video(job_id: str, req: VideoRequest):
 
         final_video = final_video.set_audio(final_audio)
 
-        if req.intro_audio_base64:
+        if False and req.intro_audio_base64:
             _job_update(job_id, stage="building_intro")
             try:
                 intro_audio_data = req.intro_audio_base64
@@ -878,7 +878,7 @@ async def make_short(req: ShortRequest):
 
         final_path = short_path
 
-        if req.category:
+        if False and req.category:
             code = LANG_CODE.get(req.language, "ur")
             intro_path = os.path.join(INTROS_DIR, req.category, f"intro_{code}.mp4")
             if os.path.isfile(intro_path):
@@ -1176,7 +1176,7 @@ async def auto_short(req: AutoShortRequest):
                 short_path = reformatted_path
 
             final_path = short_path
-            if req.category:
+            if False and req.category:
                 code = {"English": "en", "Urdu": "ur", "Arabic": "ar"}.get(detected_language, "en")
                 intro_path = os.path.join(INTROS_DIR, req.category, f"intro_{code}.mp4")
                 if os.path.isfile(intro_path):
