@@ -718,7 +718,7 @@ def _run_generate_video(job_id: str, req: VideoRequest):
             _job_update(job_id, stage="mixing_music")
             try:
                 music_path = get_or_fetch_music(req.category)
-                if music_path:
+                if music_path and req.category != "Hidayat ka Safar":
                     music_clip = prepare_music_clip(music_path, final_video.duration)
                     open_clips.append(music_clip)
                     final_audio = CompositeAudioClip([narration_trimmed, music_clip])
