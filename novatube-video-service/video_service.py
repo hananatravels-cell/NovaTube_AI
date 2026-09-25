@@ -1395,12 +1395,8 @@ async def get_thumbnail(job_id: str, text: str = ""):
             draw = ImageDraw.Draw(img, "RGBA")
             w, h = img.size
 
-            overlay_height = int(h * 0.45)
-            for y in range(int(h * 0.55), h):
-                alpha = int(200 * (y - h * 0.55) / overlay_height) if overlay_height > 0 else 0
-                draw.line([(0, y), (w, y)], fill=(0, 0, 0, min(max(alpha, 0), 200)))
-
-            font_size = int(w * (0.055 if len(overlay_text) > 20 else 0.075))
+            # Professional YouTube-style thumbnail overlay
+            font_size = int(w * 0.08) # Bolder, larger text
             try:
                 font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", font_size)
             except Exception:
@@ -1420,20 +1416,32 @@ async def get_thumbnail(job_id: str, text: str = ""):
             if current_line:
                 lines.append(current_line)
 
-            line_height = font_size * 1.2
+            line_height = font_size * 1.3
             total_text_height = line_height * len(lines)
-            start_y = h - total_text_height - (h * 0.05)
+            box_padding = int(h * 0.04)
+            start_y = h - total_text_height - (h * 0.08)
+            
+            # Draw a dark semi-transparent background box behind text for readability
+            draw.rectangle(
+                [(0, start_y - box_padding), (w, h)], 
+                fill=(0, 0, 0, 180)
+            )
+            # Add a bright accent line at the top of the box (Red)
+            draw.line([(0, start_y - box_padding), (w, start_y - box_padding)], fill=(255, 50, 50, 255), width=4)
 
             for idx, line in enumerate(lines):
                 bbox = draw.textbbox((0, 0), line, font=font)
                 text_w = bbox[2] - bbox[0]
                 x = (w - text_w) / 2
                 y = start_y + idx * line_height
-                for dx in [-2, -1, 0, 1, 2]:
-                    for dy in [-2, -1, 0, 1, 2]:
+                
+                # Thick black outline for maximum contrast
+                for dx in [-3, -2, -1, 0, 1, 2, 3]:
+                    for dy in [-3, -2, -1, 0, 1, 2, 3]:
                         if dx != 0 or dy != 0:
                             draw.text((x + dx, y + dy), line, font=font, fill=(0, 0, 0, 255))
-                draw.text((x, y), line, font=font, fill=(255, 214, 0, 255))
+                # Main text in Bright White
+                draw.text((x, y), line, font=font, fill=(255, 255, 255, 255))
 
             img.save(final_path, "JPEG", quality=92)
         else:
