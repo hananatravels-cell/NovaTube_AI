@@ -1208,7 +1208,7 @@ async def auto_short(req: AutoShortRequest):
                     lang_map = {"en": "English", "ur": "Urdu", "ar": "Arabic"}
                     detected_language = lang_map.get(lang, lang.title() if lang else "English")
 
-        num_shorts = 4  # Force 4 shorts
+        num_shorts = 2  # Force 4 shorts
 
         # NUCLEAR OPTION: Always split into 4 equal parts, bypass AI to guarantee 4 shorts
         moments = []
