@@ -38,6 +38,7 @@ from moviepy.editor import (
     CompositeAudioClip,
     ImageClip,
     CompositeVideoClip,
+    TextClip,
     concatenate_videoclips,
     concatenate_audioclips,
 )
@@ -731,6 +732,19 @@ def _run_generate_video(job_id: str, req: VideoRequest):
 
         final_video = final_video.set_audio(final_audio)
 
+        _job_update(job_id, stage="adding_captions")
+        try:
+            caption_words = transcribe_words_with_groq(audio_path)
+            caption_clips = build_caption_clips(caption_words, target_w, target_h, final_video.duration)
+            if caption_clips:
+                open_clips.extend(caption_clips)
+                final_video = CompositeVideoClip([final_video] + caption_clips)
+                logger.info(f"Added {len(caption_clips)} word-level captions")
+            else:
+                logger.info("No captions added (transcription empty or unavailable)")
+        except Exception as e:
+            logger.warning(f"Caption generation failed, continuing without captions: {e}")
+
         if False and req.intro_audio_base64:
             _job_update(job_id, stage="building_intro")
             try:
@@ -936,7 +950,7 @@ class AutoShortRequest(BaseModel):
     category: str | None = None
     min_duration: int = 20
     max_duration: int = 59
-    num_shorts: int = 1
+    num_shorts: int = 4
     aspect_ratio: str = "9:16"
 
 
@@ -954,6 +968,73 @@ def extract_audio(video_path: str, audio_out: str) -> bool:
     except Exception as e:
         logger.warning(f"Audio extraction failed: {e}")
         return False
+
+
+def transcribe_words_with_groq(audio_path: str):
+    """Word-level transcription (start/end per word) used to drive
+    CapCut-style animated captions. Separate from transcribe_with_groq,
+    which only returns segment-level timestamps."""
+    if not GROQ_API_KEY:
+        return None
+    try:
+        with open(audio_path, "rb") as f:
+            resp = requests.post(
+                "https://api.groq.com/openai/v1/audio/transcriptions",
+                headers={"Authorization": f"Bearer {GROQ_API_KEY}"},
+                files={"file": (os.path.basename(audio_path), f, "audio/mpeg")},
+                data={
+                    "model": "whisper-large-v3",
+                    "response_format": "verbose_json",
+                    "timestamp_granularities[]": "word",
+                },
+                timeout=120,
+            )
+        if resp.status_code != 200:
+            logger.warning(f"Word-level transcription failed ({resp.status_code}): {resp.text[:200]}")
+            return None
+        data = resp.json()
+        return data.get("words", [])
+    except Exception as e:
+        logger.warning(f"Word-level transcription error: {e}")
+        return None
+
+
+def build_caption_clips(words, video_w, video_h, video_duration):
+    """Builds one short-lived TextClip per spoken word, each visible only
+    during its own timestamp window (word-by-word/CapCut-style captions)."""
+    if not words:
+        return []
+
+    fontsize = int(video_h * 0.06)
+    clips = []
+    for w in words:
+        start = w.get("start")
+        end = w.get("end")
+        text = (w.get("word") or "").strip()
+        if not text or start is None or end is None:
+            continue
+        end = min(end, video_duration)
+        if end <= start:
+            continue
+        try:
+            txt_clip = (
+                TextClip(
+                    text,
+                    fontsize=fontsize,
+                    font="DejaVu-Sans-Bold",
+                    color="white",
+                    stroke_color="black",
+                    stroke_width=max(2, fontsize // 18),
+                    method="label",
+                )
+                .set_start(start)
+                .set_duration(end - start)
+                .set_position(("center", int(video_h * 0.78)))
+            )
+            clips.append(txt_clip)
+        except Exception as e:
+            logger.warning(f"Skipping caption word '{text}': {e}")
+    return clips
 
 
 def transcribe_with_groq(audio_path: str):
@@ -1007,7 +1088,7 @@ Respond with ONLY valid JSON, no extra text, in this exact format:
             "https://api.groq.com/openai/v1/chat/completions",
             headers={"Authorization": f"Bearer {GROQ_API_KEY}", "Content-Type": "application/json"},
             json={
-                "model": "llama-3.1-70b-versatile",
+                "model": "llama-3.3-70b-versatile",
                 "messages": [{"role": "user", "content": prompt}],
                 "temperature": 0.3,
             },
@@ -1060,7 +1141,7 @@ Respond with ONLY valid JSON, no extra text, in this exact format:
             "https://api.groq.com/openai/v1/chat/completions",
             headers={"Authorization": f"Bearer {GROQ_API_KEY}", "Content-Type": "application/json"},
             json={
-                "model": "llama-3.1-70b-versatile",
+                "model": "llama-3.3-70b-versatile",
                 "messages": [{"role": "user", "content": prompt}],
                 "temperature": 0.3,
             },
@@ -1127,7 +1208,7 @@ async def auto_short(req: AutoShortRequest):
                     lang_map = {"en": "English", "ur": "Urdu", "ar": "Arabic"}
                     detected_language = lang_map.get(lang, lang.title() if lang else "English")
 
-        num_shorts = max(1, min(req.num_shorts, 5))
+        num_shorts = 4  # Force 4 shorts
 
         moments = []
         if segments:
