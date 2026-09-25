@@ -1210,24 +1210,19 @@ async def auto_short(req: AutoShortRequest):
 
         num_shorts = 4  # Force 4 shorts
 
+        # NUCLEAR OPTION: Always split into 4 equal parts, bypass AI to guarantee 4 shorts
         moments = []
-        if segments:
-            if num_shorts > 1:
-                moments = select_top_moments_with_groq(segments, req.min_duration, req.max_duration, num_shorts)
-            else:
-                single = select_best_moment_with_groq(segments, req.min_duration, req.max_duration)
-                if single:
-                    moments = [single]
-
-        if not moments:
-            fallback_duration = min(45, total_duration)
-            moments = [{
-                "start_time": 0,
-                "end_time": fallback_duration,
-                "duration": fallback_duration,
-                "reason": "Automatic detection unavailable — used a safe default segment.",
-                "score": 0,
-            }]
+        part_duration = total_duration / float(num_shorts)
+        for i in range(num_shorts):
+            start = i * part_duration
+            end = start + part_duration
+            moments.append({
+                "start_time": start,
+                "end_time": end,
+                "duration": part_duration,
+                "reason": f"Equal split part {i+1}/{num_shorts}",
+                "score": 100
+            })
 
         results = []
         for idx, best in enumerate(moments):
