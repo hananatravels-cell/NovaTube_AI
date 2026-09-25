@@ -1132,7 +1132,7 @@ Rules:
 - Duration should be the SHORTEST natural length that contains the full engaging moment.
 - Acceptable range per clip: {min_duration} to {max_duration} seconds.
 - Segments must not overlap each other in time.
-- If fewer than {count} genuinely strong moments exist, return fewer — do not pad with weak ones.
+- You MUST return exactly {count} moments. If you cannot find enough strong moments, return weaker ones to make up the count to {count}.
 
 Respond with ONLY valid JSON, no extra text, in this exact format:
 {{"moments": [{{"start_time": <number>, "end_time": <number>, "duration": <number>, "reason": "<short explanation>", "score": <0-100 integer>}}]}}"""
