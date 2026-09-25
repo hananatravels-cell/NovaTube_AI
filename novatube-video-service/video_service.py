@@ -1088,7 +1088,7 @@ Respond with ONLY valid JSON, no extra text, in this exact format:
             "https://api.groq.com/openai/v1/chat/completions",
             headers={"Authorization": f"Bearer {GROQ_API_KEY}", "Content-Type": "application/json"},
             json={
-                "model": "llama-3.1-70b-versatile",
+                "model": "llama3-70b-8192",
                 "messages": [{"role": "user", "content": prompt}],
                 "temperature": 0.3,
             },
@@ -1141,7 +1141,7 @@ Respond with ONLY valid JSON, no extra text, in this exact format:
             "https://api.groq.com/openai/v1/chat/completions",
             headers={"Authorization": f"Bearer {GROQ_API_KEY}", "Content-Type": "application/json"},
             json={
-                "model": "llama-3.1-70b-versatile",
+                "model": "llama3-70b-8192",
                 "messages": [{"role": "user", "content": prompt}],
                 "temperature": 0.3,
             },
