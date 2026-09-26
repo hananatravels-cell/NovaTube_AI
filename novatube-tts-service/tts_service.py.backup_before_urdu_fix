@@ -314,32 +314,22 @@ async def generate_voice(req: VoiceRequest):
     if not req.text or not req.text.strip():
         raise HTTPException(status_code=400, detail="Text is required")
 
-    audio_bytes = None
-    provider = None
+    # 1. Primary: Edge TTS
+    audio_bytes = await generate_with_edge_tts(req.text, req.voice, req.language)
+    provider = "edge-tts"
     mime = "audio/mpeg"
 
-    if req.language.strip().lower() == "urdu":
-        # Urdu always goes straight to ElevenLabs — Edge TTS/Groq skipped.
+    # 2. Fallback 1: Groq Orpheus
+    if audio_bytes is None:
+        audio_bytes = generate_with_groq(req.text, req.voice, req.language)
+        provider = "groq"
+        mime = "audio/wav"
+
+    # 3. Fallback 2: ElevenLabs
+    if audio_bytes is None:
         audio_bytes = generate_with_elevenlabs(req.text, req.voice)
         provider = "elevenlabs"
         mime = "audio/mpeg"
-    else:
-        # 1. Primary: Edge TTS
-        audio_bytes = await generate_with_edge_tts(req.text, req.voice, req.language)
-        provider = "edge-tts"
-        mime = "audio/mpeg"
-
-        # 2. Fallback 1: Groq Orpheus
-        if audio_bytes is None:
-            audio_bytes = generate_with_groq(req.text, req.voice, req.language)
-            provider = "groq"
-            mime = "audio/wav"
-
-        # 3. Fallback 2: ElevenLabs
-        if audio_bytes is None:
-            audio_bytes = generate_with_elevenlabs(req.text, req.voice)
-            provider = "elevenlabs"
-            mime = "audio/mpeg"
 
     # 4. Last resort: Kokoro
     if audio_bytes is None:

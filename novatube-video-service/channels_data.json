@@ -47,6 +47,26 @@
       "voice": "noah",
       "language": "english",
       "createdAt": "2026-09-20T09:17:24.180748"
+    },
+    {
+      "id": "5c571d9b-d6da-4da5-9528-0162605c77cf",
+      "name": "wealth of health",
+      "niche": "Food & Recipes",
+      "category": "cooking",
+      "youtubeAccount": "wealthofhealth",
+      "voice": "noah",
+      "language": "english",
+      "createdAt": "2026-09-24T06:15:25.788988"
+    },
+    {
+      "id": "337945aa-823b-48a5-9251-b8007000f7e6",
+      "name": "The Story World",
+      "niche": "Storytelling",
+      "category": "storytelling",
+      "youtubeAccount": "storyworld",
+      "voice": "noah",
+      "language": "english",
+      "createdAt": "2026-09-25T06:01:06.528685"
     }
   ]
 }

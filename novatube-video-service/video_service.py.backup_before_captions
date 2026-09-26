@@ -38,7 +38,6 @@ from moviepy.editor import (
     CompositeAudioClip,
     ImageClip,
     CompositeVideoClip,
-    TextClip,
     concatenate_videoclips,
     concatenate_audioclips,
 )
@@ -78,19 +77,6 @@ def safe_close(*clips):
                 clip.close()
         except Exception:
             pass
-
-class AutoShortRequest(BaseModel):
-    video_base64: str | None = None
-    video_path: str | None = None
-    script: list[str] | None = None
-    category: str | None = None
-    min_duration: int = 20
-    max_duration: int = 59
-    num_shorts: int = 4
-    aspect_ratio: str = "9:16"
-
-GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-
 
 class JobProgressLogger(proglog.ProgressBarLogger):
     """Feeds moviepy's internal encoding progress back into our job
@@ -745,19 +731,6 @@ def _run_generate_video(job_id: str, req: VideoRequest):
 
         final_video = final_video.set_audio(final_audio)
 
-        _job_update(job_id, stage="adding_captions")
-        try:
-            caption_words = transcribe_words_with_groq(audio_path)
-            caption_clips = build_caption_clips(caption_words, target_w, target_h, final_video.duration)
-            if caption_clips:
-                open_clips.extend(caption_clips)
-                final_video = CompositeVideoClip([final_video] + caption_clips)
-                logger.info(f"Added {len(caption_clips)} word-level captions")
-            else:
-                logger.info("No captions added (transcription empty or unavailable)")
-        except Exception as e:
-            logger.warning(f"Caption generation failed, continuing without captions: {e}")
-
         if False and req.intro_audio_base64:
             _job_update(job_id, stage="building_intro")
             try:
@@ -836,19 +809,138 @@ ASPECT_RATIOS = {
 
 
 def reformat_video(input_path: str, output_path: str, target_w: int, target_h: int):
-    """Resize + center-crop using fast FFmpeg (100x faster than MoviePy)."""
+    """Resize + center-crop a video to an exact target aspect ratio."""
+    clip = VideoFileClip(input_path)
+    try:
+        clip = clip.resize(height=target_h) if clip.h / clip.w < target_h / target_w else clip.resize(width=target_w)
+        clip = clip.crop(
+            x_center=clip.w / 2, y_center=clip.h / 2, width=target_w, height=target_h
+        )
+        clip.write_videofile(
+            output_path, fps=24, codec="libx264", audio_codec="aac",
+            preset="ultrafast", threads=2, logger=None,
+        )
+    finally:
+        safe_close(clip)
+
+
+class ShortRequest(BaseModel):
+    video_base64: str | None = None
+    video_path: str | None = None
+    video_path: str | None = None
+    start_seconds: float = 0
+    max_duration: int = 59
+    category: str | None = None
+    language: str = "Urdu"
+    aspect_ratio: str = "9:16"
+
+
+LANG_CODE = {"Urdu": "ur", "English": "en", "Arabic": "ar"}
+
+
+@app.post("/make-short")
+async def make_short(req: ShortRequest):
     import subprocess
-    subprocess.run([
-        "ffmpeg", "-y",
-        "-i", input_path,
-        "-vf", f"scale={target_w}:{target_h}:force_original_aspect_ratio=increase,crop={target_w}:{target_h}",
-        "-c:v", "libx264",
-        "-crf", "23",
-        "-preset", "ultrafast",
-        "-c:a", "aac",
-        "-movflags", "+faststart",
-        output_path
-    ], check=True, capture_output=True)
+    work_dir = tempfile.mkdtemp(prefix="novatube_short_")
+    open_clips = []
+    try:
+        if req.video_path and os.path.exists(req.video_path):
+            full_path = req.video_path
+            logger.info(f"[AUTO-SHORT] Using existing server file: {full_path}")
+        else:
+            if not req.video_base64:
+                raise HTTPException(status_code=400, detail="Either video_path or video_base64 is required")
+            full_path = os.path.join(work_dir, "full.mp4")
+            vdata = req.video_base64
+            if vdata.startswith("data:"):
+                vdata = vdata.split(",", 1)[1]
+            with open(full_path, "wb") as f:
+                f.write(base64.b64decode(vdata))
+
+        short_path = os.path.join(work_dir, "short.mp4")
+        subprocess.run(
+            [
+                "ffmpeg", "-y",
+                "-ss", str(req.start_seconds),
+                "-i", full_path,
+                "-t", str(req.max_duration),
+                "-c", "copy",
+                short_path,
+            ],
+            check=True, capture_output=True,
+        )
+
+        if req.aspect_ratio in ASPECT_RATIOS:
+            target_w, target_h = ASPECT_RATIOS[req.aspect_ratio]
+            reformatted_path = os.path.join(work_dir, "reformatted.mp4")
+            reformat_video(short_path, reformatted_path, target_w, target_h)
+            short_path = reformatted_path
+
+        final_path = short_path
+
+        if False and req.category:
+            code = LANG_CODE.get(req.language, "ur")
+            intro_path = os.path.join(INTROS_DIR, req.category, f"intro_{code}.mp4")
+            if os.path.isfile(intro_path):
+                intro_clip = VideoFileClip(intro_path)
+                short_clip = VideoFileClip(short_path)
+                open_clips.extend([intro_clip, short_clip])
+                combined = concatenate_videoclips([intro_clip, short_clip], method="compose")
+                open_clips.append(combined)
+                final_path = os.path.join(work_dir, "final_short.mp4")
+                combined.write_videofile(
+                    final_path, fps=24, codec="libx264",
+                    audio_codec="aac", preset="ultrafast",
+                    threads=2, logger=None,
+                )
+            else:
+                logger.warning(f"No intro found for category='{req.category}', language='{req.language}' — skipping intro")
+
+        with open(final_path, "rb") as f:
+            short_b64 = base64.b64encode(f.read()).decode("utf-8")
+        return {"video": f"data:video/mp4;base64,{short_b64}"}
+
+    except subprocess.CalledProcessError as e:
+        logger.error(f"ffmpeg trim failed: {e.stderr}")
+        raise HTTPException(status_code=500, detail="Could not create short")
+    finally:
+        safe_close(*open_clips)
+        shutil.rmtree(work_dir, ignore_errors=True)
+
+
+@app.get("/health")
+async def health():
+    cached_music = []
+    if os.path.isdir(MUSIC_DIR):
+        cached_music = [
+            f[:-4] for f in os.listdir(MUSIC_DIR) if f.lower().endswith(".mp3")
+        ]
+    return {
+        "status": "ok",
+        "service": "NovaTube AI Video",
+        "pexels_configured": bool(PEXELS_API_KEY),
+        "pixabay_configured": bool(PIXABAY_API_KEY),
+        "jamendo_configured": bool(JAMENDO_CLIENT_ID),
+        "categories": list(CATEGORY_KEYWORDS.keys()),
+        "cached_music": cached_music,
+    }
+
+
+import re as _re_json
+
+
+class AutoShortRequest(BaseModel):
+    video_base64: str | None = None
+    video_path: str | None = None
+    script: list[str] | None = None
+    category: str | None = None
+    min_duration: int = 20
+    max_duration: int = 59
+    num_shorts: int = 1
+    aspect_ratio: str = "9:16"
+
+
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 
 def extract_audio(video_path: str, audio_out: str) -> bool:
@@ -862,73 +954,6 @@ def extract_audio(video_path: str, audio_out: str) -> bool:
     except Exception as e:
         logger.warning(f"Audio extraction failed: {e}")
         return False
-
-
-def transcribe_words_with_groq(audio_path: str):
-    """Word-level transcription (start/end per word) used to drive
-    CapCut-style animated captions. Separate from transcribe_with_groq,
-    which only returns segment-level timestamps."""
-    if not GROQ_API_KEY:
-        return None
-    try:
-        with open(audio_path, "rb") as f:
-            resp = requests.post(
-                "https://api.groq.com/openai/v1/audio/transcriptions",
-                headers={"Authorization": f"Bearer {GROQ_API_KEY}"},
-                files={"file": (os.path.basename(audio_path), f, "audio/mpeg")},
-                data={
-                    "model": "whisper-large-v3",
-                    "response_format": "verbose_json",
-                    "timestamp_granularities[]": "word",
-                },
-                timeout=120,
-            )
-        if resp.status_code != 200:
-            logger.warning(f"Word-level transcription failed ({resp.status_code}): {resp.text[:200]}")
-            return None
-        data = resp.json()
-        return data.get("words", [])
-    except Exception as e:
-        logger.warning(f"Word-level transcription error: {e}")
-        return None
-
-
-def build_caption_clips(words, video_w, video_h, video_duration):
-    """Builds one short-lived TextClip per spoken word, each visible only
-    during its own timestamp window (word-by-word/CapCut-style captions)."""
-    if not words:
-        return []
-
-    fontsize = int(video_h * 0.06)
-    clips = []
-    for w in words:
-        start = w.get("start")
-        end = w.get("end")
-        text = (w.get("word") or "").strip()
-        if not text or start is None or end is None:
-            continue
-        end = min(end, video_duration)
-        if end <= start:
-            continue
-        try:
-            txt_clip = (
-                TextClip(
-                    text,
-                    fontsize=fontsize,
-                    font="DejaVu-Sans-Bold",
-                    color="white",
-                    stroke_color="black",
-                    stroke_width=max(2, fontsize // 18),
-                    method="label",
-                )
-                .set_start(start)
-                .set_duration(end - start)
-                .set_position(("center", int(video_h * 0.78)))
-            )
-            clips.append(txt_clip)
-        except Exception as e:
-            logger.warning(f"Skipping caption word '{text}': {e}")
-    return clips
 
 
 def transcribe_with_groq(audio_path: str):
@@ -982,7 +1007,7 @@ Respond with ONLY valid JSON, no extra text, in this exact format:
             "https://api.groq.com/openai/v1/chat/completions",
             headers={"Authorization": f"Bearer {GROQ_API_KEY}", "Content-Type": "application/json"},
             json={
-                "model": "llama3-70b-8192",
+                "model": "llama-3.1-70b-versatile",
                 "messages": [{"role": "user", "content": prompt}],
                 "temperature": 0.3,
             },
@@ -1026,7 +1051,7 @@ Rules:
 - Duration should be the SHORTEST natural length that contains the full engaging moment.
 - Acceptable range per clip: {min_duration} to {max_duration} seconds.
 - Segments must not overlap each other in time.
-- You MUST return exactly {count} moments. If you cannot find enough strong moments, return weaker ones to make up the count to {count}.
+- If fewer than {count} genuinely strong moments exist, return fewer — do not pad with weak ones.
 
 Respond with ONLY valid JSON, no extra text, in this exact format:
 {{"moments": [{{"start_time": <number>, "end_time": <number>, "duration": <number>, "reason": "<short explanation>", "score": <0-100 integer>}}]}}"""
@@ -1035,7 +1060,7 @@ Respond with ONLY valid JSON, no extra text, in this exact format:
             "https://api.groq.com/openai/v1/chat/completions",
             headers={"Authorization": f"Bearer {GROQ_API_KEY}", "Content-Type": "application/json"},
             json={
-                "model": "llama3-70b-8192",
+                "model": "llama-3.1-70b-versatile",
                 "messages": [{"role": "user", "content": prompt}],
                 "temperature": 0.3,
             },
@@ -1102,21 +1127,26 @@ async def auto_short(req: AutoShortRequest):
                     lang_map = {"en": "English", "ur": "Urdu", "ar": "Arabic"}
                     detected_language = lang_map.get(lang, lang.title() if lang else "English")
 
-        num_shorts = 2  # Force 4 shorts
+        num_shorts = max(1, min(req.num_shorts, 5))
 
-        # NUCLEAR OPTION: Always split into 4 equal parts, bypass AI to guarantee 4 shorts
         moments = []
-        part_duration = total_duration / float(num_shorts)
-        for i in range(num_shorts):
-            start = i * part_duration
-            end = start + part_duration
-            moments.append({
-                "start_time": start,
-                "end_time": end,
-                "duration": part_duration,
-                "reason": f"Equal split part {i+1}/{num_shorts}",
-                "score": 100
-            })
+        if segments:
+            if num_shorts > 1:
+                moments = select_top_moments_with_groq(segments, req.min_duration, req.max_duration, num_shorts)
+            else:
+                single = select_best_moment_with_groq(segments, req.min_duration, req.max_duration)
+                if single:
+                    moments = [single]
+
+        if not moments:
+            fallback_duration = min(45, total_duration)
+            moments = [{
+                "start_time": 0,
+                "end_time": fallback_duration,
+                "duration": fallback_duration,
+                "reason": "Automatic detection unavailable — used a safe default segment.",
+                "score": 0,
+            }]
 
         results = []
         for idx, best in enumerate(moments):
@@ -1284,8 +1314,12 @@ async def get_thumbnail(job_id: str, text: str = ""):
             draw = ImageDraw.Draw(img, "RGBA")
             w, h = img.size
 
-            # Professional YouTube-style thumbnail overlay
-            font_size = int(w * 0.08) # Bolder, larger text
+            overlay_height = int(h * 0.45)
+            for y in range(int(h * 0.55), h):
+                alpha = int(200 * (y - h * 0.55) / overlay_height) if overlay_height > 0 else 0
+                draw.line([(0, y), (w, y)], fill=(0, 0, 0, min(max(alpha, 0), 200)))
+
+            font_size = int(w * (0.055 if len(overlay_text) > 20 else 0.075))
             try:
                 font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", font_size)
             except Exception:
@@ -1305,32 +1339,20 @@ async def get_thumbnail(job_id: str, text: str = ""):
             if current_line:
                 lines.append(current_line)
 
-            line_height = font_size * 1.3
+            line_height = font_size * 1.2
             total_text_height = line_height * len(lines)
-            box_padding = int(h * 0.04)
-            start_y = h - total_text_height - (h * 0.08)
-            
-            # Draw a dark semi-transparent background box behind text for readability
-            draw.rectangle(
-                [(0, start_y - box_padding), (w, h)], 
-                fill=(0, 0, 0, 180)
-            )
-            # Add a bright accent line at the top of the box (Red)
-            draw.line([(0, start_y - box_padding), (w, start_y - box_padding)], fill=(255, 50, 50, 255), width=4)
+            start_y = h - total_text_height - (h * 0.05)
 
             for idx, line in enumerate(lines):
                 bbox = draw.textbbox((0, 0), line, font=font)
                 text_w = bbox[2] - bbox[0]
                 x = (w - text_w) / 2
                 y = start_y + idx * line_height
-                
-                # Thick black outline for maximum contrast
-                for dx in [-3, -2, -1, 0, 1, 2, 3]:
-                    for dy in [-3, -2, -1, 0, 1, 2, 3]:
+                for dx in [-2, -1, 0, 1, 2]:
+                    for dy in [-2, -1, 0, 1, 2]:
                         if dx != 0 or dy != 0:
                             draw.text((x + dx, y + dy), line, font=font, fill=(0, 0, 0, 255))
-                # Main text in Bright White
-                draw.text((x, y), line, font=font, fill=(255, 255, 255, 255))
+                draw.text((x, y), line, font=font, fill=(255, 214, 0, 255))
 
             img.save(final_path, "JPEG", quality=92)
         else:
