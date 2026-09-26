@@ -1311,28 +1311,13 @@ export default function AIContentAgentPage() {
       </aside>
 
       <main className="flex-1 flex flex-col min-w-0">
-        <header className="h-20 bg-[#08080C]/90 backdrop-blur-xl border-b border-white/[0.06] flex items-center justify-between px-10 sticky top-0 z-10">
-          <div>
-            <h1 className="text-xl font-semibold tracking-tight flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-violet-300" /> AI Content Agent
-            </h1>
-            <p className="text-sm text-white/35">Give it a niche. It handles the rest.</p>
-          </div>
-          <div className="flex items-center gap-4">
-            <Link
-              href="/dashboard/shorts"
-              className="flex items-center gap-2.5 bg-emerald-500/[0.18] border-2 border-emerald-400/40 text-emerald-100 text-base font-bold px-6 py-3.5 rounded-xl hover:bg-emerald-500/[0.28] transition shadow-lg shadow-emerald-500/10"
-            >
-              🎬 Create Shorts
-            </Link>
-            <div className="relative hidden lg:block">
-              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" />
-              <input type="text" placeholder="Search…" className="w-64 bg-white/[0.03] border border-white/[0.08] rounded-xl pl-10 pr-4 py-2.5 text-sm placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-violet-400/20 transition" />
-            </div>
-            <button className="relative p-2.5 text-white/40 hover:text-white hover:bg-white/[0.06] rounded-xl transition">
-              <Bell className="w-5 h-5" />
-            </button>
-          </div>
+        <header className="h-20 bg-[#08080C]/90 backdrop-blur-xl border-b border-white/[0.06] flex items-center justify-end px-10 sticky top-0 z-10">
+          <Link
+            href="/dashboard/shorts"
+            className="flex items-center gap-2.5 bg-emerald-500 text-white text-base font-bold px-6 py-3.5 rounded-xl hover:bg-emerald-600 transition shadow-lg shadow-emerald-500/20"
+          >
+            🎬 Create Shorts
+          </Link>
         </header>
 
         <div className="flex-1 p-10 overflow-y-auto">
@@ -1712,31 +1697,6 @@ export default function AIContentAgentPage() {
               </div>
             </div>
 
-            <div className="bg-[#0F0F15] border border-white/[0.07] rounded-2xl p-8">
-              <h3 className="text-lg font-semibold mb-6">Live AI Workflow</h3>
-
-              <div className="space-y-2 mb-8">
-                {stages.map((stage) => (
-                  <div
-                    key={stage.id}
-                    className={`flex items-center justify-between px-4 py-3.5 rounded-xl border transition ${
-                      stage.status === 'working'
-                        ? 'bg-violet-500/[0.06] border-violet-400/20'
-                        : stage.status === 'completed'
-                        ? 'bg-emerald-500/[0.04] border-emerald-400/15'
-                        : 'bg-white/[0.02] border-white/[0.06]'
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="text-lg">{stage.emoji}</span>
-                      <div className="flex flex-col">
-                        <span className={`text-sm font-medium ${stage.available ? 'text-white/85' : 'text-white/35'}`}>
-                          {stage.label}
-                        </span>
-                        {stage.id === 'video' && stage.status === 'working' && videoProgress && (
-                          <span className="text-[11px] text-white/40 capitalize">{videoProgress}</span>
-                        )}
-                      </div>
                     </div>
                     <StageIcon stage={stage} />
                   </div>
