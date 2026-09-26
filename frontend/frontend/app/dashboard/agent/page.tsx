@@ -309,6 +309,27 @@ function computeNextPublishTime(timeHHMM: string, timeZone: string = 'America/Ne
   return new Date(targetEpoch).toISOString();
 }
 
+function getNextAvailableSlot(channelId: string, timeHHMM: string, timeZone: string = 'America/New_York'): string {
+  const baseNext = computeNextPublishTime(timeHHMM, timeZone);
+  const key = `lastScheduled_${channelId}`;
+  const lastScheduledStr = typeof window !== 'undefined' ? localStorage.getItem(key) : null;
+
+  let targetTime = new Date(baseNext).getTime();
+
+  if (lastScheduledStr) {
+    const lastScheduled = new Date(lastScheduledStr).getTime();
+    while (targetTime <= lastScheduled) {
+      targetTime += 24 * 60 * 60 * 1000;
+    }
+  }
+
+  const finalTime = new Date(targetTime).toISOString();
+  if (typeof window !== 'undefined') {
+    localStorage.setItem(key, finalTime);
+  }
+  return finalTime;
+}
+
 async function pollVideoJob(
   jobId: string,
   onProgress?: (stage: string, scenesDone: number, scenesTotal: number) => void
@@ -1118,7 +1139,7 @@ async function publishToYouTube(params: {
       // 6. PUBLISHING & SHORTS
       if (autoPublish) {
         try {
-          const mainPublishAt = computeNextPublishTime(preferredPublishTime);
+          const mainPublishAt = getNextAvailableSlot(selectedChannelId || 'default', preferredPublishTime);
           const mainVideoPath = await getVideoPathForJob(jobId);
 
           // SEO data pehle generate karein
