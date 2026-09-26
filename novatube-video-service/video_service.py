@@ -836,19 +836,35 @@ ASPECT_RATIOS = {
 
 
 def reformat_video(input_path: str, output_path: str, target_w: int, target_h: int):
-    """Resize + center-crop using fast FFmpeg (100x faster than MoviePy)."""
+    """Resize + center-crop using FFmpeg with error handling."""
     import subprocess
-    subprocess.run([
-        "ffmpeg", "-y",
-        "-i", input_path,
-        "-vf", f"scale={target_w}:{target_h}:force_original_aspect_ratio=increase,crop={target_w}:{target_h}",
-        "-c:v", "libx264",
-        "-crf", "23",
-        "-preset", "ultrafast",
-        "-c:a", "aac",
-        "-movflags", "+faststart",
-        output_path
-    ], check=True, capture_output=True)
+    try:
+        if not os.path.exists(input_path):
+            raise FileNotFoundError(f"Input file not found: {input_path}")
+        
+        cmd = [
+            "ffmpeg", "-y",
+            "-i", input_path,
+            "-vf", f"scale={target_w}:{target_h}:force_original_aspect_ratio=increase,crop={target_w}:{target_h}",
+            "-c:v", "libx264",
+            "-preset", "ultrafast",
+            "-crf", "23",
+            "-c:a", "aac",
+            "-movflags", "+faststart",
+            output_path
+        ]
+        
+        result = subprocess.run(cmd, capture_output=True, text=True)
+        
+        if result.returncode != 0:
+            print(f"FFmpeg error: {result.stderr}")
+            raise RuntimeError(f"FFmpeg failed: {result.stderr}")
+        
+        print(f"Successfully reformatted video: {output_path}")
+        
+    except Exception as e:
+        print(f"Error in reformat_video: {e}")
+        raise
 
 
 def extract_audio(video_path: str, audio_out: str) -> bool:
