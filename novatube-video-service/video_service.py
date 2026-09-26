@@ -79,6 +79,17 @@ def safe_close(*clips):
         except Exception:
             pass
 
+class AutoShortRequest(BaseModel):
+    video_base64: str | None = None
+    video_path: str | None = None
+    script: list[str] | None = None
+    category: str | None = None
+    min_duration: int = 20
+    max_duration: int = 59
+    num_shorts: int = 4
+    aspect_ratio: str = "9:16"
+
+
 class JobProgressLogger(proglog.ProgressBarLogger):
     """Feeds moviepy's internal encoding progress back into our job
     tracker, throttled to once every few seconds — this is what keeps
