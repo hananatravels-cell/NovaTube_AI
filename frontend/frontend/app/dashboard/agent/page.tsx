@@ -120,6 +120,7 @@ const NICHE_PRESETS: { label: string; category: string }[] = [
   { label: 'Kids Stories', category: 'storytelling' },
   { label: 'Storytelling', category: 'storytelling' },
   { label: 'Bedtime Stories', category: 'deep_sleep' },
+  { label: 'Entertainment', category: 'entertainment' },
   { label: 'Moral Stories for Kids', category: 'parenting' },
   { label: 'Fairy Tales', category: 'storytelling' },
   { label: 'Adventure Stories', category: 'storytelling' },
@@ -1056,33 +1057,6 @@ async function publishToYouTube(params: {
       updateStage('music', 'working');
       updateStage('video', 'working');
 
-      let introAudioBase64 = '';
-      const introTextMap: Record<string, string> = {
-        english: `Today, let's talk about ${topicValue}.`,
-        urdu: `آج ہم بات کریں گے ${topicValue} کے بارے میں۔`,
-        roman_urdu: `Aaj hum baat karenge ${topicValue} ke baare mein.`,
-        arabic: `اليوم سنتحدث عن ${topicValue}.`,
-      };
-      const introText = introTextMap[language] || introTextMap.english;
-
-      try {
-        const introVoiceRes = await fetch('/api/generate-voice', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            text: introText,
-            voice: VOICE_OPTIONS.find((v) => v.id === voice)?.label || 'Aria — Warm & Clear',
-            language: LANGUAGE_OPTIONS.find((l) => l.id === language)?.label || 'English',
-          }),
-        });
-        const introVoiceData = await introVoiceRes.json();
-        if (introVoiceRes.ok && introVoiceData?.audio) {
-          introAudioBase64 = introVoiceData.audio;
-        }
-      } catch (introErr) {
-        console.error('intro voice error:', introErr);
-      }
-
       const startRes = await fetch('/api/agent/video', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1093,8 +1067,6 @@ async function publishToYouTube(params: {
           orientation: 'horizontal',
           title: topicValue,
           scenes: sceneList.length > 0 ? sceneList : undefined,
-          introAudioBase64: introAudioBase64 || undefined,
-          introText,
         }),
       });
       const startData = await startRes.json();
