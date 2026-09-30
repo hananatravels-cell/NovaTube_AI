@@ -269,6 +269,11 @@ def _jamendo_search_single_tag(tag: str) -> str | None:
 
 
 def search_jamendo_music(category: str) -> str | None:
+    # BYPASS: Using 100% safe local no-copyright music to prevent YouTube claims
+    import os
+    safe_path = "/home/ubuntu/NovaTube_AI/novatube-video-service/music/safe_bgm.mp3"
+    if os.path.exists(safe_path):
+        return safe_path
     if not JAMENDO_CLIENT_ID:
         return None
     tags = MUSIC_SEARCH_TAGS.get(category, MUSIC_SEARCH_TAGS["storytelling"])
@@ -998,7 +1003,7 @@ Respond with ONLY valid JSON, no extra text, in this exact format:
             "https://api.groq.com/openai/v1/chat/completions",
             headers={"Authorization": f"Bearer {GROQ_API_KEY}", "Content-Type": "application/json"},
             json={
-                "model": "llama3-70b-8192",
+                "model": "openai/gpt-oss-120b",
                 "messages": [{"role": "user", "content": prompt}],
                 "temperature": 0.3,
             },
@@ -1051,7 +1056,7 @@ Respond with ONLY valid JSON, no extra text, in this exact format:
             "https://api.groq.com/openai/v1/chat/completions",
             headers={"Authorization": f"Bearer {GROQ_API_KEY}", "Content-Type": "application/json"},
             json={
-                "model": "llama3-70b-8192",
+                "model": "openai/gpt-oss-120b",
                 "messages": [{"role": "user", "content": prompt}],
                 "temperature": 0.3,
             },
@@ -1301,13 +1306,13 @@ async def get_thumbnail(job_id: str, text: str = ""):
             w, h = img.size
 
             # Professional YouTube-style thumbnail overlay
-            font_size = int(w * 0.08) # Bolder, larger text
+            font_size = int(w * 0.045) # Bolder, larger text
             try:
                 font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", font_size)
             except Exception:
                 font = ImageFont.load_default()
 
-            max_width = w * 0.9
+            max_width = w * 0.6
             words = overlay_text.split(" ")
             lines, current_line = [], ""
             for word in words:
@@ -1329,11 +1334,9 @@ async def get_thumbnail(job_id: str, text: str = ""):
             # Draw a dark semi-transparent background box behind text for readability
             draw.rectangle(
                 [(0, start_y - box_padding), (w, h)], 
-                fill=(0, 0, 0, 180)
+                fill=(0, 0, 0, 140)
             )
             # Add a bright accent line at the top of the box (Red)
-            draw.line([(0, start_y - box_padding), (w, start_y - box_padding)], fill=(255, 50, 50, 255), width=4)
-
             for idx, line in enumerate(lines):
                 bbox = draw.textbbox((0, 0), line, font=font)
                 text_w = bbox[2] - bbox[0]
@@ -1344,7 +1347,7 @@ async def get_thumbnail(job_id: str, text: str = ""):
                 for dx in [-3, -2, -1, 0, 1, 2, 3]:
                     for dy in [-3, -2, -1, 0, 1, 2, 3]:
                         if dx != 0 or dy != 0:
-                            draw.text((x + dx, y + dy), line, font=font, fill=(0, 0, 0, 255))
+                            draw.text((x + dx, y + dy), line, font=font, fill=(0, 0, 0, 140))
                 # Main text in Bright White
                 draw.text((x, y), line, font=font, fill=(255, 255, 255, 255))
 
@@ -1381,7 +1384,27 @@ def _write_channels(channels):
 
 @app.get("/channels")
 async def get_channels():
-    return {"channels": _read_channels()}
+    import json, os
+    channels = _read_channels()
+    enriched = []
+    for c in channels:
+        account = c.get("youtubeAccount", "default")
+        token_file = f"/home/ubuntu/NovaTube_AI/data/youtube_token_{account}.json"
+        status = "Disconnected"
+        gmail = account
+        if os.path.exists(token_file):
+            try:
+                with open(token_file, 'r') as f:
+                    t_data = json.load(f)
+                    status = "Connected"
+                    gmail = t_data.get("account", "") or account
+            except:
+                status = "Error"
+        c["tokenStatus"] = status
+        c["tokenName"] = f"youtube_token_{account}.json"
+        c["gmailAccount"] = gmail
+        enriched.append(c)
+    return {"channels": enriched}
 
 
 @app.post("/channels")
