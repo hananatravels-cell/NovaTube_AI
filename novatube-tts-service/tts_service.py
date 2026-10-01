@@ -40,7 +40,7 @@ app.add_middleware(
 # ---------------------------------------------------------------------------
 EDGE_VOICE_MAP = {
     "Aria — Warm & Clear": "en-US-AriaNeural",
-    "Noah — Deep & Confident": "en-US-GuyNeural",
+    "Noah — Deep & Confident": "en-US-ChristopherNeural",
     "Maya — Bright & Energetic": "en-US-JennyNeural",
     "Zayn — Calm & Reflective": "en-US-DavisNeural",
 }
@@ -73,7 +73,7 @@ GROQ_MAX_CHARS = 190  # stay under the 200-char API limit with margin
 
 GROQ_VOICE_MAP_EN = {
     "Aria — Warm & Clear": "hannah",
-    "Noah — Deep & Confident": "daniel",
+    "Noah — Deep & Confident": "austin",
     "Maya — Bright & Energetic": "autumn",
     "Zayn — Calm & Reflective": "troy",
 }
@@ -94,7 +94,7 @@ ELEVENLABS_TTS_URL = "https://api.elevenlabs.io/v1/text-to-speech/{voice_id}"
 
 ELEVENLABS_VOICE_MAP = {
     "Aria — Warm & Clear": "21m00Tcm4TlvDq8ikWAM",      # Rachel
-    "Noah — Deep & Confident": "pNInz6obpgDQGcFmaJgB",  # Adam
+    "Noah — Deep & Confident": "TxGEqnHWrfWFTfGW9XjX",  # Adam
     "Maya — Bright & Energetic": "EXAVITQu4vr4xnSDxMaL", # Bella
     "Zayn — Calm & Reflective": "onwK4e9ZLuTAKqWW03F9",  # Daniel
 }
