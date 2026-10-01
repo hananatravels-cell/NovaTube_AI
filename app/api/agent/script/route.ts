@@ -1,6 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+const TRUNC_FLAG = ' [[TRUNCATED]]';
+
+function splitTruncated(raw: string): { text: string; truncated: boolean } {
+  if (raw.endsWith(TRUNC_FLAG)) {
+    return { text: raw.slice(0, -TRUNC_FLAG.length), truncated: true };
+  }
+  return { text: raw, truncated: false };
+}
+
 async function callLLM(messages: any[], maxTokens: number): Promise<string> {
+  // ✅ FIX 1: Aapke test ke mutabiq confirmed model
+  const groqModel = 'openai/gpt-oss-120b';
+  const openRouterModel = 'meta-llama/llama-3.1-70b-instruct';
+
   let response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
     method: 'POST',
     headers: {
@@ -8,7 +21,7 @@ async function callLLM(messages: any[], maxTokens: number): Promise<string> {
       Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
     },
     body: JSON.stringify({
-      model: 'openai/gpt-oss-120b',
+      model: groqModel,
       messages,
       temperature: 0.8,
       max_tokens: maxTokens,
@@ -21,10 +34,12 @@ async function callLLM(messages: any[], maxTokens: number): Promise<string> {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'HTTP-Referer': process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000',
+        'X-Title': 'NovaTube AI',
         Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
       },
       body: JSON.stringify({
-        model: 'openai/gpt-oss-120b',
+        model: openRouterModel,
         messages,
         temperature: 0.8,
         max_tokens: maxTokens,
@@ -37,9 +52,12 @@ async function callLLM(messages: any[], maxTokens: number): Promise<string> {
     console.error('LLM call failed:', errText);
     throw new Error('Script generation failed');
   }
-
+  
+  // ✅ FIX 3: Syntax theek kiya gaya (data aur wordCount ki placement)
   const data = await response.json();
-  return data.choices[0].message.content.trim();
+  const choice = data.choices[0];
+  const text = choice.message.content.trim();
+  return choice.finish_reason === 'length' ? text + TRUNC_FLAG : text;
 }
 
 function wordCount(text: string): number {
@@ -157,34 +175,46 @@ export async function POST(req: NextRequest) {
       ? `${Math.round(minMinutes * 60)} to ${Math.round(maxMinutes * 60)} seconds`
       : `${minMinutes} to ${maxMinutes} minutes`;
 
-    const initialPrompt = `Write a complete, natural-sounding narration script (no headings, no scene markers, just spoken narration) for a YouTube video about:
+    const initialPrompt = `Write a complete, premium-quality narration script (no headings, no scene markers, just spoken narration) for a YouTube video about:
 
 "${topic}"
 ${sensitiveGuidance}
 
-This type of content usually runs somewhere between ${rangeText}, but that is only a guideline — the real goal is to cover the topic properly and naturally, with no padding, no filler, no repeated points, and no repeated scenes just to reach a longer length. If the topic is fully and engagingly covered in less time than the guideline, that is completely fine — stop there. If it genuinely needs a bit more to do the topic justice, that is also fine.
+STRUCTURE — follow this order strictly:
+1. OPENING HOOK (first 2-3 sentences): start with a gripping moment, a startling fact, a vivid scene, or a question the viewer needs answered. Never start with "Welcome", "Hello", "In this video", or a dry introduction. The viewer must be hooked immediately.
+2. SETUP: give the context the viewer needs, briefly and clearly.
+3. DEVELOPMENT: build the story or the explanation step by step, with rising interest, real details, and examples. Each part should lead naturally to the next.
+4. CLIMAX / KEY REVELATION: the most important moment, answer, or turning point of the topic.
+5. RESOLUTION: show how it ended, what it means, or what the viewer should take away.
+6. CLOSING: one reflective closing thought, then a short, warm line inviting the viewer to keep watching the channel (rephrase naturally each time, never the same wording).
 
-It should be engaging from the first sentence, written to be read aloud by a voiceover artist, with real depth, examples, or story details earned by the topic itself — not manufactured to hit a word count.
+COMPLETENESS IS THE TOP PRIORITY. The story or topic must be told from its true beginning to its true end. Never start in the middle, never skip the resolution, never stop before the ending, and never end on an unfinished thought. Length is flexible: this type of content usually runs about ${rangeText}, but it is fine to be a little shorter or longer. Never pad, repeat points, or add filler just to reach a length, and never rush or cut the story short to save length.
 
-The script MUST end with a complete, natural concluding thought that wraps up the topic, followed by a short, warm closing line that invites the viewer to keep watching the channel (for example something like "keep watching for more stories like this" or "see you in the next one" — rephrase it naturally to fit the topic and tone, do not use the exact same wording every time). Never cut off mid-sentence or mid-idea. ${langInstruction} Return ONLY the script text, nothing else — no quotes, no title, no formatting.`;
+STYLE: spoken, natural, and emotionally engaging, written to be read aloud by a voiceover artist. Mix short punchy sentences with longer flowing ones. ${langInstruction} Return ONLY the script text, nothing else — no quotes, no title, no formatting.`;
 
     let script = await callLLM(
       [
         {
           role: 'system',
-          content: 'You are an expert YouTube scriptwriter who writes to the natural length a topic deserves, never padding for duration, and always ends with a natural concluding thought plus a brief, warm invitation to keep watching the channel.',
+          content: 'You are a world-class YouTube scriptwriter and storyteller. Every script you write opens with an irresistible hook, tells the complete story or explains the complete topic from its true beginning to its true end, and finishes with a satisfying conclusion followed by a brief, warm invitation to keep watching the channel. You never start in the middle, never stop before the ending, and never pad. Completeness and quality matter more than exact length.',
         },
         { role: 'user', content: initialPrompt },
       ],
       Math.max(2000, Math.round(targetWords * 2))
     );
 
+    // ✅ FIX 2: [[TRUNCATED]] flag ko clean karein
+    let { text: cleanScript, truncated } = splitTruncated(script);
+    script = cleanScript;
+
     // Only continue the script if it came back clearly too short to
     // even minimally cover the topic (e.g. the model stopped early by
     // mistake) — this is a safety net, not a mechanism for padding out
     // to the recommended range.
     let attempts = 0;
-    while (wordCount(script) < minAcceptableWords && attempts < 2) {
+    
+    // ✅ FIX 2 (Continued): Agar script kat gayi ho (truncated) YA word count kam ho, to loop chalega
+    while ((truncated || wordCount(script) < minAcceptableWords) && attempts < 2) {
       attempts++;
       const continuation = await callLLM(
         [
@@ -194,12 +224,17 @@ The script MUST end with a complete, natural concluding thought that wraps up th
           },
           {
             role: 'user',
-            content: `Here is a narration script so far, about "${topic}":\n\n${script}\n\nThis script stopped too early and needs to properly finish covering the topic. Continue it naturally from where it left off, adding only what's genuinely needed to give the topic a complete, satisfying treatment — do not pad or repeat. End with a complete concluding thought followed by a brief, warm closing line inviting the viewer to keep watching the channel. ${langInstruction} Return ONLY the continuation text — do not repeat any earlier sentences, no quotes, no title.`,
+            content: `Here is a narration script so far, about "${topic}":\n\n${script}\n\n${truncated ? 'The previous text was cut off due to length limits. ' : ''}This script stopped too early and needs to properly finish covering the topic. Continue it naturally from where it left off, adding only what's genuinely needed to give the topic a complete, satisfying treatment — do not pad or repeat. End with a complete concluding thought followed by a brief, warm closing line inviting the viewer to keep watching the channel. ${langInstruction} Return ONLY the continuation text — do not repeat any earlier sentences, no quotes, no title.`,
           },
         ],
         Math.max(1500, Math.round((minAcceptableWords - wordCount(script)) * 2.5))
       );
-      script = `${script} ${continuation}`.trim();
+      
+      // ✅ FIX 2 (Continued): Continuation se naya truncated flag nikal kar variable update karein
+      const { text: cleanContinuation, truncated: nextTruncated } = splitTruncated(continuation);
+      truncated = nextTruncated;
+      
+      script = `${script} ${cleanContinuation}`.trim();
     }
 
     script = trimToLastCompleteSentence(script);
