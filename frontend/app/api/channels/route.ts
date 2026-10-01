@@ -13,7 +13,7 @@ interface Channel {
 }
 
 const DATA_DIR = path.join(process.cwd(), 'data');
-const FILE_PATH = path.join(DATA_DIR, 'channels.json');
+const FILE_PATH = '/home/ubuntu/NovaTube_AI/novatube-video-service/channels_data.json';
 
 async function readChannels(): Promise<Channel[]> {
   try {
