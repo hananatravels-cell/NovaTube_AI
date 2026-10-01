@@ -19,3 +19,13 @@ novatube_music_cache/
 *.mp4
 frontend/data/manual_token.py
 frontend/data/manual_token.py
+
+# Accidental git command output files
+frontend/e --*
+tatus
+
+
+# Accidental git command output files
+frontend/e --*
+tatus
+
