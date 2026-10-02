@@ -1696,12 +1696,8 @@ export default function AIContentAgentPage() {
                 </button>
               </div>
             </div>
+            <div className="space-y-6">
 
-                    </div>
-                    <StageIcon stage={stage} />
-                  </div>
-                )}
-              </div>
 
               {resultTopic && (
                 <div className="mb-6">
