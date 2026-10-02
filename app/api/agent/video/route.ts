@@ -63,6 +63,7 @@ export async function POST(req: NextRequest) {
       body: JSON.stringify({
         scenes,
         category: category || 'storytelling',
+        auto_publish: true,
         audio_base64: audioBase64,
         orientation: orientation || 'vertical',
         want_music: true,

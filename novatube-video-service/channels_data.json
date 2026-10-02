@@ -67,6 +67,26 @@
       "voice": "noah",
       "language": "english",
       "createdAt": "2026-09-25T06:01:06.528685"
+    },
+    {
+      "id": "c4364344-4674-4da0-90ce-1c102939f520",
+      "name": "Dreamy Bedtime Stories",
+      "niche": "Entertainment",
+      "category": "entertainment",
+      "youtubeAccount": "bedtime",
+      "voice": "noah",
+      "language": "english",
+      "createdAt": "2026-10-01T22:29:54.205641"
+    },
+    {
+      "id": "bd0f73c3-631c-4a71-82ac-4ab22451d585",
+      "name": "Fact Fusion",
+      "niche": "Facts & Trivia",
+      "category": "education",
+      "youtubeAccount": "factsandtrivia",
+      "voice": "noah",
+      "language": "english",
+      "createdAt": "2026-09-27T10:12:31.330572"
     }
   ]
 }

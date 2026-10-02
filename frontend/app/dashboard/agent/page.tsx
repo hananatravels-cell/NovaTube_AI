@@ -1433,7 +1433,7 @@ export default function AIContentAgentPage() {
 
           <div className="grid lg:grid-cols-[420px_1fr] gap-8 items-start">
             <div className="bg-[#0F0F15] border border-white/[0.07] rounded-2xl p-8">
-              <h3 className="text-lg font-semibold mb-6">Start AI Content</h3>
+              <h3 className="text-lg font-semibold mb-6">Video Generation Settings</h3>
 
               <div className="space-y-5">
                 <div ref={nicheBoxRef} className="relative">
@@ -1690,7 +1690,34 @@ export default function AIContentAgentPage() {
                     </>
                   ) : (
                     <>
-                      <Sparkles className="w-5 h-5" /> Start AI Content
+                      <div className="flex items-center justify-between mb-4 p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg border border-gray-200 dark:border-gray-700">
+                <div className="flex flex-col">
+                  <span className="text-sm font-semibold text-gray-900 dark:text-white">Auto-Publish to YouTube</span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400">Automatically upload when rendering is complete</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setAutoPublish(!autoPublish)}
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 ${autoPublish ? 'bg-green-600' : 'bg-gray-300 dark:bg-gray-600'}`}
+                >
+                  <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${autoPublish ? 'translate-x-6' : 'translate-x-1'}`} />
+                </button>
+              </div>
+              <button
+                type="submit"
+                disabled={isGenerating || !selectedChannel}
+                className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-green-600 hover:bg-green-700 disabled:bg-green-400 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-all shadow-md hover:shadow-lg"
+              >
+                {isGenerating ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin" /> Generating...
+                  </>
+                ) : (
+                  <>
+                    <Sparkles className="w-5 h-5" /> Generate Video
+                  </>
+                )}
+              </button>
                     </>
                   )}
                 </button>
