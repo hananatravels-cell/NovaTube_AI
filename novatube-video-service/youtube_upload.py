@@ -223,3 +223,18 @@ if __name__ == "__main__":
             upload_thumbnail(result["id"], args.thumbnail, account=args.account)
     else:
         parser.print_help()
+def post_engaging_comment(video_id: str, title: str, account: str = "default"):
+    try:
+        import os, requests
+        groq_api_key = os.getenv("GROQ_API_KEY")
+        comment_text = "What do you think about this? Let me know in the comments!"
+        if groq_api_key:
+            try:
+                resp = requests.post("https://api.groq.com/openai/v1/chat/completions", headers={"Authorization": f"Bearer {groq_api_key}", "Content-Type": "application/json"}, json={"model": "llama3-8b-8192", "messages": [{"role": "user", "content": f"Generate a short, highly engaging YouTube comment (max 15 words) with a question for a video titled: '{title}'. Output ONLY the comment text."}]}, timeout=5)
+                comment_text = resp.json()["choices"][0]["message"]["content"].strip().strip('"')
+            except Exception: pass
+        from youtube_upload import get_authenticated_service
+        youtube = get_authenticated_service(account)
+        youtube.commentThreads().insert(part="snippet", body={"snippet": {"videoId": video_id, "topLevelComment": {"snippet": {"textOriginal": comment_text}}}}).execute()
+        print("✅ Auto-comment posted!")
+    except Exception as e: print(f"⚠️ Auto-comment failed: {e}")

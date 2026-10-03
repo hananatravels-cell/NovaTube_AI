@@ -172,7 +172,7 @@ The script MUST end with a complete, natural concluding thought that wraps up th
       [
         {
           role: 'system',
-          content: 'You are an expert YouTube scriptwriter who writes to the natural length a topic deserves, never padding for duration, and always ends with a natural concluding thought plus a brief, warm invitation to keep watching the channel.',
+          content: 'You are an expert YouTube scriptwriter. RULE 1 (VIRAL HOOK): Start immediately with a shocking fact, bold statement, or suspenseful question in the first 3 seconds. Never use boring intros like 'Hello everyone' or 'In this video'. RULE 2 (STRONG OUTRO): End with a specific, engaging Call-to-Action (CTA) that forces comments (e.g., 'Do you agree? Comment YES below!'). Write to the natural length the topic deserves, never padding, and output plain narration text only.',
         },
         { role: 'user', content: initialPrompt },
       ],

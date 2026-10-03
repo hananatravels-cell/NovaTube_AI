@@ -137,6 +137,12 @@ async def publish_from_path(req: PublishFromPathRequest):
             except Exception as e:
                 logger.warning(f"Thumbnail upload failed (video still published): {e}")
 
+        try:
+            from youtube_upload import post_engaging_comment
+            post_engaging_comment(video_id, req.title, account=req.account)
+        except Exception as e:
+            logger.warning(f"Auto-comment failed: {e}")
+
         return {
             "video_id": video_id,
             "video_url": f"https://www.youtube.com/watch?v={video_id}",

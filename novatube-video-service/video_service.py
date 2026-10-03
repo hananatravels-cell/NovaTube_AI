@@ -1,3 +1,4 @@
+import json
 
 """
 NovaTube AI - Video Generation Service
@@ -545,7 +546,7 @@ async def video_file(job_id: str):
     )
 
 
-def _run_generate_video(job_id: str, req: VideoRequest):
+def _run_generate_video(job_id: str, req: VideoRequest, attempt: int = 1):
     work_dir = tempfile.mkdtemp(prefix="novatube_")
     clip_paths = []
     music_used = False
@@ -798,6 +799,63 @@ def _run_generate_video(job_id: str, req: VideoRequest):
             logger=JobProgressLogger(job_id, "encoding_final"),
         )
 
+        # ==========================================
+        # AI AUTO-QUALITY CHECK + RETRY
+        # ==========================================
+        MAX_RENDER_ATTEMPTS = 2
+        quality_issues = []
+
+        file_size = os.path.getsize(output_path) if os.path.exists(output_path) else 0
+        if file_size < 10000:
+            quality_issues.append(f"file size too small ({file_size} bytes)")
+
+        has_audio = False
+        actual_duration = 0.0
+        if file_size > 0:
+            try:
+                probe = subprocess.run(
+                    ["ffprobe", "-v", "error", "-show_entries", "stream=codec_type:format=duration",
+                     "-of", "json", output_path],
+                    capture_output=True, text=True, timeout=20,
+                )
+                probe_data = json.loads(probe.stdout or "{}")
+                has_audio = any(s.get("codec_type") == "audio" for s in probe_data.get("streams", []))
+                actual_duration = float(probe_data.get("format", {}).get("duration", 0) or 0)
+            except Exception as probe_err:
+                logger.warning(f"Quality check ffprobe failed: {probe_err}")
+
+        if not has_audio:
+            quality_issues.append("no audio track detected")
+
+        expected_duration = narration.duration if narration else 0
+        if expected_duration > 0 and actual_duration > 0:
+            if abs(actual_duration - expected_duration) > max(5, expected_duration * 0.25):
+                quality_issues.append(
+                    f"duration mismatch (expected ~{expected_duration:.0f}s, got {actual_duration:.0f}s)"
+                )
+
+        if quality_issues:
+            logger.error(f"Quality check FAILED for job {job_id} (attempt {attempt}): {', '.join(quality_issues)}")
+            try:
+                if os.path.exists(output_path):
+                    os.remove(output_path)
+            except Exception:
+                pass
+            safe_close(*open_clips)
+            shutil.rmtree(work_dir, ignore_errors=True)
+
+            if attempt < MAX_RENDER_ATTEMPTS:
+                logger.info(f"Retrying render for job {job_id} (attempt {attempt + 1}/{MAX_RENDER_ATTEMPTS})")
+                _run_generate_video(job_id, req, attempt=attempt + 1)
+            else:
+                _job_update(
+                    job_id,
+                    status="failed",
+                    error=f"Quality check failed after {MAX_RENDER_ATTEMPTS} attempts: {', '.join(quality_issues)}",
+                )
+            return
+        # ==========================================
+
         _job_update(
             job_id,
             status="done",
@@ -812,7 +870,6 @@ def _run_generate_video(job_id: str, req: VideoRequest):
         # AUTO-PUBLISH TRIGGER (Browser Independent)
         # ==========================================
         if getattr(req, 'auto_publish', True):
-===========
             try:
                 import urllib.request
                 import json
@@ -952,40 +1009,99 @@ def transcribe_words_with_groq(audio_path: str):
 
 
 def build_caption_clips(words, video_w, video_h, video_duration):
-    """Builds one short-lived TextClip per spoken word, each visible only
-    during its own timestamp window (word-by-word/CapCut-style captions)."""
+    """Builds Karaoke-style captions: full line in white, active word in yellow."""
     if not words:
         return []
 
+    # Group words into lines of max 6 words
+    lines = []
+    current_line = []
+    for w in words:
+        current_line.append(w)
+        if len(current_line) >= 6 or (w.get("word", "") or "").rstrip().endswith((".", "!", "?")):
+            lines.append(current_line)
+            current_line = []
+    if current_line:
+        lines.append(current_line)
+
     fontsize = int(video_h * 0.06)
     clips = []
-    for w in words:
-        start = w.get("start")
-        end = w.get("end")
-        text = (w.get("word") or "").strip()
-        if not text or start is None or end is None:
+    
+    try:
+        temp_font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", fontsize)
+    except:
+        temp_font = ImageFont.load_default()
+
+    for line_words in lines:
+        if not line_words:
             continue
-        end = min(end, video_duration)
-        if end <= start:
-            continue
-        try:
-            txt_clip = (
+        line_start = line_words[0]["start"]
+        line_end = line_words[-1]["end"]
+        full_text = " ".join([w.get("word", "") for w in line_words])
+        
+        # 1. Base clip: full line in white
+        base_clip = (
+            TextClip(
+                full_text,
+                fontsize=fontsize,
+                font="DejaVu-Sans-Bold",
+                color="white",
+                stroke_color="black",
+                stroke_width=max(2, fontsize // 18),
+                method="label",
+            )
+            .set_start(line_start)
+            .set_duration(line_end - line_start)
+            .set_position(("center", int(video_h * 0.78)))
+        )
+        clips.append(base_clip)
+        
+        # Calculate full width for positioning
+        draw = ImageDraw.Draw(Image.new("RGBA", (1, 1)))
+        full_bbox = draw.textbbox((0, 0), full_text, font=temp_font)
+        full_w = full_bbox[2] - full_bbox[0]
+
+        # 2. Highlight clips: active word in yellow
+        for w in line_words:
+            start = w.get("start")
+            end = w.get("end")
+            word_text = (w.get("word") or "").strip()
+            if not word_text or start is None or end is None:
+                continue
+            end = min(end, video_duration)
+            if end <= start:
+                continue
+            
+            preceding_text = ""
+            for prev_w in line_words:
+                if prev_w is w:
+                    break
+                preceding_text += (prev_w.get("word") or "") + " "
+            
+            prev_bbox = draw.textbbox((0, 0), preceding_text, font=temp_font)
+            prev_w = prev_bbox[2] - prev_bbox[0]
+            
+            word_bbox = draw.textbbox((0, 0), word_text + " ", font=temp_font)
+            word_w = word_bbox[2] - word_bbox[0]
+            
+            highlight_center_x = (video_w / 2) - (full_w / 2) + prev_w + (word_w / 2)
+            
+            highlight_clip = (
                 TextClip(
-                    text,
+                    word_text + " ",
                     fontsize=fontsize,
                     font="DejaVu-Sans-Bold",
-                    color="white",
+                    color="#FFD600",
                     stroke_color="black",
                     stroke_width=max(2, fontsize // 18),
                     method="label",
                 )
                 .set_start(start)
                 .set_duration(end - start)
-                .set_position(("center", int(video_h * 0.78)))
+                .set_position((highlight_center_x, int(video_h * 0.78)))
             )
-            clips.append(txt_clip)
-        except Exception as e:
-            logger.warning(f"Skipping caption word '{text}': {e}")
+            clips.append(highlight_clip)
+            
     return clips
 
 
@@ -1380,13 +1496,13 @@ async def get_thumbnail(job_id: str, text: str = ""):
                 x = (w - text_w) / 2
                 y = start_y + idx * line_height
                 
-                # Thick black outline for maximum contrast
-                for dx in [-3, -2, -1, 0, 1, 2, 3]:
-                    for dy in [-3, -2, -1, 0, 1, 2, 3]:
+                # Alex Hormozi Style: Thick solid black outline for maximum contrast
+                for dx in [-4, -3, -2, -1, 0, 1, 2, 3, 4]:
+                    for dy in [-4, -3, -2, -1, 0, 1, 2, 3, 4]:
                         if dx != 0 or dy != 0:
-                            draw.text((x + dx, y + dy), line, font=font, fill=(0, 0, 0, 140))
-                # Main text in Bright White
-                draw.text((x, y), line, font=font, fill=(255, 255, 255, 255))
+                            draw.text((x + dx, y + dy), line.upper(), font=font, fill=(0, 0, 0, 255))
+                # Main text in Bright Hormozi Yellow
+                draw.text((x, y), line.upper(), font=font, fill=(255, 215, 0, 255))
 
             img.save(final_path, "JPEG", quality=92)
         else:
