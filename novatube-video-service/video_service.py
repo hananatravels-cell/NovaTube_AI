@@ -759,6 +759,7 @@ def _run_generate_video(job_id: str, req: VideoRequest, attempt: int = 1):
             if caption_clips:
                 open_clips.extend(caption_clips)
                 final_video = CompositeVideoClip([final_video] + caption_clips)
+                final_video = final_video.set_audio(final_audio)
                 logger.info(f"Added {len(caption_clips)} word-level captions")
             else:
                 logger.info("No captions added (transcription empty or unavailable)")
@@ -872,7 +873,6 @@ def _run_generate_video(job_id: str, req: VideoRequest, attempt: int = 1):
         if getattr(req, 'auto_publish', True):
             try:
                 import urllib.request
-                import json
             
                 publish_payload = {
                     "videoPath": output_path,
@@ -1052,7 +1052,7 @@ def build_caption_clips(words, video_w, video_h, video_duration):
             )
             .set_start(line_start)
             .set_duration(line_end - line_start)
-            .set_position(("center", int(video_h * 0.78)))
+            .set_position(("center", int(video_h * 0.90)))
         )
         clips.append(base_clip)
         
@@ -1098,7 +1098,7 @@ def build_caption_clips(words, video_w, video_h, video_duration):
                 )
                 .set_start(start)
                 .set_duration(end - start)
-                .set_position((highlight_center_x, int(video_h * 0.78)))
+                .set_position((highlight_center_x, int(video_h * 0.90)))
             )
             clips.append(highlight_clip)
             
