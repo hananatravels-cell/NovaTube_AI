@@ -1848,7 +1848,7 @@ async function publishToYouTube(params: {
                     </>
                   ) : (
                     <>
-                      <Sparkles className="w-5 h-5" /> Start AI Content
+                      <Sparkles className="w-5 h-5" /> Start
                     </>
                   )}
                 </button>
@@ -2043,7 +2043,7 @@ async function publishToYouTube(params: {
                 </div>
               )}              {!resultVideo && !isRunning && (
                 <div className="text-center py-10 text-white/30 text-sm">
-                  Enter a niche and click "Start AI Content" to see the agent work.
+                  Enter a niche and click "Start" to see the agent work.
                 </div>
               )}
             </div>

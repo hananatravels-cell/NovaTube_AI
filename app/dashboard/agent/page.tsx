@@ -1470,7 +1470,7 @@ export default function AIContentAgentPage() {
 
           <div className="grid lg:grid-cols-[420px_1fr] gap-8 items-start">
             <div className="bg-[#0F0F15] border border-white/[0.07] rounded-2xl p-8">
-              <h3 className="text-lg font-semibold mb-6">Start AI Content</h3>
+              <h3 className="text-lg font-semibold mb-6">Start</h3>
 
               <div className="space-y-5">
                 <div ref={nicheBoxRef} className="relative">
@@ -1727,7 +1727,7 @@ export default function AIContentAgentPage() {
                     </>
                   ) : (
                     <>
-                      <Sparkles className="w-5 h-5" /> Start AI Content
+                      <Sparkles className="w-5 h-5" /> Start
                     </>
                   )}
                 </button>
@@ -1931,7 +1931,7 @@ export default function AIContentAgentPage() {
 
               {!resultVideo && !isRunning && (
                 <div className="text-center py-10 text-white/30 text-sm">
-                  Enter a niche and click "Start AI Content" to see the agent work.
+                  Enter a niche and click "Start" to see the agent work.
                 </div>
               )}
             </div>
