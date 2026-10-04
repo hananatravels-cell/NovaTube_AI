@@ -138,6 +138,22 @@ export async function POST(req: NextRequest) {
     }
 
     const fallbackMinutes = durationMinutes || 3;
+    
+    // EXACT WPM TABLE FOR PERFECT DURATION MATCH
+    const wpmTable: Record<number, { min: number; max: number }> = {
+        0.5: { min: 65, max: 75 },
+        1: { min: 130, max: 150 },
+        3: { min: 390, max: 450 },
+        5: { min: 650, max: 750 },
+        10: { min: 1300, max: 1500 },
+        15: { min: 1950, max: 2250 },
+        20: { min: 2600, max: 3000 },
+        30: { min: 3900, max: 4500 },
+        45: { min: 5850, max: 6750 },
+        60: { min: 7800, max: 9000 },
+    };
+    const targetRange = wpmTable[durationMinutes] || { min: durationMinutes * 130, max: durationMinutes * 150 };
+    const targetWords = Math.round((targetRange.min + targetRange.max) / 2);
     const { min: minMinutes, max: maxMinutes } = getDurationRange(niche, fallbackMinutes);
     const sensitiveGuidance = getSensitiveGuidance(niche);
 
@@ -204,8 +220,12 @@ The script MUST end with a complete, natural concluding thought that wraps up th
 
     script = trimToLastCompleteSentence(script);
 
-    return NextResponse.json({
-      script,
+    // HARDCODED OUTRO: Ensures story always ends smoothly without cutting
+      const fixedOutro = "\n\nThanks for listening. Sleep well and dream something wonderful.";
+      script = script.trim().replace(/['"]+$/g, '') + fixedOutro;
+
+      return NextResponse.json({
+        script,
       wordCount: wordCount(script),
       recommendedRange: { min: minMinutes, max: maxMinutes },
     });
