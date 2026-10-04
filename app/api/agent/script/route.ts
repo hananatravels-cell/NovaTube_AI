@@ -175,7 +175,7 @@ export async function POST(req: NextRequest) {
       ? `${Math.round(minMinutes * 60)} to ${Math.round(maxMinutes * 60)} seconds`
       : `${minMinutes} to ${maxMinutes} minutes`;
 
-    const initialPrompt = `Write a complete, premium-quality narration script (no headings, no scene markers, just spoken narration) for a YouTube video about:
+    const initialPrompt = `Write a complete, premium-quality, HIGHLY UNIQUE narration script. CRITICAL RULE: Do NOT use generic, overused, or repetitive angles (e.g., if the topic is a famous figure, do NOT write a basic biography. Instead, focus on ONE specific, lesser-known, untold, or highly dramatic moment, invention, or scientific miracle related to them).  (no headings, no scene markers, just spoken narration) for a YouTube video about:
 
 "${topic}"
 ${sensitiveGuidance}
@@ -190,7 +190,7 @@ STRUCTURE — follow this order strictly:
 
 COMPLETENESS IS THE TOP PRIORITY. The story or topic must be told from its true beginning to its true end. Never start in the middle, never skip the resolution, never stop before the ending, and never end on an unfinished thought. Length is flexible: this type of content usually runs about ${rangeText}, but it is fine to be a little shorter or longer. Never pad, repeat points, or add filler just to reach a length, and never rush or cut the story short to save length.
 
-STYLE: spoken, natural, and emotionally engaging, written to be read aloud by a voiceover artist. Mix short punchy sentences with longer flowing ones. ${langInstruction} Return ONLY the script text, nothing else — no quotes, no title, no formatting.`;
+STYLE: spoken, natural, and emotionally engaging. TITLE & METADATA RULE: The title and hashtags MUST be 100% unique and never reused from previous videos. , written to be read aloud by a voiceover artist. Mix short punchy sentences with longer flowing ones. ${langInstruction} Return ONLY the script text, nothing else — no quotes, no title, no formatting.`;
 
     let script = await callLLM(
       [
