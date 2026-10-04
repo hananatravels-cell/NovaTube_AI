@@ -750,7 +750,7 @@ def _run_generate_video(job_id: str, req: VideoRequest, attempt: int = 1):
             except Exception as e:
                 logger.warning(f"Music mixing failed, continuing without music: {e}")
 
-        final_video = final_video.set_audio(final_audio)
+        final_video = final_video.set_audio(final_audio).set_duration(final_audio.duration)
 
         _job_update(job_id, stage="adding_captions")
         try:
@@ -759,7 +759,7 @@ def _run_generate_video(job_id: str, req: VideoRequest, attempt: int = 1):
             if caption_clips:
                 open_clips.extend(caption_clips)
                 final_video = CompositeVideoClip([final_video] + caption_clips)
-                final_video = final_video.set_audio(final_audio)
+                final_video = final_video.set_audio(final_audio).set_duration(final_audio.duration)
                 logger.info(f"Added {len(caption_clips)} word-level captions")
             else:
                 logger.info("No captions added (transcription empty or unavailable)")
@@ -1009,22 +1009,22 @@ def transcribe_words_with_groq(audio_path: str):
 
 
 def build_caption_clips(words, video_w, video_h, video_duration):
-    """Builds Karaoke-style captions: full line in white, active word in yellow."""
+    """Builds 2-line captions: Full white line on top, active yellow word below it."""
     if not words:
         return []
 
-    # Group words into lines of max 6 words
+    # Group words into lines of max 5 words
     lines = []
     current_line = []
     for w in words:
         current_line.append(w)
-        if len(current_line) >= 3 or sum(len((x.get("word", "") or "").strip()) for x in current_line) >= 16 or (w.get("word", "") or "").rstrip().endswith((".", "!", "?")):
+        if len(current_line) >= 5 or (w.get("word", "") or "").rstrip().endswith((".", "!", "?")):
             lines.append(current_line)
             current_line = []
     if current_line:
         lines.append(current_line)
 
-    fontsize = int(min(video_h * 0.08, video_w * 0.075))
+    fontsize = int(video_h * 0.06)
     clips = []
     
     try:
@@ -1037,9 +1037,9 @@ def build_caption_clips(words, video_w, video_h, video_duration):
             continue
         line_start = line_words[0]["start"]
         line_end = line_words[-1]["end"]
-        full_text = " ".join([w.get("word", "") for w in line_words]).upper()
+        full_text = " ".join([w.get("word", "") for w in line_words])
         
-        # 1. Base clip: full line in white
+        # 1. Puri Line (White Color) - Upar (80% position)
         base_clip = (
             TextClip(
                 full_text,
@@ -1047,61 +1047,42 @@ def build_caption_clips(words, video_w, video_h, video_duration):
                 font="DejaVu-Sans-Bold",
                 color="white",
                 stroke_color="black",
-                stroke_width=max(2, fontsize // 10),
+                stroke_width=max(2, fontsize // 18),
                 method="label",
             )
             .set_start(line_start)
             .set_duration(line_end - line_start)
-            .set_position(("center", int(video_h * 0.62)))
+            .set_position(("center", int(video_h * 0.80)))
         )
         clips.append(base_clip)
         
-        # Calculate full width for positioning
-        draw = ImageDraw.Draw(Image.new("RGBA", (1, 1)))
-        full_bbox = draw.textbbox((0, 0), full_text, font=temp_font)
-        full_w = full_bbox[2] - full_bbox[0]
-
-        # 2. Highlight clips: active word in yellow
+        # 2. Spoken Word (Yellow Color) - Neeche (88% position)
         for w in line_words:
             start = w.get("start")
             end = w.get("end")
-            word_text = (w.get("word") or "").strip().upper()
+            word_text = (w.get("word") or "").strip()
             if not word_text or start is None or end is None:
                 continue
             end = min(end, video_duration)
             if end <= start:
                 continue
             
-            preceding_text = ""
-            for prev_w in line_words:
-                if prev_w is w:
-                    break
-                preceding_text += (prev_w.get("word") or "").upper() + " "
-            
-            prev_bbox = draw.textbbox((0, 0), preceding_text, font=temp_font)
-            prev_w = prev_bbox[2] - prev_bbox[0]
-            
-            word_bbox = draw.textbbox((0, 0), word_text + " ", font=temp_font)
-            word_w = word_bbox[2] - word_bbox[0]
-            
-            highlight_center_x = (video_w / 2) - (full_w / 2) + prev_w + (word_w / 2)
-            
-            highlight_clip = (
+            word_clip = (
                 TextClip(
-                    word_text + " ",
-                    fontsize=fontsize,
+                    word_text,
+                    fontsize=int(fontsize * 1.1), # Thora bara taake highlight saaf dikhe
                     font="DejaVu-Sans-Bold",
-                    color="#FFD600",
+                    color="#FFD700", # Bright Yellow/Gold
                     stroke_color="black",
-                    stroke_width=max(2, fontsize // 10),
+                    stroke_width=max(2, fontsize // 18),
                     method="label",
                 )
                 .set_start(start)
                 .set_duration(end - start)
-                .set_position((highlight_center_x, int(video_h * 0.62)))
+                .set_position(("center", int(video_h * 0.88))) # Line ke bilkul neeche
             )
-            clips.append(highlight_clip)
-            
+            clips.append(word_clip)
+
     return clips
 
 
@@ -1590,3 +1571,46 @@ async def delete_channel(channel_id: str):
     channels = [c for c in channels if c["id"] != channel_id]
     _write_channels(channels)
     return {"deleted": True}
+
+
+def save_to_memory(topic, title, visuals_list):
+    memory_file = "/home/ubuntu/NovaTube_AI/novatube-video-service/video_memory.json"
+    try:
+        with open(memory_file, "r") as f:
+            memory = json.load(f)
+        
+        if topic and topic not in memory["used_topics"]:
+            memory["used_topics"].append(topic)
+        if title and title not in memory["used_titles"]:
+            memory["used_titles"].append(title)
+        if visuals_list:
+            for v in visuals_list:
+                if v not in memory["used_visuals"]:
+                    memory["used_visuals"].append(v)
+                    
+        with open(memory_file, "w") as f:
+            json.dump(memory, f, indent=2)
+        print(f"💾 Saved to memory: {topic}")
+    except Exception as e:
+        print(f"⚠️ Memory save failed: {e}")
+
+def get_memory():
+    memory_file = "/home/ubuntu/NovaTube_AI/novatube-video-service/video_memory.json"
+    try:
+        with open(memory_file, "r") as f:
+            return json.load(f)
+    except:
+        return {"used_topics": [], "used_titles": [], "used_visuals": []}
+
+def save_video_to_memory(topic, title):
+    try:
+        with open("/home/ubuntu/NovaTube_AI/novatube-video-service/video_memory.json", "r") as f:
+            mem = json.load(f)
+        if topic and topic not in mem["used_topics"]:
+            mem["used_topics"].append(topic)
+        if title and title not in mem["used_titles"]:
+            mem["used_titles"].append(title)
+        with open("/home/ubuntu/NovaTube_AI/novatube-video-service/video_memory.json", "w") as f:
+            json.dump(mem, f, indent=2)
+    except Exception as e:
+        print("Memory save error:", e)
