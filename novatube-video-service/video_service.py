@@ -1018,13 +1018,13 @@ def build_caption_clips(words, video_w, video_h, video_duration):
     current_line = []
     for w in words:
         current_line.append(w)
-        if len(current_line) >= 6 or (w.get("word", "") or "").rstrip().endswith((".", "!", "?")):
+        if len(current_line) >= 3 or sum(len((x.get("word", "") or "").strip()) for x in current_line) >= 16 or (w.get("word", "") or "").rstrip().endswith((".", "!", "?")):
             lines.append(current_line)
             current_line = []
     if current_line:
         lines.append(current_line)
 
-    fontsize = int(video_h * 0.06)
+    fontsize = int(min(video_h * 0.08, video_w * 0.075))
     clips = []
     
     try:
@@ -1037,7 +1037,7 @@ def build_caption_clips(words, video_w, video_h, video_duration):
             continue
         line_start = line_words[0]["start"]
         line_end = line_words[-1]["end"]
-        full_text = " ".join([w.get("word", "") for w in line_words])
+        full_text = " ".join([w.get("word", "") for w in line_words]).upper()
         
         # 1. Base clip: full line in white
         base_clip = (
@@ -1047,12 +1047,12 @@ def build_caption_clips(words, video_w, video_h, video_duration):
                 font="DejaVu-Sans-Bold",
                 color="white",
                 stroke_color="black",
-                stroke_width=max(2, fontsize // 18),
+                stroke_width=max(2, fontsize // 10),
                 method="label",
             )
             .set_start(line_start)
             .set_duration(line_end - line_start)
-            .set_position(("center", int(video_h * 0.90)))
+            .set_position(("center", int(video_h * 0.62)))
         )
         clips.append(base_clip)
         
@@ -1065,7 +1065,7 @@ def build_caption_clips(words, video_w, video_h, video_duration):
         for w in line_words:
             start = w.get("start")
             end = w.get("end")
-            word_text = (w.get("word") or "").strip()
+            word_text = (w.get("word") or "").strip().upper()
             if not word_text or start is None or end is None:
                 continue
             end = min(end, video_duration)
@@ -1076,7 +1076,7 @@ def build_caption_clips(words, video_w, video_h, video_duration):
             for prev_w in line_words:
                 if prev_w is w:
                     break
-                preceding_text += (prev_w.get("word") or "") + " "
+                preceding_text += (prev_w.get("word") or "").upper() + " "
             
             prev_bbox = draw.textbbox((0, 0), preceding_text, font=temp_font)
             prev_w = prev_bbox[2] - prev_bbox[0]
@@ -1093,12 +1093,12 @@ def build_caption_clips(words, video_w, video_h, video_duration):
                     font="DejaVu-Sans-Bold",
                     color="#FFD600",
                     stroke_color="black",
-                    stroke_width=max(2, fontsize // 18),
+                    stroke_width=max(2, fontsize // 10),
                     method="label",
                 )
                 .set_start(start)
                 .set_duration(end - start)
-                .set_position((highlight_center_x, int(video_h * 0.90)))
+                .set_position((highlight_center_x, int(video_h * 0.62)))
             )
             clips.append(highlight_clip)
             
