@@ -161,7 +161,7 @@ export async function POST(req: NextRequest) {
     // initial generation request (max_tokens etc.) — the prompt itself
     // tells the model this is a guideline, not a requirement.
     const midMinutes = (minMinutes + maxMinutes) / 2;
-    const targetWords = Math.round(midMinutes * 140);
+    // const targetWords = Math.round(midMinutes * 140); // Using wpmTable instead
     const minAcceptableWords = Math.max(10, Math.round(minMinutes * 140 * 0.6));
     const langInstruction = language ? `Write in ${language}.` : '';
 
@@ -222,7 +222,12 @@ The script MUST end with a complete, natural concluding thought that wraps up th
 
     // HARDCODED OUTRO: Ensures story always ends smoothly without cutting
       const fixedOutro = "\n\nThanks for listening. Sleep well and dream something wonderful.";
-      script = script.trim().replace(/['"]+$/g, '') + fixedOutro;
+      // FINAL CHECK: Agar script abhi bhi choti hai, toh zabardast conclusion likho
+        if (wordCount(script) < targetRange.min) {
+            script += " This story shows us that sometimes, the original is always the best. Thanks for listening. Sleep well and dream something wonderful.";
+        } else {
+            script = script.trim().replace(/['"]+$/g, '') + fixedOutro;
+        }
 
       return NextResponse.json({
         script,

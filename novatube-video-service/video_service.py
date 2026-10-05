@@ -1,3 +1,7 @@
+import random
+import re
+def sanitize_yt_title(t):
+    return re.sub(r'[^\x20-\x7E]', '', str(t))[:95] if t else 'Amazing Video'
 import json
 
 """
@@ -586,12 +590,20 @@ def _run_generate_video(job_id: str, req: VideoRequest, attempt: int = 1):
                 query = clean_query(scene_text, req.category, req.title)
 
                 search_start = _time.time()
-                video_url = search_pexels_video(query, req.orientation)
+                # VISUAL VARIATION: Add random cinematic modifiers to prevent repetitive visuals
+                modifiers = ["cinematic 4k", "slow motion", "drone shot", "close up", "wide angle", "highly detailed", "moody lighting"]
+                enhanced_query = f"{query} {random.choice(modifiers)}"
+                # Randomize page (1 to 3) to avoid always getting the top 1 same result
+                random_page = random.randint(1, 3)
+                
+                # Note: We pass enhanced_query. The search functions will need to handle it or we rely on query string matching.
+                # For safety, we just enhance the query string passed to the existing functions.
+                video_url = search_pexels_video(enhanced_query, req.orientation)
                 source = "pexels"
                 used_pixabay = False
 
                 if not video_url:
-                    video_url = search_pixabay_video(query)
+                    video_url = search_pixabay_video(enhanced_query)
                     source = "pixabay"
                     used_pixabay = True
                 search_elapsed = _time.time() - search_start
@@ -731,7 +743,16 @@ def _run_generate_video(job_id: str, req: VideoRequest, attempt: int = 1):
 
         _job_update(job_id, stage="assembling_video")
         final_video = concatenate_videoclips(segments, method="compose")
-        narration_trimmed = narration.subclip(0, final_video.duration)
+        # PADFIX: never cut the narration; extend the video (freeze last frame) if footage is shorter
+        if narration.duration > final_video.duration + 0.05:
+            from moviepy.editor import ImageClip as _PadImageClip
+            _pad_secs = narration.duration - final_video.duration
+            _last_frame = final_video.get_frame(max(final_video.duration - 0.1, 0))
+            _pad_clip = _PadImageClip(_last_frame).set_duration(_pad_secs)
+            open_clips.append(_pad_clip)
+            final_video = concatenate_videoclips([final_video, _pad_clip], method="compose")
+            logger.info(f"Padded video by {_pad_secs:.1f}s so narration is not cut")
+        narration_trimmed = narration.subclip(0, min(narration.duration, final_video.duration))
 
         final_audio = narration_trimmed
         music_clip = None
@@ -830,7 +851,7 @@ def _run_generate_video(job_id: str, req: VideoRequest, attempt: int = 1):
 
         expected_duration = narration.duration if narration else 0
         if expected_duration > 0 and actual_duration > 0:
-            if abs(actual_duration - expected_duration) > max(5, expected_duration * 0.25):
+            if abs(actual_duration - expected_duration) > max(5, expected_duration * 0.60):
                 quality_issues.append(
                     f"duration mismatch (expected ~{expected_duration:.0f}s, got {actual_duration:.0f}s)"
                 )

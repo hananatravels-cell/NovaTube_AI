@@ -727,6 +727,7 @@ export default function AIContentAgentPage() {
   const sidebarItems = [
     { name: 'Overview', icon: <LayoutDashboard className="w-5 h-5" />, id: 'overview', href: '/dashboard' },
     { name: 'AI Content Agent', icon: <Sparkles className="w-5 h-5" />, id: 'agent', href: '/dashboard/agent' },
+    { name: 'ClipNova', icon: <Film className="w-5 h-5" />, id: 'clipnova', href: '/dashboard/clipnova' },
     { name: 'AI Scripts', icon: <FileText className="w-5 h-5" />, id: 'scripts', href: '/dashboard/scripts' },
     { name: 'Voice Generator', icon: <Mic className="w-5 h-5" />, id: 'voice', href: '/dashboard/voice' },
     { name: 'Video Generator', icon: <Video className="w-5 h-5" />, id: 'video', href: '/dashboard/video' },
