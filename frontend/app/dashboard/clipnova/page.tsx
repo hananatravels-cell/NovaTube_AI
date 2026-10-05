@@ -15,7 +15,7 @@ export default function ClipNovaPage() {
         <div className="border-2 border-dashed border-gray-700 rounded-2xl p-16 text-center hover:border-violet-500 transition-all duration-300 bg-[#12121a]">
           <div className="text-6xl mb-6">📤</div>
           <h3 className="text-2xl font-semibold text-white mb-3">Upload Long Video</h3>
-          <p className="text-gray-400 mb-8">Drag & drop your MP4/MOV file here, or click to browse</p>
+          <p className="text-gray-400 mb-8">Drag and drop your MP4/MOV file here, or click to browse</p>
           <button className="bg-violet-600 hover:bg-violet-700 text-white px-8 py-3 rounded-xl font-bold text-lg transition-colors shadow-lg shadow-violet-500/20">
             Select Video File
           </button>
@@ -33,7 +33,7 @@ export default function ClipNovaPage() {
           </div>
           <div className="bg-[#12121a] p-5 rounded-xl border border-gray-800">
             <h4 className="text-white font-semibold mb-2">📱 9:16 Format</h4>
-            <p className="text-sm text-gray-400">Perfectly cropped for Shorts & Reels.</p>
+            <p className="text-sm text-gray-400">Perfectly cropped for Shorts and Reels.</p>
           </div>
         </div>
       </div>
